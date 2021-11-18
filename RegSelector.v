@@ -34,30 +34,31 @@ output reg [AMBA_WORD-1:0] NOISE
 
 
 always @(posedge clk or negedge rst) begin
-if(!rst) begin
-CTRL <= {AMBA_WORD{1'b0}};
-DATA_IN <= {AMBA_WORD{1'b0}};
-CODEWORD_WIDTH <= {AMBA_WORD{1'b0}};
-NOISE <= {AMBA_WORD{1'b0}};
-
-end
-if( PSEL & PENABLE) begin
-if( PWRITE) begin
-case(PADDR[3:2]) // Check RTL
-2'b00 : CTRL <= PWDATA;
-2'b01 : DATA_IN <= PWDATA;
-2'b10 : CODEWORD_WIDTH <= PWDATA;
-default : NOISE <= PWDATA;
-endcase
-end else begin
-case(PADDR[3:2]) // Read to CPU
-2'b00 : PRDATA <= CTRL;
-2'b01 : PRDATA <= DATA_IN;
-2'b10 : PRDATA <= CODEWORD_WIDTH;
-default : PRDATA <= NOISE;
-endcase
-end
-end
+  if(!rst) begin
+    CTRL <= {AMBA_WORD{1'b0}};
+    DATA_IN <= {AMBA_WORD{1'b0}};
+    CODEWORD_WIDTH <= {AMBA_WORD{1'b0}};
+    NOISE <= {AMBA_WORD{1'b0}};
+  end
+  else begin
+    if( PSEL & PENABLE) begin
+      if( PWRITE) begin
+        case(PADDR[3:2]) // Check RTL
+          2'b00 : CTRL <= PWDATA;
+          2'b01 : DATA_IN <= PWDATA;
+          2'b10 : CODEWORD_WIDTH <= PWDATA;
+          default : NOISE <= PWDATA;
+        endcase
+        end else begin
+        case(PADDR[3:2]) // Read to CPU
+          2'b00 : PRDATA <= CTRL;
+          2'b01 : PRDATA <= DATA_IN;
+          2'b10 : PRDATA <= CODEWORD_WIDTH;
+          default : PRDATA <= NOISE;
+        endcase
+      end
+    end
+  end
 end
 
 endmodule
