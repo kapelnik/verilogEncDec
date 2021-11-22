@@ -20,6 +20,9 @@ parameter AMBA_WORD = 32
 (
 input  clk,
 input  rst,
+input  Small,
+input  Medium,
+input  Large,
 input [AMBA_WORD-1:0] DATA_IN,
 input [1:0] CODEWORD_WIDTH,
 output reg [AMBA_WORD-1:0] OUT = {AMBA_WORD{1'b0}}
