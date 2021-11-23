@@ -11,7 +11,6 @@
 `resetall
 `timescale 1ns/10ps
 module Register_selctor
-
 #(
 parameter DATA_WIDTH = 32,
 parameter AMBA_ADDR_WIDTH = 32,

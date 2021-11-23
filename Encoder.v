@@ -25,7 +25,8 @@ input  Medium,
 input  Large,
 input [AMBA_WORD-1:0] DATA_IN,
 input [1:0] CODEWORD_WIDTH,
-output reg [AMBA_WORD-1:0] OUT = {AMBA_WORD{1'b0}}
+output reg 	[AMBA_WORD-1:0] OUT = {AMBA_WORD{1'b0}},
+output wire	 enc_done 
 );
 reg Small, Medium,Large;
 //using the following lines - A-Z, we will implement  matrix multiply
