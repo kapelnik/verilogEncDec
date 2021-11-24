@@ -13,7 +13,7 @@
 module Register_selctor
 #(
 parameter DATA_WIDTH = 32,
-parameter AMBA_ADDR_WIDTH = 32,
+parameter AMBA_ADDR_WIDTH = 20,
 parameter AMBA_WORD = 32
 )
 (
@@ -34,6 +34,7 @@ output reg [AMBA_WORD-1:0] NOISE
 
 always @(posedge clk or negedge rst) begin
   if(!rst) begin
+    PRDATA <= {AMBA_WORD{1'b0}};
     CTRL <= {AMBA_WORD{1'b0}};
     DATA_IN <= {AMBA_WORD{1'b0}};
     CODEWORD_WIDTH <= {AMBA_WORD{1'b0}};

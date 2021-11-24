@@ -13,7 +13,7 @@
 module Error_fix 
 #(
 parameter DATA_WIDTH = 32,
-parameter AMBA_ADDR_WIDTH = 32,
+parameter AMBA_ADDR_WIDTH = 20,
 parameter AMBA_WORD = 32
 )
 (
@@ -23,9 +23,9 @@ input  [4:0] S,   //Row to fix
 input  [1:0] NOF, //Number of errors
 input   Small,
 input   Medium,
-input   Enc_Done,
+//input   Enc_Done,
 input  [AMBA_WORD-1:0] DATA_IN,
-output reg Error_Done = 1'b0,
+//output reg Error_Done = 1'b0,
 output reg [AMBA_WORD-1:0] OUT = {AMBA_WORD{1'b0}}
 );
 reg [AMBA_WORD-1:0] Bit_fix = {AMBA_WORD{1'b0}};
@@ -89,26 +89,23 @@ always @(*) begin // Number of errors
   
   
 always @(posedge clk or negedge rst) begin//TODO Maybe change clk to negedge
-  if(rst) begin
-	if(Enc_Done) begin
-			if(Small) begin
+  if(!rst) begin
+		OUT <= {AMBA_WORD{1'b0}};
+	end		
+	else begin
+		
+		if(Small) begin	
 				OUT	<=	DATA_IN^{{2'b00},{Bit_fix[31:5]},{Bit_fix[2:0]}};
-				Error_Done <= 1'b1;
+
 			end
 			else if (Medium) begin
 				OUT	<=	DATA_IN^{{2'b0},{Bit_fix[31:5]},{Bit_fix[3:0]}};
-				Error_Done <= 1'b1;
+
 			end
 			else begin
 				OUT	<=	DATA_IN^Bit_fix;
-				Error_Done <= 1'b1;
+
 			end
-		end
-		else Error_Done <= 1'b0;
-	end
-	else begin
-		OUT <= {AMBA_WORD{1'b0}};
-		Error_Done <= 1'b0;
 	end
 	
 end

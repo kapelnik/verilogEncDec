@@ -13,7 +13,7 @@
 module Num_Of_Errors 
 #(
 parameter DATA_WIDTH = 32,
-parameter AMBA_ADDR_WIDTH = 32,
+parameter AMBA_ADDR_WIDTH = 20,
 parameter AMBA_WORD = 32
 )
 (

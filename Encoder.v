@@ -14,7 +14,7 @@ module Encoder
 //Here we use parameters, BUT we will not change the default values. Top entity will pad zeroes to the input.
 #(
 parameter DATA_WIDTH = 32,
-parameter AMBA_ADDR_WIDTH = 32,
+parameter AMBA_ADDR_WIDTH = 20,
 parameter AMBA_WORD = 32
 )
 (
@@ -23,15 +23,16 @@ input  rst,
 input  Small,
 input  Medium,
 input  Large,
-input [AMBA_WORD-1:0] DATA_IN,
+input [AMBA_WORD-1:0] DATA_IN_Pad,
 input [1:0] CODEWORD_WIDTH,
-output reg 	[AMBA_WORD-1:0] OUT = {AMBA_WORD{1'b0}},
-output wire	 enc_done 
+output reg 	[AMBA_WORD-1:0] OUT = {AMBA_WORD{1'b0}}
+
 );
-reg Small, Medium,Large;
+
 //using the following lines - A-Z, we will implement  matrix multiply
-reg A,B,C,E,F,G,H,I,J,K,M,O,P,Q,R,T,V,W,Y,Z,AC,ACE,ACEG,AE,IK,PR;
-reg [AMBA_WORD-1:0] YOUT = {AMBA_WORD{1'b0}};
+reg A,B,C,E,F,G,H,I,J,K,M,O,P,R,T,V,W,Y,Z,AC,ACE,ACEG,AE,IK,PR;
+reg [31:0] YOUT 		= {32{1'b0}};
+reg	[31:0] DATA_IN	 	= {32{1'b0}};
 
 
 
@@ -39,9 +40,9 @@ reg [AMBA_WORD-1:0] YOUT = {AMBA_WORD{1'b0}};
 always@(*) begin
   //============================================================//
   //only one of the following will be 1, the rest 0
-  Small   <=  ~(CODEWORD_WIDTH[0] | CODEWORD_WIDTH[1]);
-  Medium  <=  CODEWORD_WIDTH[0] & ~CODEWORD_WIDTH[1];
-  Large   <=  CODEWORD_WIDTH[1] & ~CODEWORD_WIDTH[0];
+  //Small   <=  ~(CODEWORD_WIDTH[0] | CODEWORD_WIDTH[1]);
+ // Medium  <=  CODEWORD_WIDTH[0] & ~CODEWORD_WIDTH[1];
+ // Large   <=  CODEWORD_WIDTH[1] & ~CODEWORD_WIDTH[0];
   
 
   //============================================================//
@@ -61,7 +62,7 @@ always@(*) begin
   //N <= DATA_IN[18]^DATA_IN[17]; NOT USED
   O   <= DATA_IN[17]^DATA_IN[16];
   P   <= DATA_IN[16]^DATA_IN[15];
-  Q   <= DATA_IN[15]^DATA_IN[14];
+  //Q <= DATA_IN[15]^DATA_IN[14]; NOT USED
   R   <= DATA_IN[14]^DATA_IN[13];
   //S <= DATA_IN[13]^DATA_IN[12]; NOT USED
   T   <= DATA_IN[12]^DATA_IN[11];
@@ -114,21 +115,36 @@ always @(*) begin
     // end
   end
   
-  
-always @(posedge clk or negedge rst) begin//TODO Maybe change clk to negedge
-  if(rst) begin
+
+  always @(*) begin // Pirty Fixing
 		if(Small) begin
-			OUT<={YOUT>>24};
+			DATA_IN<= {DATA_IN_Pad,{24{1'b0}}};
 		end
 		else if (Medium) begin
-			OUT<={YOUT>>16};
+			DATA_IN<= {DATA_IN_Pad,{16{1'b0}}};
+		end
+		else begin
+			DATA_IN<= DATA_IN_Pad;
+		end
+	
+end
+	
+ 
+always @(posedge clk or negedge rst) begin//TODO Maybe change clk to negedge
+  if(!rst) begin
+		OUT<={AMBA_WORD{1'b0}};
+	end
+	else begin
+		
+		if(Small) begin
+			OUT<=YOUT[31:24];
+		end
+		else if (Medium) begin
+			OUT<=YOUT[31:16];
 		end
 		else begin
 			OUT<=YOUT;
 		end
-	end
-	else begin
-		OUT<={AMBA_WORD{1'b0}};
 	end
 	
 end
