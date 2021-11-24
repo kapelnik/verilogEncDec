@@ -23,7 +23,7 @@ input  rst,
 input  Small,
 input  Medium,
 input  Large,
-input [AMBA_WORD-1:0] DATA_IN_Pad,
+input [AMBA_WORD-1:0] DATA_IN,
 input [1:0] CODEWORD_WIDTH,
 output reg 	[AMBA_WORD-1:0] OUT = {AMBA_WORD{1'b0}}
 
@@ -32,7 +32,7 @@ output reg 	[AMBA_WORD-1:0] OUT = {AMBA_WORD{1'b0}}
 //using the following lines - A-Z, we will implement  matrix multiply
 reg A,B,C,E,F,G,H,I,J,K,M,O,P,R,T,V,W,Y,Z,AC,ACE,ACEG,AE,IK,PR;
 reg [31:0] YOUT 		= {32{1'b0}};
-reg	[31:0] DATA_IN	 	= {32{1'b0}};
+
 
 
 
@@ -116,18 +116,18 @@ always @(*) begin
   end
   
 
-  always @(*) begin // Pirty Fixing
-		if(Small) begin
-			DATA_IN<= {DATA_IN_Pad,{24{1'b0}}};
-		end
-		else if (Medium) begin
-			DATA_IN<= {DATA_IN_Pad,{16{1'b0}}};
-		end
-		else begin
-			DATA_IN<= DATA_IN_Pad;
-		end
+  // always @(*) begin // Pirty Fixing
+		// if(Small) begin
+			// DATA_IN<= {DATA_IN_Pad,{24{1'b0}}};
+		// end
+		// else if (Medium) begin
+			// DATA_IN<= {DATA_IN_Pad,{16{1'b0}}};
+		// end
+		// else begin
+			// DATA_IN<= DATA_IN_Pad;
+		// end
 	
-end
+// end
 	
  
 always @(posedge clk or negedge rst) begin//TODO Maybe change clk to negedge

@@ -86,7 +86,7 @@ PENABLE <= 1'b0;
 
 repeat(5)@(posedge clk);
 
-PWDATA <= {{AMBA_WORD-2{1'b1}},{2'b00}}; // 11111__1100
+PWDATA <= {{AMBA_WORD-8{1'b0}},{8'b00010000}}; // 11111__1100
 PADDR <= {{AMBA_ADDR_WIDTH-4{1'b0}},{4'b1100}}; // NOISE
 PSEL <= 1'b1;
 
@@ -98,11 +98,11 @@ PENABLE <= 1'b0;
 
 repeat(5)@(posedge clk);
 
-PWDATA <= {{AMBA_WORD-3{1'b1}},{3'b000}}; // 11111000
+PWDATA <= {{AMBA_WORD-3{1'b0}},{3'b010}}; // 11111000
 PADDR <= {{AMBA_ADDR_WIDTH-4{1'b0}},{4'b0000}}; // CTRL
 PSEL <= 1'b1;
 
-#2;
+#10;
 PENABLE <= 1'b1;
 #2;
 PSEL <= 1'b0;
@@ -162,7 +162,7 @@ PENABLE <= 1'b0;
 
 
 
-#100
+#10000
 $finish(0);
 end
 

@@ -38,8 +38,8 @@ reg [1:0] State = 2'b00;
 reg [1:0] Next_State = 2'b00;
 
 //Register for full channel
-reg [AMBA_WORD-1:0] FC_REG,
-					DATA_IN_Pad;
+reg [31:0] FC_REG;
+reg [31:0] DATA_IN_Pad;
 
 
 //Registers, output from Register_selctor
@@ -73,14 +73,14 @@ Register_selctor #(DATA_WIDTH , AMBA_ADDR_WIDTH , AMBA_WORD )	Register_selctor(
    clk,rst,PADDR,PWDATA,PENABLE,PSEL,PWRITE,PRDATA_REG,CTRL_REG,DATA_IN_REG,CODEWORD_WIDTH_REG,NOISE_REG
 );
 
-Encoder #(DATA_WIDTH , AMBA_ADDR_WIDTH , AMBA_WORD) Encoder(
+Encoder #(DATA_WIDTH , AMBA_ADDR_WIDTH , 32) Encoder(
 	clk,rst,Small,Medium,Large,FC_REG,CODEWORD_WIDTH_REG[1:0],Enc_Out
 );
 
 Num_Of_Errors #() Num_Of_Errors(
    .clk            (clk),
    .Yin            (Enc_Out[5:0]),
-   .DATA_IN        (FC_REG[5:0]),
+   .DATA_IN        (FC_REG[32+5-AMBA_WORD:32-AMBA_WORD]),
    .Small          (Small),
    .Medium         (Medium),
    .NOF            (NOF),
@@ -95,7 +95,7 @@ Error_fix #() Error_fix(
    .Small      (Small),
    .Medium     (Medium),
 //   .Enc_Done   (Enc_Done),
-   .DATA_IN    (FC_REG),
+   .DATA_IN    ({{32-AMBA_WORD{1'b0}},FC_REG[31:32-AMBA_WORD]}),
 //   .Error_Done (Error_Done),
    .OUT        (Dec_Out)
 );
@@ -120,14 +120,15 @@ always@(*) begin // Next state chosing
 								Next_State					<= 		 DECODING;
 							end
 						2'b10: begin
-								if(!Noise_added)begin
-									Next_State	<= 		 ENCODING;
-									Noise_added <= 1'b1 ;
-								end
-								else begin
-									FC_REG      <= Enc_Out[AMBA_WORD-1:0]^NOISE_REG;
-									Next_State  <= DECODING ;
-								end
+								Next_State	<= 		 NOISE;
+								// if(!Noise_added)begin
+									// ;
+									// Noise_added <= 1'b1 ;
+								// end
+								// else begin
+									// FC_REG      <= {{Enc_Out[AMBA_WORD-1:0]^NOISE_REG},{32-AMBA_WORD{1'b0}}};
+									// Next_State  <= DECODING ;
+								// end
 							end
 						default: Next_State			       	<=       IDLE;
 					endcase
@@ -138,10 +139,16 @@ always@(*) begin // Next state chosing
 					next_operation_done         <=	 	 1'b1;
 					Noise_added 				<= 		 1'b0;
 				end
+		NOISE 	: begin	////=================NOISE State//=================
+					Next_State			       	<=       DECODING;
+					FC_REG    				    <= {{Enc_Out[AMBA_WORD-1:0]^NOISE_REG},{32-AMBA_WORD{1'b0}}};
+					Noise_added 				<= 		 1'b1;
+				end	
 		default: begin	////=================IDLE State//=================
-					if(PADDR[3:2] == 2'b00) begin
+					next_operation_done         <=	 	 1'b0;
+					if(PADDR[3:2] == 2'b00 & PENABLE) begin
 							Next_State <= ENCODING;
-							next_operation_done         <=	 	 1'b0;
+							
 							FC_REG <= DATA_IN_Pad ;
 						end
 					
@@ -182,7 +189,6 @@ always@(posedge clk or negedge rst) begin
 		PRDATA<= {AMBA_WORD{1'b0}};
 		data_out<=  {DATA_WIDTH{1'b0}};
 		next_operation_done<= 1'b0;
-		Noise_added <= 1'b0;
 	end
 	else State <= Next_State;
 end
@@ -208,13 +214,13 @@ always@(*)begin
 			end
 		default: begin
 				if(Small) begin
-					DATA_IN_Pad<= {DATA_IN_REG[3:0],{4'b0000}};
+					DATA_IN_Pad<= {DATA_IN_REG[3:0],{28{1'b0}}};
 				end
 				else if (Medium) begin
-					DATA_IN_Pad<= {DATA_IN_REG[11:0],{5'b00000}};
+					DATA_IN_Pad<= {DATA_IN_REG[10:0],{21{1'b0}}};
 				end
 				else begin
-					DATA_IN_Pad<= {DATA_IN_REG[26:0],{6'b000000}};
+					DATA_IN_Pad<= {DATA_IN_REG[25:0],{6{1'b0}}};
 				end
 			end
 	endcase
