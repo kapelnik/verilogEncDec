@@ -34,7 +34,7 @@ reg [DATA_WIDTH - 1:0]      data_out;
 logic                         operation_done;
 
 
-TOP #(AMBA_WORD,AMBA_ADDR_WIDTH,DATA_WIDTH) U_0(
+TOP #(DATA_WIDTH,AMBA_ADDR_WIDTH,AMBA_WORD) U_0(
    .clk            (clk),
    .rst            (rst),
    .PADDR          (PADDR),

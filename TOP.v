@@ -80,7 +80,7 @@ Encoder #(DATA_WIDTH , AMBA_ADDR_WIDTH , 32) Encoder(
 Num_Of_Errors #() Num_Of_Errors(
    .clk            (clk),
    .Yin            (Enc_Out[5:0]),
-   .DATA_IN        (FC_REG[32+5-AMBA_WORD:32-AMBA_WORD]),
+   .DATA_IN        (FC_REG[32+5-DATA_WIDTH:32-DATA_WIDTH]),
    .Small          (Small),
    .Medium         (Medium),
    .NOF            (NOF),
@@ -95,7 +95,7 @@ Error_fix #() Error_fix(
    .Small      (Small),
    .Medium     (Medium),
 //   .Enc_Done   (Enc_Done),
-   .DATA_IN    ({{32-AMBA_WORD{1'b0}},FC_REG[31:32-AMBA_WORD]}),
+   .DATA_IN    ({{32-DATA_WIDTH{1'b0}},FC_REG[31:32-DATA_WIDTH]}),
 //   .Error_Done (Error_Done),
    .OUT        (Dec_Out)
 );
@@ -113,35 +113,34 @@ always@(*) begin // Next state chosing
 						2'b00: begin
 								Next_State			       	<=       IDLE;
 								next_operation_done         <=	 	 1'b1;
-								data_out					<=		 Enc_Out[AMBA_WORD-1:0];
+								data_out					<=		 Enc_Out[DATA_WIDTH-1:0];
 								
 							end
 						2'b01: begin
 								Next_State					<= 		 DECODING;
 							end
 						2'b10: begin
-								Next_State	<= 		 NOISE;
-								// if(!Noise_added)begin
-									// ;
-									// Noise_added <= 1'b1 ;
-								// end
-								// else begin
-									// FC_REG      <= {{Enc_Out[AMBA_WORD-1:0]^NOISE_REG},{32-AMBA_WORD{1'b0}}};
-									// Next_State  <= DECODING ;
-								// end
+								
+								 if(!Noise_added)begin
+									Next_State	<= 		 NOISE;
+									FC_REG    	<= {{Enc_Out[DATA_WIDTH-1:0]^NOISE_REG[DATA_WIDTH-1:0]},{32-DATA_WIDTH{1'b0}}};
+								end
+								else begin
+									Next_State  <=       DECODING ;
+								end
 							end
 						default: Next_State			       	<=       IDLE;
 					endcase
 				end
 		DECODING: begin	////=================DECODING State//=================
 					Next_State			       	<=       IDLE;
-					data_out					<=		 Dec_Out[AMBA_WORD-1:0];
+					data_out					<=		 Dec_Out[DATA_WIDTH-1:0]; //{DATA_WIDTH-AMBA_WORD{1'b0}},
 					next_operation_done         <=	 	 1'b1;
 					Noise_added 				<= 		 1'b0;
 				end
 		NOISE 	: begin	////=================NOISE State//=================
 					Next_State			       	<=       DECODING;
-					FC_REG    				    <= {{Enc_Out[AMBA_WORD-1:0]^NOISE_REG},{32-AMBA_WORD{1'b0}}};
+					
 					Noise_added 				<= 		 1'b1;
 				end	
 		default: begin	////=================IDLE State//=================
