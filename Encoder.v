@@ -18,14 +18,14 @@ parameter AMBA_ADDR_WIDTH = 20,
 parameter AMBA_WORD = 32
 )
 (
-input  clk,
-input  rst,
-input  Small,
-input  Medium,
-input  Large,
-input [AMBA_WORD-1:0] DATA_IN,
-input [1:0] CODEWORD_WIDTH,
-output reg 	[AMBA_WORD-1:0] OUT = {AMBA_WORD{1'b0}}
+input wire   clk,
+input wire   rst,
+input wire   Small,
+input wire   Medium,
+input wire   Large,
+input wire  [AMBA_WORD-1:0] DATA_IN,
+input wire  [1:0] CODEWORD_WIDTH,
+output reg 	[AMBA_WORD-1:0] Enc_Out 
 
 );
 
@@ -130,22 +130,28 @@ always @(*) begin
 // end
 	
  
-always @(posedge clk or negedge rst) begin//TODO Maybe change clk to negedge
-  if(!rst) begin
-		OUT<={AMBA_WORD{1'b0}};
-	end
-	else begin
-		
-		if(Small) begin
-			OUT<=YOUT[31:24];
+always @(posedge clk or negedge rst) begin    //TODO Maybe change clk to negedge
+	if(!rst) 
+		begin
+			Enc_Out<={AMBA_WORD{1'b0}};
 		end
-		else if (Medium) begin
-			OUT<=YOUT[31:16];
+	else 
+		begin
+			
+			if(Small) 
+				begin
+					Enc_Out<={{AMBA_WORD-8{1'b0}},YOUT[31:24]};
+				end
+			else 
+				if (Medium) 
+					begin
+					Enc_Out<={{AMBA_WORD-16{1'b0}},YOUT[31:16]};
+					end
+				else 
+					begin
+						Enc_Out<=YOUT;
+					end
 		end
-		else begin
-			OUT<=YOUT;
-		end
-	end
 	
 end
 

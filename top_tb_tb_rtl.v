@@ -32,9 +32,10 @@ logic                         PWRITE;
 reg [AMBA_WORD - 1:0]       PRDATA;
 reg [DATA_WIDTH - 1:0]      data_out;
 logic                         operation_done;
+reg [1:0] 				     num_of_errors;
 
 
-TOP #(DATA_WIDTH,AMBA_ADDR_WIDTH,AMBA_WORD) U_0(
+TOP #(.DATA_WIDTH(DATA_WIDTH) , .AMBA_ADDR_WIDTH(AMBA_ADDR_WIDTH) , .AMBA_WORD(AMBA_WORD)) U_0(
    .clk            (clk),
    .rst            (rst),
    .PADDR          (PADDR),
@@ -44,7 +45,8 @@ TOP #(DATA_WIDTH,AMBA_ADDR_WIDTH,AMBA_WORD) U_0(
    .PWRITE         (PWRITE),
    .PRDATA         (PRDATA),
    .data_out       (data_out),
-   .operation_done (operation_done)
+   .operation_done (operation_done),
+   .num_of_errors  (num_of_errors)
 );
 
 //clock always block:
@@ -61,7 +63,7 @@ repeat(10)@(posedge clk);
 
 // WRITE TO REGISTERS TEST
 
-PWDATA <= {8'b00001010}; // 10100000
+PWDATA <= {8'b00001010}; // 10101010
 PADDR <= {{AMBA_ADDR_WIDTH-4{1'b0}},{4'b0100}}; // DATA
 PSEL <= 1'b1;
 PWRITE <= 1'b1;
@@ -102,13 +104,61 @@ PWDATA <= {{AMBA_WORD-3{1'b0}},{3'b010}}; // 11111000
 PADDR <= {{AMBA_ADDR_WIDTH-4{1'b0}},{4'b0000}}; // CTRL
 PSEL <= 1'b1;
 
-#10;
+#2;
 PENABLE <= 1'b1;
 #2;
 PSEL <= 1'b0;
 PENABLE <= 1'b0;
 
+repeat(4)@(posedge clk);
+PWDATA <= {8'b00001010}; // 10101010
+PADDR <= {{AMBA_ADDR_WIDTH-4{1'b0}},{4'b0100}}; // DATA
+PSEL <= 1'b1;
+PWRITE <= 1'b1;
+
+#2;
+PENABLE <= 1'b1;
+#2;
+PSEL <= 1'b0;
+PENABLE <= 1'b0;
+
+repeat(5)@(posedge clk);
+
+PWDATA <= {{AMBA_WORD-2{1'b1}},{2'b00}};  //// 0000000000
+PADDR <= {{AMBA_ADDR_WIDTH-4{1'b0}},{4'b1000}}; // WIDTH
+PSEL <= 1'b1;
+
+#2;
+PENABLE <= 1'b1;
+#2;
+PSEL <= 1'b0;
+PENABLE <= 1'b0;
+
+repeat(5)@(posedge clk);
+
+PWDATA <= {{AMBA_WORD-8{1'b0}},{8'b00000001}}; // 11111__1100
+PADDR <= {{AMBA_ADDR_WIDTH-4{1'b0}},{4'b1100}}; // NOISE
+PSEL <= 1'b1;
+
+#2;
+PENABLE <= 1'b1;
+#2;
+PSEL <= 1'b0;
+PENABLE <= 1'b0;
+
+repeat(5)@(posedge clk);
+
+PWDATA <= {{AMBA_WORD-3{1'b0}},{3'b010}}; // 11111000
+PADDR <= {{AMBA_ADDR_WIDTH-4{1'b0}},{4'b0000}}; // CTRL
+PSEL <= 1'b1;
+
+#2;
+PENABLE <= 1'b1;
+#2;
+PSEL <= 1'b0;
+PENABLE <= 1'b0;
 // READ FROM REGISTERS TEST
+
 PWRITE <= 1'b0;
 
 //CTRL

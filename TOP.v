@@ -22,10 +22,16 @@ input wire clk,
 input wire rst,
 input wire [AMBA_ADDR_WIDTH-1:0] 	PADDR,
 input wire [AMBA_WORD-1:0] 			PWDATA,
-input wire 							PENABLE,PSEL,PWRITE,
+
+input wire 							PENABLE,
+									PSEL,
+									PWRITE,
+									
 output reg [AMBA_WORD-1:0] 			PRDATA,
 output reg [DATA_WIDTH-1:0] 		data_out,
-output reg 							operation_done
+output reg 							operation_done,
+output reg [1:0]					num_of_errors
+
 );
 //States 
 parameter [1:0] IDLE 			= 2'b00,
@@ -34,11 +40,11 @@ parameter [1:0] IDLE 			= 2'b00,
 				NOISE 			= 2'b11;
 
 //State reg controlled by the state machine
-reg [1:0] State = 2'b00;
-reg [1:0] Next_State = 2'b00;
+reg [1:0] current_state;
+reg [1:0] Next_State;
 
 //Register for full channel
-reg [31:0] FC_REG;
+reg [31:0] FC_REG ;
 reg [31:0] DATA_IN_Pad;
 
 
@@ -59,9 +65,9 @@ wire [AMBA_WORD-1:0] Enc_Out,
 // wire [AMBA_WORD-1:0] Enc_Out_f, //// Final out
 					 // Dec_Out_f;
 
-reg  Small, /// Control bits
-	 Medium,
-	 Large,
+reg  Small = 1'b0, /// Control bits
+	 Medium = 1'b0,
+	 Large= 1'b1,
 	 next_operation_done = 1'b1,
 	// Enc_Done,
 	// Dec_Done,
@@ -69,25 +75,44 @@ reg  Small, /// Control bits
 
 
 //Create register selector
-Register_selctor #(DATA_WIDTH , AMBA_ADDR_WIDTH , AMBA_WORD )	Register_selctor(
-   clk,rst,PADDR,PWDATA,PENABLE,PSEL,PWRITE,PRDATA_REG,CTRL_REG,DATA_IN_REG,CODEWORD_WIDTH_REG,NOISE_REG
+Register_selctor #(.DATA_WIDTH(DATA_WIDTH) , .AMBA_ADDR_WIDTH(AMBA_ADDR_WIDTH) , .AMBA_WORD(AMBA_WORD) )	Register_selctor(
+   .clk            (clk),
+   .rst            (rst),
+   .PADDR          (PADDR),
+   .PWDATA         (PWDATA),
+   .PENABLE        (PENABLE),
+   .PSEL           (PSEL),
+   .PWRITE         (PWRITE),
+   .PRDATA         (PRDATA_REG),
+   .CTRL           (CTRL_REG),
+   .DATA_IN        (DATA_IN_REG),
+   .CODEWORD_WIDTH (CODEWORD_WIDTH_REG),
+   .NOISE          (NOISE_REG)
 );
 
-Encoder #(DATA_WIDTH , AMBA_ADDR_WIDTH , 32) Encoder(
-	clk,rst,Small,Medium,Large,FC_REG,CODEWORD_WIDTH_REG[1:0],Enc_Out
+Encoder #(.DATA_WIDTH(DATA_WIDTH) , .AMBA_ADDR_WIDTH(AMBA_ADDR_WIDTH) , .AMBA_WORD(32)) Encoder(
+   .clk            (clk),
+   .rst            (rst),
+   .Small          (Small),
+   .Medium         (Medium),
+   .Large          (Large),
+   .DATA_IN        (FC_REG),
+   .CODEWORD_WIDTH (CODEWORD_WIDTH_REG[1:0]),
+   .Enc_Out         (Enc_Out)
+	// clk,rst,Small,Medium,Large,FC_REG,CODEWORD_WIDTH_REG[1:0],Enc_Out
 );
 
-Num_Of_Errors #() Num_Of_Errors(
+Num_Of_Errors #(.DATA_WIDTH(32),.AMBA_ADDR_WIDTH(32),.AMBA_WORD(32)) Num_Of_Errors(
    .clk            (clk),
    .Yin            (Enc_Out[5:0]),
    .DATA_IN        (FC_REG[32+5-DATA_WIDTH:32-DATA_WIDTH]),
    .Small          (Small),
    .Medium         (Medium),
    .NOF            (NOF),
-   .OUT            (NOE_Out)
+   .NOE_Out        (NOE_Out)
 );
 
-Error_fix #() Error_fix(
+Error_fix #(.DATA_WIDTH(32),.AMBA_ADDR_WIDTH(32),.AMBA_WORD(32)) Error_fix(
    .clk        (clk),
    .rst        (rst),
    .S          (NOE_Out),
@@ -97,7 +122,7 @@ Error_fix #() Error_fix(
 //   .Enc_Done   (Enc_Done),
    .DATA_IN    ({{32-DATA_WIDTH{1'b0}},FC_REG[31:32-DATA_WIDTH]}),
 //   .Error_Done (Error_Done),
-   .OUT        (Dec_Out)
+   .Dec_Out    (Dec_Out)
 );
 
 
@@ -106,13 +131,14 @@ Error_fix #() Error_fix(
 
 
  
-always@(*) begin // Next state chosing
-	case (State)
+always@(*) 
+begin: Top_state_machine // Next state chosing
+	case (current_state)
 		ENCODING: begin	//=================ENCODING State//=================
 					case (CTRL_REG[1:0])
 						2'b00: begin
 								Next_State			       	<=       IDLE;
-								next_operation_done         <=	 	 1'b1;
+								// next_operation_done         <=	 	 1'b1;
 								data_out					<=		 Enc_Out[DATA_WIDTH-1:0];
 								
 							end
@@ -121,11 +147,13 @@ always@(*) begin // Next state chosing
 							end
 						2'b10: begin
 								
-								 if(!Noise_added)begin
+								 if(!Noise_added) 
+								begin
 									Next_State	<= 		 NOISE;
 									FC_REG    	<= {{Enc_Out[DATA_WIDTH-1:0]^NOISE_REG[DATA_WIDTH-1:0]},{32-DATA_WIDTH{1'b0}}};
 								end
-								else begin
+								else 
+								begin
 									Next_State  <=       DECODING ;
 								end
 							end
@@ -135,7 +163,7 @@ always@(*) begin // Next state chosing
 		DECODING: begin	////=================DECODING State//=================
 					Next_State			       	<=       IDLE;
 					data_out					<=		 Dec_Out[DATA_WIDTH-1:0]; //{DATA_WIDTH-AMBA_WORD{1'b0}},
-					next_operation_done         <=	 	 1'b1;
+					// next_operation_done         <=	 	 1'b1;
 					Noise_added 				<= 		 1'b0;
 				end
 		NOISE 	: begin	////=================NOISE State//=================
@@ -145,7 +173,8 @@ always@(*) begin // Next state chosing
 				end	
 		default: begin	////=================IDLE State//=================
 					next_operation_done         <=	 	 1'b0;
-					if(PADDR[3:2] == 2'b00 & PENABLE) begin
+					if(PADDR[3:2] == 2'b00 & PENABLE)
+						begin
 							Next_State <= ENCODING;
 							
 							FC_REG <= DATA_IN_Pad ;
@@ -155,41 +184,61 @@ always@(*) begin // Next state chosing
 	endcase
 end
 
-always@(*) begin //Control bit change
-	case (State)
+always@(*) 
+begin : Bit_Control //Control bit change
+	case (current_state)
 		ENCODING: begin	//=================ENCODING State//=================
-					
+					case (CTRL_REG[1:0])
+						2'b00: begin
+								next_operation_done         <=	 	 1'b1;
+							   end
+						default: next_operation_done         <=	 	 1'b0;
+					endcase
 				end
 		DECODING: begin	////=================DECODING State//=================
-				
+					next_operation_done         <=	 	 1'b1;
+					Noise_added 				<= 		 1'b0;
 				end
-		NOISE: begin	////=================NOISE State//=================
-				
-				end
+		NOISE 	: begin	////=================NOISE State//=================
+
+					
+					Noise_added 				<= 		 1'b1;
+				end	
 		default: begin	////=================IDLE State//=================
+					next_operation_done         <=	 	 1'b0;
+					
 					
 				end
 	endcase
 end
 
 // Opration done
-always@(posedge clk or negedge rst) begin
-	if(!rst) begin
+always@(posedge clk or negedge rst) 
+begin: Operation_bit_control
+	if(!rst) 
+	begin
 		operation_done<= 1'b0;	
 	end
-	else operation_done<= next_operation_done;
+	else 
+		operation_done<= next_operation_done;
+		
 end
 
 
 //State machine controller, each clock move to Next_State
-always@(posedge clk or negedge rst) begin
-	if(!rst) begin
-		State<= IDLE;
-		PRDATA<= {AMBA_WORD{1'b0}};
-		data_out<=  {DATA_WIDTH{1'b0}};
-		next_operation_done<= 1'b0;
-	end
-	else State <= Next_State;
+always@(posedge clk or negedge rst) 
+begin: State_control
+	if(!rst) 
+		begin
+			current_state<= IDLE;
+			PRDATA<= {AMBA_WORD{1'b0}};
+	//		data_out<=  {DATA_WIDTH{1'b0}};
+		end
+	else 
+		begin
+			num_of_errors <= NOF ;
+			current_state <= Next_State;
+		end
 end
 
 
@@ -206,33 +255,39 @@ end
 		// end
 	
 // end
-always@(*)begin
+always@(*)
+begin: Zero_padding
 	case (CTRL_REG[1:0])
-		2'b01: begin
-			DATA_IN_Pad <= DATA_IN_REG;
-			end
-		default: begin
-				if(Small) begin
-					DATA_IN_Pad<= {DATA_IN_REG[3:0],{28{1'b0}}};
-				end
-				else if (Medium) begin
-					DATA_IN_Pad<= {DATA_IN_REG[10:0],{21{1'b0}}};
-				end
-				else begin
-					DATA_IN_Pad<= {DATA_IN_REG[25:0],{6{1'b0}}};
-				end
+	
+		2'b01: 	DATA_IN_Pad<= {{DATA_IN_REG[DATA_WIDTH-1:0]},{32-DATA_WIDTH{1'b0}}};		//Decode - need all data width since the parity is already added
+		
+		default: begin																		//default - encode or full channel, data received without parity bits
+				if(Small) 
+					begin
+						DATA_IN_Pad<= {{DATA_IN_REG[3:0]},{28{1'b0}}};		//Data width = 00x: data_in is 8 bits, when the 4 LSB are the values, and 4 MSB are zeroes or dont cares
+					end
+				else 
+				if (Medium) 
+					begin
+						DATA_IN_Pad<= {{DATA_IN_REG[10:0]},{21{1'b0}}};		//Data width = 01x: data_in is 16 bits, when the 11 LSB are the values, and 5 MSB are zeroes or dont cares
+					end
+				else 
+					begin
+						DATA_IN_Pad<= {{DATA_IN_REG[25:0]},{6{1'b0}}};		//Data width = 10x: data_in is 32 bits, when the 25 LSB are the values, and 6 MSB are zeroes or dont cares
+					end
 			end
 	endcase
 end
 
-always@(*)begin
+always@(*)
+begin: data_out_width
 	case (CODEWORD_WIDTH_REG[1:0])
 		2'b00: begin
 				Small<= 1'b1;
 				Medium <= 1'b0;
 				Large <= 1'b0;
 			end
-		2'b00: begin
+		2'b01: begin
 				Small<= 1'b0;
 				Medium <= 1'b1;
 				Large <= 1'b0;
