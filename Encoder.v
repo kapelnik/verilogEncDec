@@ -37,7 +37,7 @@ reg [31:0] YOUT 		= {32{1'b0}};
 
 
 
-always@(*) begin
+always@(*) begin : Save_Multiple_Calculation
   //============================================================//
   //only one of the following will be 1, the rest 0
   //Small   <=  ~(CODEWORD_WIDTH[0] | CODEWORD_WIDTH[1]);
@@ -81,7 +81,7 @@ always@(*) begin
 end
 
 //============================================================//
-always @(*) begin
+always @(*) begin : Encode_Data
   // if(rst) begin
       
     //This block is for the parity of the small input
@@ -130,7 +130,7 @@ always @(*) begin
 // end
 	
  
-always @(posedge clk or negedge rst) begin    //TODO Maybe change clk to negedge
+always @(posedge clk or negedge rst) begin : Size_Check    //TODO Maybe change clk to negedge
 	if(!rst) 
 		begin
 			Enc_Out<={AMBA_WORD{1'b0}};

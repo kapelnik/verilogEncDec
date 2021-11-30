@@ -34,7 +34,7 @@ output reg [AMBA_WORD-1:0] NOISE
 
 
 
-always @(posedge clk or negedge rst) begin
+always @(posedge clk or negedge rst) begin : Register_Selction
   if(!rst) 
 	  begin
 		PRDATA <= {AMBA_WORD{1'b0}};

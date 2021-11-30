@@ -36,7 +36,7 @@ reg Enable_Fix = 1'b0;
 
 
 
-always@(*) begin // Checking number of errors (NOF)
+always@(*) begin : Error_fix_Enable // Checking number of errors (NOF)
   case (NOF) 
 	2'b01:	 Enable_Fix <= 1'b1; // 1 Error we can fix the vector
 	default: Enable_Fix <= 1'b0;
@@ -46,7 +46,7 @@ always@(*) begin // Checking number of errors (NOF)
 end
  
 //============================================================//
-always @(*) begin // Number of errors
+always @(*) begin : Find_Number_Of_Errors // Number of errors
 	if(Enable_Fix) 
 		begin
 			case(S)
@@ -90,7 +90,7 @@ always @(*) begin // Number of errors
   end
   
   
-always @(posedge clk or negedge rst) begin//TODO Maybe change clk to negedge
+always @(posedge clk or negedge rst) begin : Error_Fix_Out//TODO Maybe change clk to negedge
 	if(!rst) 
 		begin
 			Dec_Out <= {AMBA_WORD{1'b0}};

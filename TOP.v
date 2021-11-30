@@ -41,7 +41,8 @@ parameter [1:0] IDLE 			= 2'b00,
 
 //State reg controlled by the state machine
 reg [1:0] current_state;
-reg [1:0] Next_State;
+reg [1:0] Next_State,
+		  next_num_of_errors;
 
 //Register for full channel
 reg [31:0] FC_REG ;
@@ -71,7 +72,8 @@ reg  Small = 1'b0, /// Control bits
 	 next_operation_done = 1'b1,
 	// Enc_Done,
 	// Dec_Done,
-	 Noise_added = 1'b0;
+	 Noise_added = 1'b0,
+	 load        = 1'b0;
 
 
 //Create register selector
@@ -105,7 +107,7 @@ Encoder #(.DATA_WIDTH(DATA_WIDTH) , .AMBA_ADDR_WIDTH(AMBA_ADDR_WIDTH) , .AMBA_WO
 Num_Of_Errors #(.DATA_WIDTH(32),.AMBA_ADDR_WIDTH(32),.AMBA_WORD(32)) Num_Of_Errors(
    .clk            (clk),
    .Yin            (Enc_Out[5:0]),
-   .DATA_IN        (FC_REG[32+5-DATA_WIDTH:32-DATA_WIDTH]),
+   .DATA_IN        (FC_REG),
    .Small          (Small),
    .Medium         (Medium),
    .NOF            (NOF),
@@ -139,7 +141,7 @@ begin: Top_state_machine // Next state chosing
 						2'b00: begin
 								Next_State			       	<=       IDLE;
 								// next_operation_done         <=	 	 1'b1;
-								data_out					<=		 Enc_Out[DATA_WIDTH-1:0];
+								// data_out					<=		 Enc_Out[DATA_WIDTH-1:0];
 								
 							end
 						2'b01: begin
@@ -149,12 +151,12 @@ begin: Top_state_machine // Next state chosing
 								
 								 if(!Noise_added) 
 								begin
-									Next_State	<= 		 NOISE;
-									FC_REG    	<= {{Enc_Out[DATA_WIDTH-1:0]^NOISE_REG[DATA_WIDTH-1:0]},{32-DATA_WIDTH{1'b0}}};
+									Next_State	<= 		NOISE;
+									// FC_REG    	<= 		{{Enc_Out[DATA_WIDTH-1:0]^NOISE_REG[DATA_WIDTH-1:0]},{32-DATA_WIDTH{1'b0}}};
 								end
 								else 
 								begin
-									Next_State  <=       DECODING ;
+									Next_State  <=      DECODING ;
 								end
 							end
 						default: Next_State			       	<=       IDLE;
@@ -162,30 +164,92 @@ begin: Top_state_machine // Next state chosing
 				end
 		DECODING: begin	////=================DECODING State//=================
 					Next_State			       	<=       IDLE;
-					data_out					<=		 Dec_Out[DATA_WIDTH-1:0]; //{DATA_WIDTH-AMBA_WORD{1'b0}},
+					// data_out					<=		 Dec_Out[DATA_WIDTH-1:0]; //{DATA_WIDTH-AMBA_WORD{1'b0}},
 					// next_operation_done         <=	 	 1'b1;
-					Noise_added 				<= 		 1'b0;
+					// Noise_added 				<= 		 1'b0;
 				end
 		NOISE 	: begin	////=================NOISE State//=================
 					Next_State			       	<=       DECODING;
-					
-					Noise_added 				<= 		 1'b1;
+					// Noise_added 				<= 		 1'b1;
 				end	
 		default: begin	////=================IDLE State//=================
 					next_operation_done         <=	 	 1'b0;
-					if(PADDR[3:2] == 2'b00 & PENABLE)
+					// FC_REG 						<=		 DATA_IN_Pad ;
+					if(PADDR[3:2] == 2'b00 & PENABLE & PWRITE)
 						begin
 							Next_State <= ENCODING;
-							
-							FC_REG <= DATA_IN_Pad ;
 						end
+					else 
+						begin
+							Next_State 				<= 		IDLE;	
+							// Noise_added 			<= 		 1'b0;
+
+						end
+				end
+	endcase
+end
+
+
+
+always@(*) 
+begin : FC_REG_Control //Control bit change
+	case (Next_State)
+		ENCODING: begin	//=================ENCODING State//=================
+					case (CTRL_REG[1:0])
+						2'b10: 		load <= 1'b1 ;
+						default:	load <= 1'b0 ;
+					endcase
+				end
+		DECODING: begin	////=================DECODING State//=================
+					load			       	<=       1'b1;
+				end
+		NOISE 	: begin	////=================NOISE State//=================
+					load			       	<=       1'b1;
+				end		
+					// Noise_added 				<= 		 1'b1;
+		default: begin	////=================Any Other State//=================
+					load <= 1'b0 ;
+					
 					
 				end
 	endcase
 end
 
+
 always@(*) 
-begin : Bit_Control //Control bit change
+begin : Noise_Control //Control bit change
+	case (current_state)
+		NOISE 	: begin	////=================NOISE State//=================
+					Noise_added 				<= 		 1'b1;
+				end	
+		default: begin	////=================Any Other State//=================
+					Noise_added         <=	 	 1'b0;	
+				end
+	endcase
+end
+
+
+always@(*) 
+begin : DATA_OUT_Control //Control bit change
+	case (current_state)
+		ENCODING: begin	//=================ENCODING State//=================
+					case (CTRL_REG[1:0])
+						2'b00: data_out						<=		 Enc_Out[DATA_WIDTH-1:0];
+						default: data_out					<=		 Dec_Out[DATA_WIDTH-1:0];
+					endcase
+				end
+		DECODING: 	////=================DECODING State//=================
+			data_out										<=		 Dec_Out[DATA_WIDTH-1:0]; //{DATA_WIDTH-AMBA_WORD{1'b0}},
+		
+		default: begin	////=================Any Other State//=================
+					data_out								<=		 Enc_Out[DATA_WIDTH-1:0];
+				end
+	endcase
+end
+
+
+always@(*) 
+begin : Next_operation_done_Control //Control bit change
 	case (current_state)
 		ENCODING: begin	//=================ENCODING State//=================
 					case (CTRL_REG[1:0])
@@ -197,17 +261,9 @@ begin : Bit_Control //Control bit change
 				end
 		DECODING: begin	////=================DECODING State//=================
 					next_operation_done         <=	 	 1'b1;
-					Noise_added 				<= 		 1'b0;
 				end
-		NOISE 	: begin	////=================NOISE State//=================
-
-					
-					Noise_added 				<= 		 1'b1;
-				end	
 		default: begin	////=================IDLE State//=================
 					next_operation_done         <=	 	 1'b0;
-					
-					
 				end
 	endcase
 end
@@ -224,6 +280,21 @@ begin: Operation_bit_control
 		
 end
 
+always@(posedge clk or negedge rst) 
+begin: FC_control
+	if(!rst) 
+		begin
+			FC_REG <= {32{1'b0}};	
+		end
+	else 
+		begin
+			if (load)
+				FC_REG  	   <= {{Enc_Out[DATA_WIDTH-1:0]^NOISE_REG[DATA_WIDTH-1:0]},{32-DATA_WIDTH{1'b0}}};
+			else
+				FC_REG         <=	 	 DATA_IN_Pad;
+		end	
+		
+end
 
 //State machine controller, each clock move to Next_State
 always@(posedge clk or negedge rst) 
@@ -236,10 +307,11 @@ begin: State_control
 		end
 	else 
 		begin
-			num_of_errors <= NOF ;
 			current_state <= Next_State;
 		end
 end
+
+
 
 
 // always @(*) begin // Pirty Fixing
@@ -255,6 +327,46 @@ end
 		// end
 	
 // end
+
+
+
+always@(*) 
+begin : N_NOF_CONTROL //Control bit change
+	case (current_state)
+		NOISE: begin	//=================ENCODING State//=================
+					next_num_of_errors <= NOF;
+				end
+				
+		default: begin	////=================IDLE State//=================
+					case(num_of_errors)
+						2'b00: next_num_of_errors <= 2'b00;
+						2'b01: next_num_of_errors <= 2'b01;
+						default : next_num_of_errors <= 2'b10;
+							
+					endcase
+					
+				end
+	endcase
+end
+
+// Opration done
+always@(posedge clk or negedge rst) 
+begin: NOF_control
+	if(!rst) 
+	begin
+		num_of_errors <= 1'b0;	
+	end
+	else 
+		num_of_errors<= next_num_of_errors;
+		
+end
+
+
+
+
+
+
+
 always@(*)
 begin: Zero_padding
 	case (CTRL_REG[1:0])
