@@ -302,12 +302,24 @@ begin: State_control
 	if(!rst) 
 		begin
 			current_state<= IDLE;
-			PRDATA<= {AMBA_WORD{1'b0}};
 	//		data_out<=  {DATA_WIDTH{1'b0}};
 		end
 	else 
 		begin
 			current_state <= Next_State;
+		end
+end
+
+//State machine controller, each clock move to Next_State
+always@(*) 
+begin: REGISTERS_READ
+	if(!rst) 
+		begin
+			PRDATA<= {AMBA_WORD{1'b0}};
+		end
+	else 
+		begin
+			PRDATA<= PRDATA_REG;
 		end
 end
 
