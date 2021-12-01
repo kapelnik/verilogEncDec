@@ -103,7 +103,7 @@ always @(*) begin : Encode_Data
     YOUT[15:6] <=DATA_IN[15:6];
     
     // This block is for the parity of the large input
-    YOUT[5] <= Large ?  B^H^O^Y^DATA_IN[27]^DATA_IN[20]^DATA_IN[18]^DATA_IN[13]^DATA_IN[20]^DATA_IN[8]  : 0;//C27
+    YOUT[5] <= Large ?  B^H^O^Y^DATA_IN[27]^DATA_IN[20]^DATA_IN[18]^DATA_IN[13]^DATA_IN[11]^DATA_IN[8]  : 0;//C27
     YOUT[4] <= Large ?  ACEG^IK^M^DATA_IN[17]  : 0;//C28
     YOUT[3] <= Large ?  ACEG^PR^T^DATA_IN[10]  : 0;//C29
     YOUT[2] <= Large ?  AC^IK^PR^W^DATA_IN[7]  : 0;//C30

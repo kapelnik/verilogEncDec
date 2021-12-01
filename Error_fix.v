@@ -85,7 +85,7 @@ always @(*) begin : Find_Number_Of_Errors // Number of errors
 			endcase
 		end
 	else 
-		Bit_fix <= NOF[1] ? {AMBA_WORD{1'bx}} : {AMBA_WORD{1'b0}};///// TODO Deleate the X
+		Bit_fix <= {AMBA_WORD{1'b0}};///// NOF[1] ? {AMBA_WORD{1'bx}} : {
    
   end
   
