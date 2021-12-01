@@ -31,8 +31,12 @@ output reg [AMBA_WORD-1:0] CODEWORD_WIDTH,
 output reg [AMBA_WORD-1:0] NOISE
 );
 
+reg start_work;
 
-
+always@(PSEL) 
+begin : Timing_Control 
+	start_work <= PSEL ;
+end
 
 always @(posedge clk or negedge rst) begin : Register_Selction
   if(!rst) 
@@ -45,7 +49,7 @@ always @(posedge clk or negedge rst) begin : Register_Selction
 	  end
   else 
 	  begin
-		if( PSEL & PENABLE) 
+		if(start_work) 
 			begin
 			    if( PWRITE) 
 					begin

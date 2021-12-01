@@ -93,21 +93,21 @@ Register_selctor #(.DATA_WIDTH(DATA_WIDTH) , .AMBA_ADDR_WIDTH(AMBA_ADDR_WIDTH) ,
    .NOISE          (NOISE_REG)
 );
 
-Encoder #(.DATA_WIDTH(DATA_WIDTH) , .AMBA_ADDR_WIDTH(AMBA_ADDR_WIDTH) , .AMBA_WORD(32)) Encoder(
+Encoder #( .AMBA_WORD(32)) Encoder(
    .clk            (clk),
    .rst            (rst),
    .Small          (Small),
    .Medium         (Medium),
    .Large          (Large),
    .DATA_IN        (FC_REG),
-   .CODEWORD_WIDTH (CODEWORD_WIDTH_REG[1:0]),
+   // .CODEWORD_WIDTH (CODEWORD_WIDTH_REG[1:0]),
    .Enc_Out         (Enc_Out)
 	// clk,rst,Small,Medium,Large,FC_REG,CODEWORD_WIDTH_REG[1:0],Enc_Out
 );
 
-Num_Of_Errors #(.DATA_WIDTH(32),.AMBA_ADDR_WIDTH(32),.AMBA_WORD(32)) Num_Of_Errors(
-   .clk            (clk),
-   .Yin            (Enc_Out[5:0]),
+Num_Of_Errors Num_Of_Errors(
+   // .clk            (clk),
+   .Yin            (Enc_Out[4:0]),
    .DATA_IN        (FC_REG),
    .Small          (Small),
    .Medium         (Medium),

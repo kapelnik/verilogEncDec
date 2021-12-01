@@ -28,8 +28,8 @@ input  [31:0] DATA_IN,
 //output reg Error_Done = 1'b0,
 output reg [AMBA_WORD-1:0] Dec_Out
 );
-reg [AMBA_WORD-1:0] Bit_fix = {AMBA_WORD{1'b0}};
-reg Enable_Fix = 1'b0;
+reg [AMBA_WORD-1:0] Bit_fix;// = {AMBA_WORD{1'b0}};
+reg Enable_Fix;// = 1'b0;
 
 //using the following lines - A-Z, we will implement  matrix multiply
 

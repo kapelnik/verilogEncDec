@@ -13,8 +13,8 @@
 module Encoder
 //Here we use parameters, BUT we will not change the default values. Top entity will pad zeroes to the input.
 #(
-parameter DATA_WIDTH = 32,
-parameter AMBA_ADDR_WIDTH = 20,
+// parameter DATA_WIDTH = 32,
+// parameter AMBA_ADDR_WIDTH = 20,
 parameter AMBA_WORD = 32
 )
 (
@@ -24,14 +24,14 @@ input wire   Small,
 input wire   Medium,
 input wire   Large,
 input wire  [AMBA_WORD-1:0] DATA_IN,
-input wire  [1:0] CODEWORD_WIDTH,
+// input wire  [1:0] CODEWORD_WIDTH,
 output reg 	[AMBA_WORD-1:0] Enc_Out 
 
 );
 
 //using the following lines - A-Z, we will implement  matrix multiply
 reg A,B,C,E,F,G,H,I,J,K,M,O,P,R,T,V,W,Y,Z,AC,ACE,ACEG,AE,IK,PR;
-reg [31:0] YOUT 		= {32{1'b0}};
+reg [31:0] YOUT;// 		= {32{1'b0}};
 
 
 
@@ -72,14 +72,61 @@ always@(*) begin : Save_Multiple_Calculation
   //X <= DATA_IN[8]^DATA_IN[7]; NOT USED
   Y   <= DATA_IN[7]^DATA_IN[6];
   Z   <= DATA_IN[31]^DATA_IN[29]^DATA_IN[27];
-  AC  <= A^C;
-  ACE <= AC^E;
-  ACEG<= ACE^G;
-  AE  <=A^E;
-  IK  <=I^K;
-  PR  <=P^R;  
+  // AC  <= A^C;
+  // ACE <= AC^E;
+  // ACEG<= ACE^G;
+  // AE  <=A^E;
+  // IK  <=I^K;
+  // PR  <=P^R;
+  
 end
 
+always@(*) begin : Save_Multiple_Calculation1
+  //============================================================//
+  //only one of the following will be 1, the rest 0
+  //Small   <=  ~(CODEWORD_WIDTH[0] | CODEWORD_WIDTH[1]);
+ // Medium  <=  CODEWORD_WIDTH[0] & ~CODEWORD_WIDTH[1];
+ // Large   <=  CODEWORD_WIDTH[1] & ~CODEWORD_WIDTH[0];
+  
+
+  //============================================================//
+
+  AC  <= A^C;
+  AE  <=A^E;
+  IK  <=I^K;
+  PR  <=P^R;
+  
+end
+
+always@(*) begin : Save_Multiple_Calculation2
+  //============================================================//
+  //only one of the following will be 1, the rest 0
+  //Small   <=  ~(CODEWORD_WIDTH[0] | CODEWORD_WIDTH[1]);
+ // Medium  <=  CODEWORD_WIDTH[0] & ~CODEWORD_WIDTH[1];
+ // Large   <=  CODEWORD_WIDTH[1] & ~CODEWORD_WIDTH[0];
+  
+
+  //============================================================//
+
+
+  ACE <= AC^E;
+
+end
+
+always@(*) begin : Save_Multiple_Calculation3
+  //============================================================//
+  //only one of the following will be 1, the rest 0
+  //Small   <=  ~(CODEWORD_WIDTH[0] | CODEWORD_WIDTH[1]);
+ // Medium  <=  CODEWORD_WIDTH[0] & ~CODEWORD_WIDTH[1];
+ // Large   <=  CODEWORD_WIDTH[1] & ~CODEWORD_WIDTH[0];
+  
+
+  //============================================================//
+
+
+
+  ACEG<= ACE^G;
+end
 //============================================================//
 always @(*) begin : Encode_Data
   // if(rst) begin
@@ -103,12 +150,12 @@ always @(*) begin : Encode_Data
     YOUT[15:6] <=DATA_IN[15:6];
     
     // This block is for the parity of the large input
-    YOUT[5] <= Large ?  B^H^O^Y^DATA_IN[27]^DATA_IN[20]^DATA_IN[18]^DATA_IN[13]^DATA_IN[11]^DATA_IN[8]  : 0;//C27
-    YOUT[4] <= Large ?  ACEG^IK^M^DATA_IN[17]  : 0;//C28
-    YOUT[3] <= Large ?  ACEG^PR^T^DATA_IN[10]  : 0;//C29
-    YOUT[2] <= Large ?  AC^IK^PR^W^DATA_IN[7]  : 0;//C30
-    YOUT[1] <= Large ?  AE^I^M^P^T^V^DATA_IN[8]^DATA_IN[6]  : 0;//C31
-    YOUT[0] <= Large ?  Z^O^V^Y^DATA_IN[25]^DATA_IN[23]^DATA_IN[21]^DATA_IN[19]^DATA_IN[14]^DATA_IN[12]  : 0;//C32
+    YOUT[5] <= Large ?  B^H^O^Y^DATA_IN[27]^DATA_IN[20]^DATA_IN[18]^DATA_IN[13]^DATA_IN[11]^DATA_IN[8]  : DATA_IN[5];//C27
+    YOUT[4] <= Large ?  ACEG^IK^M^DATA_IN[17]  : DATA_IN[4];//C28
+    YOUT[3] <= Large ?  ACEG^PR^T^DATA_IN[10]  : DATA_IN[3];//C29
+    YOUT[2] <= Large ?  AC^IK^PR^W^DATA_IN[7]  : DATA_IN[2];//C30
+    YOUT[1] <= Large ?  AE^I^M^P^T^V^DATA_IN[8]^DATA_IN[6]  : DATA_IN[1];//C31
+    YOUT[0] <= Large ?  Z^O^V^Y^DATA_IN[25]^DATA_IN[23]^DATA_IN[21]^DATA_IN[19]^DATA_IN[14]^DATA_IN[12]  : DATA_IN[0];//C32
     // end
   // else begin 
       // YOUT <= {AMBA_WORD{1'b0}};

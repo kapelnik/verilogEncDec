@@ -12,21 +12,21 @@
 `timescale 1ns/10ps
 module Num_Of_Errors 
 #(
-parameter DATA_WIDTH = 32,
-parameter AMBA_ADDR_WIDTH = 20,
-parameter AMBA_WORD = 32
+// parameter DATA_WIDTH = 32,
+// parameter AMBA_ADDR_WIDTH = 20,
+// parameter AMBA_WORD = 32
 )
 (
-input clk,
-input [5:0] Yin, // Pirty from the encoder
+// input clk,
+input [4:0] Yin, // Pirty from the encoder
 input [31:0] DATA_IN, // Pirty from the data
 input  Small,
 input  Medium,
 output reg [1:0] NOF , //Number of errors
 output reg [4:0] NOE_Out  // telling what row to fix
 );
-reg [5:0] Prity_Y;
-reg [5:0] Prity_data;
+reg [4:0] Prity_Y;
+// reg [5:0] Prity_data;
 reg [5:0] S;
 
 //using the following lines - A-Z, we will implement  matrix multiply
@@ -45,9 +45,10 @@ always@(*) begin : Get_S // Cheking parity and size
   //============================================================//
   // S[4:0] <= Prity_Y[4:0] ^ Prity_data[4:0];
   // S[5]   <= Prity_Y[5] ^ Prity_data[4]^ Prity_data[3]^ Prity_data[2]^ Prity_data[1]^ Prity_data[0];
-	S[5] <= ^DATA_IN;
     if(Small) 
 		begin
+		  	S[5] <= ^DATA_IN;
+
 			S[4:3] <= 2'b00;
 			S[2] <= Prity_Y[2]^DATA_IN[26];
 			S[1] <= Prity_Y[1]^DATA_IN[25];
@@ -56,11 +57,15 @@ always@(*) begin : Get_S // Cheking parity and size
 	else 
 		if (Medium) 
 			begin
+			  	S[5] <= ^DATA_IN;
+
 				S[4] <= 1'b0;
 				S[3:0] <= Prity_Y[3:0]^DATA_IN[19:16];
 			end
 		else 
 			begin
+			  	S[5] <= ^DATA_IN;
+
 				S[4:0] <= Prity_Y[4:0]^DATA_IN[4:0];
 			end
 end
@@ -69,9 +74,28 @@ end
 always @(*) begin : Check_Number_Of_Errors// Number of errors
   // if(rst) begin
   
+    // NOE_Out <= S[4:0]; // Index of error
+		if(S[5])
+			begin
+				NOF[0] <= S[0] | S[1] | S[2] | S[3] | S[4] ;
+				NOF[1] <= 1'b0;
+			end
+		else
+			begin
+				NOF[0] <= 1'b0;
+				NOF[1] <= S[0] | S[1] | S[2] | S[3] | S[4] ;
+			end
+    // NOF[0] <= S[5] & ( S[0] | S[1] | S[2] | S[3] | S[4]) ;
+	// NOF[1] <= ~S[5] & ( S[0] | S[1] | S[2] | S[3] | S[4]) ;
+   
+  end
+  
+  always @(*) begin : Index_Of_Errors// Number of errors
+  // if(rst) begin
+  
     NOE_Out <= S[4:0]; // Index of error 
-    NOF[0] <= S[5] & ( S[0] | S[1] | S[2] | S[3] | S[4]) ;
-	NOF[1] <= ~S[5] & ( S[0] | S[1] | S[2] | S[3] | S[4]) ;
+    // NOF[0] <= S[5] & ( S[0] | S[1] | S[2] | S[3] | S[4]) ;
+	// NOF[1] <= ~S[5] & ( S[0] | S[1] | S[2] | S[3] | S[4]) ;
    
   end
   
@@ -80,13 +104,13 @@ always @(*) begin : Check_Number_Of_Errors// Number of errors
 always @(*) begin : Get_Both_Parities// Pirty Fixing
 		if(Small) 
 			begin
-				Prity_Y<={{Yin[3]},{2'b00},{Yin[2:0]}};
+				Prity_Y<={{2'b00},{Yin[2:0]}};
 				// Prity_data<={{DATA_IN[3]},{2'b00},{DATA_IN[2:0]}};
 			end
 		else 
 			if (Medium) 
 				begin
-					Prity_Y<={{Yin[4]},{1'b0},{Yin[3:0]}};
+					Prity_Y<={{1'b0},{Yin[3:0]}};
 					// Prity_data<={{DATA_IN[4]},{1'b0},{DATA_IN[3:0]}};
 				end
 			else 
