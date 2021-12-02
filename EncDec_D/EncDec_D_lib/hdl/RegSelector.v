@@ -2,7 +2,8 @@
 // Verilog Module Project1_lib.Register_selctor
 //
 // Created:
-//          by - benmaorr.UNKNOWN (L330W509)
+//          by - benmaorr.refael,kapelnik.Tal (L330W509)
+				
 //          at - 11:29:09 11/15/2021
 //
 // using Mentor Graphics HDL Designer(TM) 2019.2 (Build 5)
@@ -33,11 +34,14 @@ output reg [AMBA_WORD-1:0] NOISE
 
 wire start_work;
 
+
+// This module is the register bank of the ECC_ENC_DEC module. the parameter got from the top entity are the sizes of the registers.
+// To interact with module(R/W), follow the AMBA APB bus protocol.
+
+
+//when PSEL&PENABLE are 1 start work, depending on R/W -> PWRITE,PADDR
 assign start_work = PSEL&PENABLE ;
-// always@(PSEL) 
-// begin : Timing_Control 
-	// start_work <= PSEL ;
-// end
+
 
 always @(posedge clk or negedge rst) begin : Register_Selction
   if(!rst) 
@@ -53,7 +57,7 @@ always @(posedge clk or negedge rst) begin : Register_Selction
 		if(start_work) 
 			begin
 			    if( PWRITE) 
-					begin
+					begin//OFFSET OF THE ADDRES IS THE SELECTED REGISTER
 						case(PADDR) // Check RTL
 						  2'b00 : CTRL <= PWDATA;
 						  2'b01 : DATA_IN <= PWDATA;
@@ -63,7 +67,7 @@ always @(posedge clk or negedge rst) begin : Register_Selction
 					end
 			    else 
 				begin
-					case(PADDR) // Read to CPU
+					case(PADDR) // PREAD: CPU Reads from registers
 					  2'b00 : PRDATA <= CTRL;
 					  2'b01 : PRDATA <= DATA_IN;
 					  2'b10 : PRDATA <= CODEWORD_WIDTH;

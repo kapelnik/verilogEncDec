@@ -2,7 +2,7 @@
 // Verilog Module Project_lib.TOP
 //
 // Created:
-//          by - benmaorr.UNKNOWN (L330W516)
+//          by - benmaorr.refael,kapelnik.Tal (L330W509)
 //          at - 11:11:58 11/23/2021
 //
 // using Mentor Graphics HDL Designer(TM) 2019.2 (Build 5)
@@ -208,7 +208,7 @@ begin : FC_REG_Control //Control bit change
 end
 
 //#################################
-//FC_control
+//FC_control used to implement Full Channel - encoder->noise->encode->decode
 
 assign Enc_noise = Enc_Out[DATA_WIDTH-1:0]^NOISE_REG[DATA_WIDTH-1:0];
 

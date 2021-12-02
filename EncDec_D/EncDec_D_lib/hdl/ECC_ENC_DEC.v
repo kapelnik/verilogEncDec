@@ -2,7 +2,7 @@
 // Verilog Module EncDec_D_lib.ECC_ENC_DEC
 //
 // Created:
-//          by - benmaorr.UNKNOWN (L330W528)
+//          by - benmaorr.refael,kapelnik.Tal (L330W509)
 //          at - 17:34:12 12/ 2/2021
 //
 // using Mentor Graphics HDL Designer(TM) 2019.2 (Build 5)
@@ -208,7 +208,7 @@ begin : FC_REG_Control //Control bit change
 end
 
 //#################################
-//FC_control
+//FC_control used to implement Full Channel - encoder->noise->encode->decode
 
 assign Enc_noise = Enc_Out[DATA_WIDTH-1:0]^NOISE_REG[DATA_WIDTH-1:0];
 
@@ -229,7 +229,7 @@ begin: FC_control
 end
 
 //#################################
-//Noise_Control
+//Noise_Control - This flag used for the state machine to know whether noise has being added or not
 always@(current_state) 
 begin : Noise_Control 
 	case (current_state)
@@ -255,20 +255,7 @@ begin : DATA_OUT_Control
 			else
 				data_out					<=		 Dec_Out[DATA_WIDTH-1:0];
 		end
-	// case (current_state)
-		// ENCODING: begin	//=================ENCODING State//=================
-					// case (CTRL_REG[1:0])
-						// 2'b00: data_out						<=		 Enc_Out[DATA_WIDTH-1:0];
-						// default: data_out					<=		 Dec_Out[DATA_WIDTH-1:0];
-					// endcase
-				// end
-		// DECODING: 	////=================DECODING State//=================
-			// data_out										<=		 Dec_Out[DATA_WIDTH-1:0]; //{DATA_WIDTH-AMBA_WORD{1'b0}},
-		
-		// default: begin	////=================Any Other State//=================
-					// data_out								<=		 Enc_Out[DATA_WIDTH-1:0];
-				// end
-	// endcase
+
 end
 
 //#################################
@@ -326,20 +313,7 @@ end
 
 
 
-//#################################
-// always @(*) begin // Pirty Fixing
-		// if(Small) begin
-			// Enc_Out_f	<=	Enc_Out[AMBA_WORD-1:0];
-			// Dec_Out_f	<=	Dec_Out[AMBA_WORD-1:0];
-		// end
-		// else if (Medium) begin
-			// DATA_IN<= {DATA_IN_Pad<<16};
-		// end
-		// else begin
-			// DATA_IN<= ATA_IN_Pad;
-		// end
-	
-// end
+
 
 
 //#################################
@@ -380,26 +354,7 @@ end
 assign Small  = ~CODEWORD_WIDTH_REG[1] & ~CODEWORD_WIDTH_REG[0];
 assign Medium = ~CODEWORD_WIDTH_REG[1] &  CODEWORD_WIDTH_REG[0];
 assign Large  =  CODEWORD_WIDTH_REG[1] & ~CODEWORD_WIDTH_REG[0];
-// always@(*)
-// begin: data_out_width
-	// case (CODEWORD_WIDTH_REG[1:0])
-		// 2'b00: begin
-				// Small<= 1'b1;
-				// Medium <= 1'b0;
-				// Large <= 1'b0;
-			// end
-		// 2'b01: begin
-				// Small<= 1'b0;
-				// Medium <= 1'b1;
-				// Large <= 1'b0;
-			// end
-		// default: begin
-				// Small<= 1'b0;
-				// Medium <= 1'b0;
-				// Large <= 1'b1;
-			// end
-	// endcase
-// end
+
 
 
 //#################################

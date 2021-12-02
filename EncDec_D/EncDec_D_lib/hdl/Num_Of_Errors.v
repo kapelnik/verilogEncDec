@@ -2,7 +2,7 @@
 // Verilog Module Project_lib.Num_Of_Errors
 //
 // Created:
-//          by - benmaorr.UNKNOWN (L330W516)
+//          by - benmaorr.refael,kapelnik.Tal (L330W509)
 //          at - 12:18:28 11/22/2021
 //
 // using Mentor Graphics HDL Designer(TM) 2019.2 (Build 5)
@@ -24,22 +24,12 @@ reg [4:0] Prity_Y;
 // reg [5:0] Prity_data;
 reg [5:0] S;
 
-//using the following lines - A-Z, we will implement  matrix multiply
-
 
 
 
 always@(*) begin : Get_S // Cheking parity and size
-  //============================================================// TODO move to another entity at the top
-  //only one of the following will be 1, the rest 0
-  // Small   <=  ~(CODEWORD_WIDTH[0] | CODEWORD_WIDTH[1]);
-  // Medium  <=  CODEWORD_WIDTH[0] & ~CODEWORD_WIDTH[1];
-  // Large   <=  CODEWORD_WIDTH[1] & ~CODEWORD_WIDTH[0];
-  
 
   //============================================================//
-  // S[4:0] <= Prity_Y[4:0] ^ Prity_data[4:0];
-  // S[5]   <= Prity_Y[5] ^ Prity_data[4]^ Prity_data[3]^ Prity_data[2]^ Prity_data[1]^ Prity_data[0];
     if(Small) 
 		begin
 		  	S[5] <= ^DATA_IN;
@@ -70,6 +60,8 @@ always @(*) begin : Check_Number_Of_Errors// Number of errors
   // if(rst) begin
   
     // NOE_Out <= S[4:0]; // Index of error
+	//When S[5] is 1 we know theres at least 2 errors
+	//else check if S0|..|S5 to know if theres 1 error or not
 		if(S[5])
 			begin
 				NOF[0] <= S[0] | S[1] | S[2] | S[3] | S[4] ;
@@ -80,38 +72,30 @@ always @(*) begin : Check_Number_Of_Errors// Number of errors
 				NOF[0] <= 1'b0;
 				NOF[1] <= S[0] | S[1] | S[2] | S[3] | S[4] ;
 			end
-    // NOF[0] <= S[5] & ( S[0] | S[1] | S[2] | S[3] | S[4]) ;
-	// NOF[1] <= ~S[5] & ( S[0] | S[1] | S[2] | S[3] | S[4]) ;
    
   end
   
   always @(*) begin : Index_Of_Errors// Number of errors
-  // if(rst) begin
   
     NOE_Out <= S[4:0]; // Index of error 
-    // NOF[0] <= S[5] & ( S[0] | S[1] | S[2] | S[3] | S[4]) ;
-	// NOF[1] <= ~S[5] & ( S[0] | S[1] | S[2] | S[3] | S[4]) ;
    
   end
   
 
   
-always @(*) begin : Get_Both_Parities// Pirty Fixing
+always @(*) begin : Get_Both_Parities// Pirty Fixing, set the parity in the right index depending the data width(S/M/L)
 		if(Small) 
 			begin
 				Prity_Y<={{2'b00},{Yin[2:0]}};
-				// Prity_data<={{DATA_IN[3]},{2'b00},{DATA_IN[2:0]}};
 			end
 		else 
 			if (Medium) 
 				begin
 					Prity_Y<={{1'b0},{Yin[3:0]}};
-					// Prity_data<={{DATA_IN[4]},{1'b0},{DATA_IN[3:0]}};
 				end
 			else 
 				begin
 					Prity_Y<=Yin;
-					// Prity_data<=DATA_IN;
 				end
 	
 end

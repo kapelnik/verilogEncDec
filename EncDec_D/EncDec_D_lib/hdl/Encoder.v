@@ -2,7 +2,7 @@
 // Verilog Module Project1_lib.Register_selctor
 //
 // Created:
-//          by - benmaorr.UNKNOWN (L330W509)
+//          by - benmaorr.refael,kapelnik.Tal (L330W509)
 //          at - 11:29:09 11/15/2021
 //
 // using Mentor Graphics HDL Designer(TM) 2019.2 (Build 5)
@@ -30,6 +30,8 @@ output reg 	[AMBA_WORD-1:0] Enc_Out
 );
 
 //using the following lines - A-Z, we will implement  matrix multiply
+// With this component we calculate the parity, in order to reduce calculation and space (XOR gates)
+ // in the design, we minimized the XOR gates by using repeating calculations for C1, … , Cn. 
 //reg A,B,C,E,F,G,H,I,J,K,M,O,P,R,T,V,W,Y,Z,AC,ACE,ACEG,AE,IK,PR;
 wire [31:0] YOUT;// 		= {32{1'b0}};
 wire [24:0] xor_gates ;
@@ -67,22 +69,11 @@ wire [24:0] xor_gates ;
   // xor_gates[20]  <=A^E;
   // IK  <=I^K;
   // PR  <=P^R;
-  
-
-
   assign xor_gates[19]  = xor_gates[0]^xor_gates[2];	// AC
   assign xor_gates[20]  = xor_gates[0]^xor_gates[3];	// AE
   assign xor_gates[21]  =xor_gates[7]^xor_gates[9];	// IK
   assign xor_gates[22]  =xor_gates[12]^xor_gates[13];	// PR
-  
-
-
-
-
   assign xor_gates[23] = xor_gates[19]^xor_gates[3];	// ACE
-
-
-
   assign xor_gates[24]= xor_gates[23]^xor_gates[5];	// ACEG
 
 //============================================================//
@@ -114,35 +105,17 @@ wire [24:0] xor_gates ;
     assign YOUT[2] = Large ?  xor_gates[19]^xor_gates[21]^xor_gates[22]^xor_gates[16]^DATA_IN[7]  													    		: DATA_IN[2];//C30
     assign YOUT[1] = Large ?  xor_gates[20]^xor_gates[7]^xor_gates[10]^xor_gates[12]^xor_gates[14]^xor_gates[15]^DATA_IN[8]^DATA_IN[6]  					    : DATA_IN[1];//C31
     assign YOUT[0] = Large ?  xor_gates[18]^xor_gates[11]^xor_gates[15]^xor_gates[17]^DATA_IN[25]^DATA_IN[23]^DATA_IN[21]^DATA_IN[19]^DATA_IN[14]^DATA_IN[12]   : DATA_IN[0];//C32
-    // end
-  // else begin 
-      // YOUT <= {AMBA_WORD{1'b0}};
-    // end
- // end
-  
 
-  // always @(*) begin // Pirty Fixing
-		// if(Small) begin
-			// DATA_IN<= {DATA_IN_Pad,{24{1'b0}}};
-		// end
-		// else if (Medium) begin
-			// DATA_IN<= {DATA_IN_Pad,{16{1'b0}}};
-		// end
-		// else begin
-			// DATA_IN<= DATA_IN_Pad;
-		// end
-	
-// end
 	
  
-always @(posedge clk or negedge rst) begin : Size_Check    //TODO Maybe change clk to negedge
+always @(posedge clk or negedge rst) begin : Size_Check    
 	if(!rst) 
 		begin
 			Enc_Out <= {AMBA_WORD{1'b0}};
 		end
 	else 
 		begin
-			
+			//YOUT is the encoded word, set it to Enc_Out with padding to the left
 			if(Small) 
 				begin
 					Enc_Out<={YOUT[AMBA_WORD-9:0],YOUT[31:24]};

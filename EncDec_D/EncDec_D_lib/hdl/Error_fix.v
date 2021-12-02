@@ -31,21 +31,16 @@ output reg [AMBA_WORD-1:0] Dec_Out
 reg [AMBA_WORD-1:0] Bit_fix;// = {AMBA_WORD{1'b0}};
 wire Enable_Fix;// = 1'b0;
 
-//using the following lines - A-Z, we will implement  matrix multiply
 
-
+//if NOF = 1 there is one error and we can fix it
 assign Enable_Fix = NOF==2'b01 ? 1'b1 : 1'b0 ; 
 
-// always@(NOF) begin : Error_fix_Enable // Checking number of errors (NOF)
-  // case (NOF) 
-	// 2'b01:	 Enable_Fix <= 1'b1; // 1 Error we can fix the vector
-	// default: Enable_Fix <= 1'b0;
-  // endcase
-  
-  
-// end
+
  
+  //============================================================//
+ //Bit_fix is One Hot - by the value of S we can find the index of the error, calculated from the matrix H
 //============================================================//
+
 always @(Enable_Fix or S) begin : Find_Number_Of_Errors // Number of errors
 	if(Enable_Fix) 
 		begin
@@ -85,12 +80,15 @@ always @(Enable_Fix or S) begin : Find_Number_Of_Errors // Number of errors
 			endcase
 		end
 	else 
-		Bit_fix <= {AMBA_WORD{1'b0}};///// NOF[1] ? {AMBA_WORD{1'bx}} : {
+		Bit_fix <= {AMBA_WORD{1'b0}};
    
   end
   
   
-always @(posedge clk or negedge rst) begin : Error_Fix_Out//TODO Maybe change clk to negedge
+   //============================================================//
+  // Decoder out put - Dec_Out is set after an error has fixed if NOF was 1, output=input if NOF is 0, and output=0000..0 if NOF=2
+ //============================================================//
+always @(posedge clk or negedge rst) begin : Error_Fix_Out
 	if(!rst) 
 		begin
 			Dec_Out <= {AMBA_WORD{1'b0}};
