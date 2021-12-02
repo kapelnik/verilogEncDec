@@ -16,7 +16,6 @@ suid 6,0
 usingSuid 1
 emptyRow *1 (LEmptyRow
 )
-uid 69,0
 optionalChildren [
 *2 (RefLabelRowHdr
 )
@@ -154,7 +153,6 @@ uid 62,0
 pdm (PhysicalDM
 displayShortBounds 1
 editShortBounds 1
-uid 83,0
 optionalChildren [
 *21 (Sheet
 sheetRow (SheetRow
@@ -175,29 +173,25 @@ font "Tahoma,10,0"
 )
 emptyMRCItem *22 (MRCItem
 litem &1
-pos 6
+pos 3
 dimension 20
 )
-uid 85,0
 optionalChildren [
 *23 (MRCItem
 litem &2
 pos 0
 dimension 20
-uid 86,0
 )
 *24 (MRCItem
 litem &3
 pos 1
 dimension 23
-uid 87,0
 )
 *25 (MRCItem
 litem &4
 pos 2
 hidden 1
 dimension 20
-uid 88,0
 )
 *26 (MRCItem
 litem &15
@@ -244,80 +238,67 @@ fontColor "0,0,0"
 font "Tahoma,10,0"
 textAngle 90
 )
-uid 89,0
 optionalChildren [
 *32 (MRCItem
 litem &5
 pos 0
 dimension 20
-uid 90,0
 )
 *33 (MRCItem
 litem &7
 pos 1
 dimension 50
-uid 91,0
 )
 *34 (MRCItem
 litem &8
 pos 2
 dimension 100
-uid 92,0
 )
 *35 (MRCItem
 litem &9
 pos 3
 dimension 50
-uid 93,0
 )
 *36 (MRCItem
 litem &10
 pos 4
 dimension 100
-uid 94,0
 )
 *37 (MRCItem
 litem &11
 pos 5
 dimension 60
-uid 95,0
 )
 *38 (MRCItem
 litem &12
 pos 6
 dimension 100
-uid 96,0
 )
 *39 (MRCItem
 litem &13
 pos 7
 dimension 50
-uid 97,0
 )
 *40 (MRCItem
 litem &14
 pos 8
 dimension 80
-uid 98,0
 )
 ]
 )
 fixedCol 4
 fixedRow 2
 name "Ports"
-uid 84,0
 vaOverrides [
 ]
 )
 ]
 )
-uid 68,0
 )
 genericsCommonDM (CommonDM
 ldm (LogicalDM
 emptyRow *41 (LEmptyRow
 )
-uid 100,0
 optionalChildren [
 *42 (RefLabelRowHdr
 )
@@ -348,7 +329,6 @@ tm "GenericEolColHdrMgr"
 pdm (PhysicalDM
 displayShortBounds 1
 editShortBounds 1
-uid 110,0
 optionalChildren [
 *51 (Sheet
 sheetRow (SheetRow
@@ -369,29 +349,25 @@ font "Tahoma,10,0"
 )
 emptyMRCItem *52 (MRCItem
 litem &41
-pos 0
+pos 3
 dimension 20
 )
-uid 112,0
 optionalChildren [
 *53 (MRCItem
 litem &42
 pos 0
 dimension 20
-uid 113,0
 )
 *54 (MRCItem
 litem &43
 pos 1
 dimension 23
-uid 114,0
 )
 *55 (MRCItem
 litem &44
 pos 2
 hidden 1
 dimension 20
-uid 115,0
 )
 ]
 )
@@ -402,50 +378,42 @@ fontColor "0,0,0"
 font "Tahoma,10,0"
 textAngle 90
 )
-uid 116,0
 optionalChildren [
 *56 (MRCItem
 litem &45
 pos 0
 dimension 20
-uid 117,0
 )
 *57 (MRCItem
 litem &47
 pos 1
 dimension 50
-uid 118,0
 )
 *58 (MRCItem
 litem &48
 pos 2
 dimension 100
-uid 119,0
 )
 *59 (MRCItem
 litem &49
 pos 3
 dimension 50
-uid 120,0
 )
 *60 (MRCItem
 litem &50
 pos 4
 dimension 80
-uid 121,0
 )
 ]
 )
 fixedCol 3
 fixedRow 2
 name "Ports"
-uid 111,0
 vaOverrides [
 ]
 )
 ]
 )
-uid 99,0
 type 1
 )
 VExpander (VariableExpander
@@ -544,7 +512,7 @@ value "L330W528"
 )
 (vvPair
 variable "graphical_source_time"
-value "17:30:55"
+value "11:35:30"
 )
 (vvPair
 variable "group"
@@ -556,7 +524,7 @@ value "L330W528"
 )
 (vvPair
 variable "language"
-value "Verilog"
+value "VHDL"
 )
 (vvPair
 variable "library"
@@ -564,11 +532,11 @@ value "EncDec_D_lib"
 )
 (vvPair
 variable "library_downstream_HdsLintPlugin"
-value "$HDS_PROJECT_DIR/EncDec_D_lib/designcheck"
+value "$HDS_PROJECT_DIR\\EncDec_D_lib\\designcheck"
 )
 (vvPair
 variable "library_downstream_QuestaSimCompiler"
-value "$HDS_PROJECT_DIR/EncDec_D_lib/work"
+value "$HDS_PROJECT_DIR\\EncDec_D_lib\\work"
 )
 (vvPair
 variable "mm"
@@ -648,7 +616,7 @@ value "symbol"
 )
 (vvPair
 variable "time"
-value "17:30:55"
+value "11:35:30"
 )
 (vvPair
 variable "unit"
@@ -677,7 +645,6 @@ value "21"
 ]
 )
 LanguageMgr "Verilog2001LangMgr"
-uid 67,0
 optionalChildren [
 *61 (SymbolBody
 uid 8,0
@@ -716,7 +683,8 @@ font "Courier New,8,0"
 )
 xt "2000,10000,28000,11600"
 st "// input clk,
-input  wire [4:0] Yin; // Pirty from the encoder"
+input  wire [4:0] Yin; // Pirty from the encoder
+"
 )
 thePort (LogicalPort
 lang 5
@@ -766,7 +734,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,11600,29500,12400"
-st "input  wire [31:0]  DATA_IN; // Pirty from the data"
+st "input  wire [31:0]  DATA_IN; // Pirty from the data
+"
 )
 thePort (LogicalPort
 lang 5
@@ -815,7 +784,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,12400,16500,13200"
-st "input  wire         Small;"
+st "input  wire         Small;
+"
 )
 thePort (LogicalPort
 lang 5
@@ -862,7 +832,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,13200,17000,14000"
-st "input  wire         Medium;"
+st "input  wire         Medium;
+"
 )
 thePort (LogicalPort
 lang 5
@@ -910,7 +881,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,14000,25500,14800"
-st "output reg [1:0]    NOF; //Number of errors"
+st "output reg [1:0]    NOF; //Number of errors
+"
 )
 thePort (LogicalPort
 lang 5
@@ -961,7 +933,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,14800,31500,15600"
-st "output reg [4:0]    NOE_Out; // telling what row to fix"
+st "output reg [4:0]    NOE_Out; // telling what row to fix
+"
 )
 thePort (LogicalPort
 lang 5
@@ -996,7 +969,6 @@ stg "VerticalLayoutStrategy"
 first (Text
 uid 11,0
 va (VaSet
-isHidden 1
 font "arial,8,1"
 )
 xt "37700,6000,43600,7000"
@@ -1139,11 +1111,10 @@ tm "PackageList"
 )
 ]
 )
-windowSize "288,270,1304,960"
-viewArea "20223,-96,49272,19664"
-cachedDiagramExtent "0,-6000,73000,49000"
-hasePageBreakOrigin 1
-pageBreakOrigin "0,-7000"
+windowSize "0,0,1015,690"
+viewArea "0,0,0,0"
+cachedDiagramExtent "0,0,0,0"
+pageBreakOrigin "0,0"
 defaultCommentText (CommentText
 shape (Rectangle
 layer 0
@@ -1414,8 +1385,6 @@ xt "2000,9000,2000,9000"
 tm "SyDeclarativeTextMgr"
 )
 )
-lastUid 121,0
-okToSyncOnLoad 1
-OkToSyncGenericsOnLoad 1
-activeModelName "Symbol"
+lastUid 66,0
+activeModelName "Symbol:CDM"
 )
