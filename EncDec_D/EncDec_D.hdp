@@ -1,0 +1,15 @@
+[DesignChecker]
+EncDec_D_lib = $HDS_PROJECT_DIR\EncDec_D_lib\designcheck
+[QuestaSim]
+EncDec_D_lib = $HDS_PROJECT_DIR\EncDec_D_lib\work
+[hdl]
+EncDec_D_lib = $HDS_PROJECT_DIR\EncDec_D_lib\hdl
+[hds]
+EncDec_D_lib = $HDS_PROJECT_DIR\EncDec_D_lib\hds
+[hds_settings]
+default_library = EncDec_D_lib
+version = 2
+[library_type]
+EncDec_D_lib = regular
+[shared]
+others = $HDS_TEAM_HOME/shared.hdp

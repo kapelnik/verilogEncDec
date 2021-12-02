@@ -1,0 +1,2 @@
+DEFAULT_ARCHITECTURE atom Register_selctor
+DEFAULT_FILE atom RegSelector.v
