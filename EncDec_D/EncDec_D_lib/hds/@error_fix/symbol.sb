@@ -477,23 +477,23 @@ VExpander (VariableExpander
 vvMap [
 (vvPair
 variable "HDLDir"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hdl"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hdl"
 )
 (vvPair
 variable "HDSDir"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds"
 )
 (vvPair
 variable "SideDataDesignDir"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\@error_fix\\symbol.sb.info"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@error_fix\\symbol.sb.info"
 )
 (vvPair
 variable "SideDataUserDir"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\@error_fix\\symbol.sb.user"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@error_fix\\symbol.sb.user"
 )
 (vvPair
 variable "SourceDir"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds"
 )
 (vvPair
 variable "appl"
@@ -509,11 +509,11 @@ value "%(unit)_%(view)_config"
 )
 (vvPair
 variable "d"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\@error_fix"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@error_fix"
 )
 (vvPair
 variable "d_logical"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\Error_fix"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\Error_fix"
 )
 (vvPair
 variable "date"
@@ -553,7 +553,7 @@ value "symbol"
 )
 (vvPair
 variable "graphical_source_author"
-value "benmaorr"
+value "kapelnik"
 )
 (vvPair
 variable "graphical_source_date"
@@ -565,11 +565,11 @@ value "UNKNOWN"
 )
 (vvPair
 variable "graphical_source_host"
-value "L330W528"
+value "L330W529"
 )
 (vvPair
 variable "graphical_source_time"
-value "11:35:31"
+value "22:13:13"
 )
 (vvPair
 variable "group"
@@ -577,7 +577,7 @@ value "UNKNOWN"
 )
 (vvPair
 variable "host"
-value "L330W528"
+value "L330W529"
 )
 (vvPair
 variable "language"
@@ -585,15 +585,11 @@ value "VHDL"
 )
 (vvPair
 variable "library"
-value "EncDec_D_lib"
+value "ECC_ENC_DEC_lib"
 )
 (vvPair
 variable "library_downstream_HdsLintPlugin"
-value "$HDS_PROJECT_DIR\\EncDec_D_lib\\designcheck"
-)
-(vvPair
-variable "library_downstream_QuestaSimCompiler"
-value "$HDS_PROJECT_DIR\\EncDec_D_lib\\work"
+value "$HDS_PROJECT_DIR\\ECC_ENC_DEC_lib\\designcheck"
 )
 (vvPair
 variable "mm"
@@ -613,11 +609,11 @@ value "December"
 )
 (vvPair
 variable "p"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\@error_fix\\symbol.sb"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@error_fix\\symbol.sb"
 )
 (vvPair
 variable "p_logical"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\Error_fix\\symbol.sb"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\Error_fix\\symbol.sb"
 )
 (vvPair
 variable "package_name"
@@ -625,7 +621,7 @@ value "<Undefined Variable>"
 )
 (vvPair
 variable "project_name"
-value "EncDec_D"
+value "ECC_ENC_DEC"
 )
 (vvPair
 variable "series"
@@ -673,7 +669,7 @@ value "symbol"
 )
 (vvPair
 variable "time"
-value "11:35:31"
+value "22:13:13"
 )
 (vvPair
 variable "unit"
@@ -681,7 +677,7 @@ value "Error_fix"
 )
 (vvPair
 variable "user"
-value "benmaorr"
+value "kapelnik"
 )
 (vvPair
 variable "version"
@@ -1122,8 +1118,8 @@ uid 11,0
 va (VaSet
 font "arial,8,1"
 )
-xt "35700,14000,41600,15000"
-st "EncDec_D_lib"
+xt "35700,14000,43700,15000"
+st "ECC_ENC_DEC_lib"
 blo "35700,14800"
 )
 second (Text
@@ -1229,11 +1225,11 @@ va (VaSet
 fg "0,0,32768"
 font "arial,10,0"
 )
-xt "200,-5800,32300,-600"
+xt "200,-5800,32700,-600"
 st "
 Created using Mentor Graphics HDL2Graphics(TM) Technology
-on - 11:35:31 12/ 2/2021
-from - D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hdl\\Error_fix.v
+on - 22:13:13 12/ 2/2021
+from - C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hdl\\Error_fix.v
 
 "
 tm "CommentText"

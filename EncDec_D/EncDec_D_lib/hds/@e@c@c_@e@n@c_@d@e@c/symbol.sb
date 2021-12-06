@@ -16,7 +16,6 @@ suid 11,0
 usingSuid 1
 emptyRow *1 (LEmptyRow
 )
-uid 118,0
 optionalChildren [
 *2 (RefLabelRowHdr
 )
@@ -222,7 +221,6 @@ uid 111,0
 pdm (PhysicalDM
 displayShortBounds 1
 editShortBounds 1
-uid 132,0
 optionalChildren [
 *26 (Sheet
 sheetRow (SheetRow
@@ -243,29 +241,25 @@ font "Tahoma,10,0"
 )
 emptyMRCItem *27 (MRCItem
 litem &1
-pos 11
+pos 3
 dimension 20
 )
-uid 134,0
 optionalChildren [
 *28 (MRCItem
 litem &2
 pos 0
 dimension 20
-uid 135,0
 )
 *29 (MRCItem
 litem &3
 pos 1
 dimension 23
-uid 136,0
 )
 *30 (MRCItem
 litem &4
 pos 2
 hidden 1
 dimension 20
-uid 137,0
 )
 *31 (MRCItem
 litem &15
@@ -342,80 +336,67 @@ fontColor "0,0,0"
 font "Tahoma,10,0"
 textAngle 90
 )
-uid 138,0
 optionalChildren [
 *42 (MRCItem
 litem &5
 pos 0
 dimension 20
-uid 139,0
 )
 *43 (MRCItem
 litem &7
 pos 1
 dimension 50
-uid 140,0
 )
 *44 (MRCItem
 litem &8
 pos 2
 dimension 100
-uid 141,0
 )
 *45 (MRCItem
 litem &9
 pos 3
 dimension 50
-uid 142,0
 )
 *46 (MRCItem
 litem &10
 pos 4
 dimension 100
-uid 143,0
 )
 *47 (MRCItem
 litem &11
 pos 5
 dimension 60
-uid 144,0
 )
 *48 (MRCItem
 litem &12
 pos 6
 dimension 100
-uid 145,0
 )
 *49 (MRCItem
 litem &13
 pos 7
 dimension 50
-uid 146,0
 )
 *50 (MRCItem
 litem &14
 pos 8
 dimension 80
-uid 147,0
 )
 ]
 )
 fixedCol 4
 fixedRow 2
 name "Ports"
-uid 133,0
 vaOverrides [
 ]
 )
 ]
 )
-uid 117,0
 )
 genericsCommonDM (CommonDM
 ldm (LogicalDM
 emptyRow *51 (LEmptyRow
 )
-uid 149,0
 optionalChildren [
 *52 (RefLabelRowHdr
 )
@@ -501,7 +482,6 @@ uid 86,0
 pdm (PhysicalDM
 displayShortBounds 1
 editShortBounds 1
-uid 159,0
 optionalChildren [
 *68 (Sheet
 sheetRow (SheetRow
@@ -522,29 +502,25 @@ font "Tahoma,10,0"
 )
 emptyMRCItem *69 (MRCItem
 litem &51
-pos 7
+pos 3
 dimension 20
 )
-uid 161,0
 optionalChildren [
 *70 (MRCItem
 litem &52
 pos 0
 dimension 20
-uid 162,0
 )
 *71 (MRCItem
 litem &53
 pos 1
 dimension 23
-uid 163,0
 )
 *72 (MRCItem
 litem &54
 pos 2
 hidden 1
 dimension 20
-uid 164,0
 )
 *73 (MRCItem
 litem &61
@@ -597,73 +573,65 @@ fontColor "0,0,0"
 font "Tahoma,10,0"
 textAngle 90
 )
-uid 165,0
 optionalChildren [
 *80 (MRCItem
 litem &55
 pos 0
 dimension 20
-uid 166,0
 )
 *81 (MRCItem
 litem &57
 pos 1
 dimension 50
-uid 167,0
 )
 *82 (MRCItem
 litem &58
 pos 2
 dimension 100
-uid 168,0
 )
 *83 (MRCItem
 litem &59
 pos 3
 dimension 50
-uid 169,0
 )
 *84 (MRCItem
 litem &60
 pos 4
 dimension 80
-uid 170,0
 )
 ]
 )
 fixedCol 3
 fixedRow 2
 name "Ports"
-uid 160,0
 vaOverrides [
 ]
 )
 ]
 )
-uid 148,0
 type 1
 )
 VExpander (VariableExpander
 vvMap [
 (vvPair
 variable "HDLDir"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hdl"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hdl"
 )
 (vvPair
 variable "HDSDir"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds"
 )
 (vvPair
 variable "SideDataDesignDir"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb.info"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb.info"
 )
 (vvPair
 variable "SideDataUserDir"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb.user"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb.user"
 )
 (vvPair
 variable "SourceDir"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds"
 )
 (vvPair
 variable "appl"
@@ -679,11 +647,11 @@ value "%(unit)_%(view)_config"
 )
 (vvPair
 variable "d"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@e@c@c_@e@n@c_@d@e@c"
 )
 (vvPair
 variable "d_logical"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\ECC_ENC_DEC"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\ECC_ENC_DEC"
 )
 (vvPair
 variable "date"
@@ -723,7 +691,7 @@ value "symbol"
 )
 (vvPair
 variable "graphical_source_author"
-value "benmaorr"
+value "kapelnik"
 )
 (vvPair
 variable "graphical_source_date"
@@ -735,11 +703,11 @@ value "UNKNOWN"
 )
 (vvPair
 variable "graphical_source_host"
-value "L330W528"
+value "L330W529"
 )
 (vvPair
 variable "graphical_source_time"
-value "17:46:17"
+value "22:13:14"
 )
 (vvPair
 variable "group"
@@ -747,23 +715,19 @@ value "UNKNOWN"
 )
 (vvPair
 variable "host"
-value "L330W528"
+value "L330W529"
 )
 (vvPair
 variable "language"
-value "Verilog"
+value "VHDL"
 )
 (vvPair
 variable "library"
-value "EncDec_D_lib"
+value "ECC_ENC_DEC_lib"
 )
 (vvPair
 variable "library_downstream_HdsLintPlugin"
-value "$HDS_PROJECT_DIR/EncDec_D_lib/designcheck"
-)
-(vvPair
-variable "library_downstream_QuestaSimCompiler"
-value "$HDS_PROJECT_DIR/EncDec_D_lib/work"
+value "$HDS_PROJECT_DIR\\ECC_ENC_DEC_lib\\designcheck"
 )
 (vvPair
 variable "mm"
@@ -783,11 +747,11 @@ value "December"
 )
 (vvPair
 variable "p"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb"
 )
 (vvPair
 variable "p_logical"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\ECC_ENC_DEC\\symbol.sb"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\ECC_ENC_DEC\\symbol.sb"
 )
 (vvPair
 variable "package_name"
@@ -795,7 +759,7 @@ value "<Undefined Variable>"
 )
 (vvPair
 variable "project_name"
-value "EncDec_D"
+value "ECC_ENC_DEC"
 )
 (vvPair
 variable "series"
@@ -843,7 +807,7 @@ value "symbol"
 )
 (vvPair
 variable "time"
-value "17:46:17"
+value "22:13:14"
 )
 (vvPair
 variable "unit"
@@ -851,7 +815,7 @@ value "ECC_ENC_DEC"
 )
 (vvPair
 variable "user"
-value "benmaorr"
+value "kapelnik"
 )
 (vvPair
 variable "version"
@@ -872,7 +836,6 @@ value "21"
 ]
 )
 LanguageMgr "Verilog2001LangMgr"
-uid 116,0
 optionalChildren [
 *85 (SymbolBody
 uid 8,0
@@ -910,7 +873,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,10000,23000,10800"
-st "input  wire                        clk;"
+st "input  wire                        clk;
+"
 )
 thePort (LogicalPort
 lang 5
@@ -957,7 +921,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,10800,23000,11600"
-st "input  wire                        rst;"
+st "input  wire                        rst;
+"
 )
 thePort (LogicalPort
 lang 5
@@ -1004,7 +969,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,11600,24500,12400"
-st "input  wire [AMBA_ADDR_WIDTH-1:0]  PADDR;"
+st "input  wire [AMBA_ADDR_WIDTH-1:0]  PADDR;
+"
 )
 thePort (LogicalPort
 lang 5
@@ -1052,7 +1018,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,12400,25000,13200"
-st "input  wire [AMBA_WORD-1:0]        PWDATA;"
+st "input  wire [AMBA_WORD-1:0]        PWDATA;
+"
 )
 thePort (LogicalPort
 lang 5
@@ -1100,7 +1067,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,13200,25500,14000"
-st "input  wire                        PENABLE;"
+st "input  wire                        PENABLE;
+"
 )
 thePort (LogicalPort
 lang 5
@@ -1147,7 +1115,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,14000,24000,14800"
-st "input  wire                        PSEL;"
+st "input  wire                        PSEL;
+"
 )
 thePort (LogicalPort
 lang 5
@@ -1194,7 +1163,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,14800,25000,15600"
-st "input  wire                        PWRITE;"
+st "input  wire                        PWRITE;
+"
 )
 thePort (LogicalPort
 lang 5
@@ -1242,7 +1212,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,15600,25000,16400"
-st "output reg [AMBA_WORD-1:0]         PRDATA;"
+st "output reg [AMBA_WORD-1:0]         PRDATA;
+"
 )
 thePort (LogicalPort
 lang 5
@@ -1292,7 +1263,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,16400,26000,17200"
-st "output reg [DATA_WIDTH-1:0]        data_out;"
+st "output reg [DATA_WIDTH-1:0]        data_out;
+"
 )
 thePort (LogicalPort
 lang 5
@@ -1342,7 +1314,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,17200,29000,18000"
-st "output reg                         operation_done;"
+st "output reg                         operation_done;
+"
 )
 thePort (LogicalPort
 lang 5
@@ -1391,7 +1364,8 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,18000,28500,18800"
-st "output reg [1:0]                   num_of_errors;"
+st "output reg [1:0]                   num_of_errors;
+"
 )
 thePort (LogicalPort
 lang 5
@@ -1425,21 +1399,20 @@ stg "VerticalLayoutStrategy"
 first (Text
 uid 11,0
 va (VaSet
-isHidden 1
 font "arial,8,1"
 )
-xt "36700,21000,42600,22000"
-st "EncDec_D_lib"
-blo "36700,21800"
+xt "35700,16000,43700,17000"
+st "ECC_ENC_DEC_lib"
+blo "35700,16800"
 )
 second (Text
 uid 12,0
 va (VaSet
 font "arial,8,1"
 )
-xt "36700,22000,43400,23000"
+xt "35700,17000,42400,18000"
 st "ECC_ENC_DEC"
-blo "36700,22800"
+blo "35700,17800"
 )
 )
 gi *97 (GenericInterface
@@ -1462,7 +1435,8 @@ AMBA_WORD       32
 IDLE            2'b00  
 ENCODING        2'b01  
 DECODING        2'b10  
-NOISE           2'b11  "
+NOISE           2'b11  
+"
 )
 header "Parameter Declarations"
 showHdrWhenContentsEmpty 1
@@ -1561,11 +1535,11 @@ va (VaSet
 fg "0,0,32768"
 font "arial,10,0"
 )
-xt "200,-5800,32300,-600"
+xt "200,-5800,32200,-600"
 st "
 Created using Mentor Graphics HDL2Graphics(TM) Technology
-on - 17:34:52 12/ 2/2021
-from - D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hdl\\ECC_ENC_DEC.v
+on - 22:13:14 12/ 2/2021
+from - C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hdl\\ECC_ENC_DEC.v
 
 "
 tm "CommentText"
@@ -1611,11 +1585,10 @@ tm "PackageList"
 )
 ]
 )
-windowSize "302,359,1318,1049"
-viewArea "20208,6916,49257,26675"
-cachedDiagramExtent "0,-6000,73000,49000"
-hasePageBreakOrigin 1
-pageBreakOrigin "0,-7000"
+windowSize "0,0,1015,690"
+viewArea "0,0,0,0"
+cachedDiagramExtent "0,0,0,0"
+pageBreakOrigin "0,0"
 defaultCommentText (CommentText
 shape (Rectangle
 layer 0
@@ -1886,8 +1859,6 @@ xt "2000,9000,2000,9000"
 tm "SyDeclarativeTextMgr"
 )
 )
-lastUid 170,0
-okToSyncOnLoad 1
-OkToSyncGenericsOnLoad 1
-activeModelName "Symbol"
+lastUid 115,0
+activeModelName "Symbol:CDM"
 )

@@ -16,7 +16,6 @@ suid 7,0
 usingSuid 1
 emptyRow *1 (LEmptyRow
 )
-uid 78,0
 optionalChildren [
 *2 (RefLabelRowHdr
 )
@@ -161,7 +160,6 @@ uid 71,0
 pdm (PhysicalDM
 displayShortBounds 1
 editShortBounds 1
-uid 92,0
 optionalChildren [
 *22 (Sheet
 sheetRow (SheetRow
@@ -185,26 +183,22 @@ litem &1
 pos 3
 dimension 20
 )
-uid 94,0
 optionalChildren [
 *24 (MRCItem
 litem &2
 pos 0
 dimension 20
-uid 95,0
 )
 *25 (MRCItem
 litem &3
 pos 1
 dimension 23
-uid 96,0
 )
 *26 (MRCItem
 litem &4
 pos 2
 hidden 1
 dimension 20
-uid 97,0
 )
 *27 (MRCItem
 litem &15
@@ -257,80 +251,67 @@ fontColor "0,0,0"
 font "Tahoma,10,0"
 textAngle 90
 )
-uid 98,0
 optionalChildren [
 *34 (MRCItem
 litem &5
 pos 0
 dimension 20
-uid 99,0
 )
 *35 (MRCItem
 litem &7
 pos 1
 dimension 50
-uid 100,0
 )
 *36 (MRCItem
 litem &8
 pos 2
 dimension 100
-uid 101,0
 )
 *37 (MRCItem
 litem &9
 pos 3
 dimension 50
-uid 102,0
 )
 *38 (MRCItem
 litem &10
 pos 4
 dimension 100
-uid 103,0
 )
 *39 (MRCItem
 litem &11
 pos 5
 dimension 60
-uid 104,0
 )
 *40 (MRCItem
 litem &12
 pos 6
 dimension 100
-uid 105,0
 )
 *41 (MRCItem
 litem &13
 pos 7
 dimension 50
-uid 106,0
 )
 *42 (MRCItem
 litem &14
 pos 8
 dimension 80
-uid 107,0
 )
 ]
 )
 fixedCol 4
 fixedRow 2
 name "Ports"
-uid 93,0
 vaOverrides [
 ]
 )
 ]
 )
-uid 77,0
 )
 genericsCommonDM (CommonDM
 ldm (LogicalDM
 emptyRow *43 (LEmptyRow
 )
-uid 109,0
 optionalChildren [
 *44 (RefLabelRowHdr
 )
@@ -363,15 +344,17 @@ value "32"
 pr "// parameter DATA_WIDTH = 32,
 // parameter AMBA_ADDR_WIDTH = 20,"
 apr 0
+po ")
+)"
+apo 0
 )
-uid 131,0
+uid 54,0
 )
 ]
 )
 pdm (PhysicalDM
 displayShortBounds 1
 editShortBounds 1
-uid 119,0
 optionalChildren [
 *54 (Sheet
 sheetRow (SheetRow
@@ -395,32 +378,28 @@ litem &43
 pos 3
 dimension 20
 )
-uid 121,0
 optionalChildren [
 *56 (MRCItem
 litem &44
 pos 0
 dimension 20
-uid 122,0
 )
 *57 (MRCItem
 litem &45
 pos 1
 dimension 23
-uid 123,0
 )
 *58 (MRCItem
 litem &46
 pos 2
 hidden 1
 dimension 20
-uid 124,0
 )
 *59 (MRCItem
 litem &53
 pos 0
 dimension 20
-uid 132,0
+uid 55,0
 )
 ]
 )
@@ -431,73 +410,65 @@ fontColor "0,0,0"
 font "Tahoma,10,0"
 textAngle 90
 )
-uid 125,0
 optionalChildren [
 *60 (MRCItem
 litem &47
 pos 0
 dimension 20
-uid 126,0
 )
 *61 (MRCItem
 litem &49
 pos 1
 dimension 50
-uid 127,0
 )
 *62 (MRCItem
 litem &50
 pos 2
 dimension 100
-uid 128,0
 )
 *63 (MRCItem
 litem &51
 pos 3
 dimension 50
-uid 129,0
 )
 *64 (MRCItem
 litem &52
 pos 4
 dimension 80
-uid 130,0
 )
 ]
 )
 fixedCol 3
 fixedRow 2
 name "Ports"
-uid 120,0
 vaOverrides [
 ]
 )
 ]
 )
-uid 108,0
 type 1
 )
 VExpander (VariableExpander
 vvMap [
 (vvPair
 variable "HDLDir"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hdl"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hdl"
 )
 (vvPair
 variable "HDSDir"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds"
 )
 (vvPair
 variable "SideDataDesignDir"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\@encoder\\symbol.sb.info"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@encoder\\symbol.sb.info"
 )
 (vvPair
 variable "SideDataUserDir"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\@encoder\\symbol.sb.user"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@encoder\\symbol.sb.user"
 )
 (vvPair
 variable "SourceDir"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds"
 )
 (vvPair
 variable "appl"
@@ -513,11 +484,11 @@ value "%(unit)_%(view)_config"
 )
 (vvPair
 variable "d"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\@encoder"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@encoder"
 )
 (vvPair
 variable "d_logical"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\Encoder"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\Encoder"
 )
 (vvPair
 variable "date"
@@ -557,7 +528,7 @@ value "symbol"
 )
 (vvPair
 variable "graphical_source_author"
-value "benmaorr"
+value "kapelnik"
 )
 (vvPair
 variable "graphical_source_date"
@@ -569,11 +540,11 @@ value "UNKNOWN"
 )
 (vvPair
 variable "graphical_source_host"
-value "L330W528"
+value "L330W529"
 )
 (vvPair
 variable "graphical_source_time"
-value "11:44:03"
+value "22:13:13"
 )
 (vvPair
 variable "group"
@@ -581,23 +552,19 @@ value "UNKNOWN"
 )
 (vvPair
 variable "host"
-value "L330W528"
+value "L330W529"
 )
 (vvPair
 variable "language"
-value "Verilog"
+value "VHDL"
 )
 (vvPair
 variable "library"
-value "EncDec_D_lib"
+value "ECC_ENC_DEC_lib"
 )
 (vvPair
 variable "library_downstream_HdsLintPlugin"
-value "$HDS_PROJECT_DIR\\EncDec_D_lib\\designcheck"
-)
-(vvPair
-variable "library_downstream_QuestaSimCompiler"
-value "$HDS_PROJECT_DIR\\EncDec_D_lib\\work"
+value "$HDS_PROJECT_DIR\\ECC_ENC_DEC_lib\\designcheck"
 )
 (vvPair
 variable "mm"
@@ -617,11 +584,11 @@ value "December"
 )
 (vvPair
 variable "p"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\@encoder\\symbol.sb"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@encoder\\symbol.sb"
 )
 (vvPair
 variable "p_logical"
-value "D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hds\\Encoder\\symbol.sb"
+value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\Encoder\\symbol.sb"
 )
 (vvPair
 variable "package_name"
@@ -629,7 +596,7 @@ value "<Undefined Variable>"
 )
 (vvPair
 variable "project_name"
-value "EncDec_D"
+value "ECC_ENC_DEC"
 )
 (vvPair
 variable "series"
@@ -677,7 +644,7 @@ value "symbol"
 )
 (vvPair
 variable "time"
-value "11:44:03"
+value "22:13:13"
 )
 (vvPair
 variable "unit"
@@ -685,7 +652,7 @@ value "Encoder"
 )
 (vvPair
 variable "user"
-value "benmaorr"
+value "kapelnik"
 )
 (vvPair
 variable "version"
@@ -706,7 +673,6 @@ value "21"
 ]
 )
 LanguageMgr "Verilog2001LangMgr"
-uid 76,0
 optionalChildren [
 *65 (SymbolBody
 uid 8,0
@@ -1073,8 +1039,8 @@ uid 11,0
 va (VaSet
 font "arial,8,1"
 )
-xt "27700,13000,33600,14000"
-st "EncDec_D_lib"
+xt "27700,13000,35700,14000"
+st "ECC_ENC_DEC_lib"
 blo "27700,13800"
 )
 second (Text
@@ -1097,12 +1063,14 @@ uid 15,0
 va (VaSet
 font "Courier New,8,0"
 )
-xt "24000,400,42500,4400"
+xt "24000,400,42500,6000"
 st "Parameter Declarations
 
 // parameter DATA_WIDTH = 32,
 // parameter AMBA_ADDR_WIDTH = 20,
 AMBA_WORD 32  
+)
+)
 "
 )
 header "Parameter Declarations"
@@ -1115,6 +1083,9 @@ value "32"
 pr "// parameter DATA_WIDTH = 32,
 // parameter AMBA_ADDR_WIDTH = 20,"
 apr 0
+po ")
+)"
+apo 0
 )
 ]
 )
@@ -1175,11 +1146,11 @@ va (VaSet
 fg "0,0,32768"
 font "arial,10,0"
 )
-xt "200,-5800,32300,-600"
+xt "200,-5800,32700,-600"
 st "
 Created using Mentor Graphics HDL2Graphics(TM) Technology
-on - 11:35:29 12/ 2/2021
-from - D:\\Users\\benmaorr\\Desktop\\EncDec_D\\EncDec_D_lib\\hdl\\Encoder.v
+on - 22:13:13 12/ 2/2021
+from - C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hdl\\Encoder.v
 
 "
 tm "CommentText"
@@ -1499,8 +1470,6 @@ xt "2000,9000,2000,9000"
 tm "SyDeclarativeTextMgr"
 )
 )
-lastUid 132,0
-postModuleDirective "//using the following lines - A-Z, we will implement  matrix multiply
-//reg A,B,C,E,F,G,H,I,J,K,M,O,P,R,T,V,W,Y,Z,AC,ACE,ACEG,AE,IK,PR;"
+lastUid 75,0
 activeModelName "Symbol:CDM"
 )

@@ -15,20 +15,29 @@ interface Interface #(
 parameter DATA_WIDTH = 32,
 parameter AMBA_ADDR_WIDTH = 20,
 parameter AMBA_WORD = 32
-);
+)();
 
 //signals declaration
-logic clk;
-logic rst;
-logic ena;
+logic 								                clk;
+logic 								                rst;
+logic 		[AMBA_ADDR_WIDTH-1:0] 	 PADDR;
+logic 		[AMBA_WORD-1:0] 		      PWDATA;
+logic 								                PENABLE;
+logic								                PSEL;
+logic								                PWRITE;
+logic		[AMBA_WORD-1:0] 		       PRDATA;
+logic 		[DATA_WIDTH-1:0] 		     data_out;
+logic 								                operation_done;
+logic 		[1:0]				               num_of_errors;
 
-
-
-
+ 
 //modports declaration
-modport stimulus (output clk, rst, ena, im_pixel, w_pixel, param);
-modport ECC_ENC_DEC (input clk, rst, PADDR, PWDATA, PENABLE, PSEL,PWRITE, output PRDATA, data_out, operation_done, num_of_errors);
-modport checker_coverager (input clk, rst, ena, im_pixel, w_pixel, param, iw_pixel);
-modport vsgoldenmodel (input ena, iw_pixel);
+modport Stimulus (output clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, input  data_out, operation_done, num_of_errors);
+modport ECC_ENC_DEC (input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, output PRDATA, data_out, operation_done, num_of_errors);
+modport Checker (input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors);
+modport Coverage (input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors);
+//modport vsgoldenmodel (input PWDATA, operation_done,);
+
+
 
 endinterface
