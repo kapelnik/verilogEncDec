@@ -37,6 +37,8 @@ begin : stim_proc
     stim_bus.rst = 1;
     @(posedge stim_bus.clk); // wait til next rising edge (in other words, wait 20ns)
     stim_bus.rst = 0;
+
+  
   
 end
 

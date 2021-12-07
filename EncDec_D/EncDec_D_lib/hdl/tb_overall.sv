@@ -17,13 +17,13 @@ parameter AMBA_ADDR_WIDTH = 20,
 parameter AMBA_WORD = 32
 );
 
-Interface tb();
+Interface  #(.DATA_WIDTH(DATA_WIDTH), .AMBA_ADDR_WIDTH(AMBA_ADDR_WIDTH), .AMBA_WORD(AMBA_WORD)) tb();
 
 Stimulus gen(
   .stim_bus(tb)
   );
 
-ECC_ENC_DEC dut(
+ECC_ENC_DEC  #(.DATA_WIDTH(DATA_WIDTH), .AMBA_ADDR_WIDTH(AMBA_ADDR_WIDTH), .AMBA_WORD(AMBA_WORD)) dut(
    .clk            (tb.clk),
    .rst            (tb.rst),
    .PADDR          (tb.PADDR),
