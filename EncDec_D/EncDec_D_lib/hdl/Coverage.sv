@@ -28,6 +28,12 @@ covergroup signals_test @(posedge coverage_bus.clk);
        bins high = {1};
      }
      
+    // did operation_done ranged from 1:0
+			op_done : coverpoint coverage_bus.operation_done{
+       bins low = {0};
+       bins high = {1};
+     }
+     
      
      
      
