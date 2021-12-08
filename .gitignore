@@ -38,3 +38,14 @@ EncDec_D/EncDec_D_lib/hds/.hdlsidedata/_GoldenModle.v._fpf
 Verification/Data.txt
 EncDec_D/EncDec_D_lib/hds/_@golden@modle._epf
 *.dat
+*.qdb
+*.qpg
+*.qtl
+EncDec_D/dp_user/v2_72/dp_user_prefs
+EncDec_D/EncDec_D_lib/work/_info
+EncDec_D/EncDec_D_lib/work/_vmake
+EncDec_D/EncDec_D_lib/work/hds_args.tmp
+EncDec_D/EncDec_D_lib/work/modelsim.ini
+EncDec_D/EncDec_D_lib/work/transcript
+EncDec_D/EncDec_D_lib/work/transcript.txt
+EncDec_D/EncDec_D_lib/work/vsim.wlf

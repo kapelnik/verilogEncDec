@@ -1,13 +1,14 @@
 [DesignChecker]
-EncDec_D_lib = $HDS_PROJECT_DIR\EncDec_D_lib\designcheck
+EncDec_D_lib = $HDS_PROJECT_DIR/EncDec_D_lib/designcheck
 [QuestaSim]
-EncDec_D_lib = $HDS_PROJECT_DIR\EncDec_D_lib\work
+EncDec_D_lib = $HDS_PROJECT_DIR/EncDec_D_lib/work
 [hdl]
-EncDec_D_lib = $HDS_PROJECT_DIR\EncDec_D_lib\hdl
+EncDec_D_lib = $HDS_PROJECT_DIR/EncDec_D_lib/hdl
 [hds]
-EncDec_D_lib = $HDS_PROJECT_DIR\EncDec_D_lib\hds
+EncDec_D_lib = $HDS_PROJECT_DIR/EncDec_D_lib/hds
 [hds_settings]
 default_library = EncDec_D_lib
+design_root = EncDec_D_lib.tb_overall(tb_overall)tb_overall.sv
 version = 2
 [library_type]
 EncDec_D_lib = regular

@@ -36,7 +36,7 @@ begin : init_proc
 	
 end
 
-always@(posedge  gold_bus.opration_done) begin
+always@(gold_bus.opration_done or gold_bus.RegistersR) begin
 	// Data out
 	if(gold_bus.opration_done == 1'b1)
 		gold_bus.gm_DATA_OUT = DataOut;

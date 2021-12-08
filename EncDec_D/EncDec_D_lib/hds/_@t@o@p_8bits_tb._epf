@@ -1,2 +1,0 @@
-DEFAULT_ARCHITECTURE atom TOP_8bits_tb
-DEFAULT_FILE atom top_8bits_tb_rtl.v

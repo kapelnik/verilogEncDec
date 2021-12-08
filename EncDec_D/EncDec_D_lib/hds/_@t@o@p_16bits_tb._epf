@@ -1,2 +1,0 @@
-DEFAULT_ARCHITECTURE atom TOP_16bits_tb
-DEFAULT_FILE atom top_16bits_tb_rtl.v
