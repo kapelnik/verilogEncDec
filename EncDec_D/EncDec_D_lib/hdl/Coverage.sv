@@ -22,18 +22,41 @@ parameter AMBA_WORD = 32
 
 //Cover Groups:
 covergroup signals_test @(posedge coverage_bus.clk);
-    // did reset ranged from 1:0
-			reset : coverpoint coverage_bus.rst{
-       bins low = {0};
-       bins high = {1};
-     }
+		// did reset ranged from 1:0
+				reset : coverpoint coverage_bus.rst{
+		   bins low = {0};
+		   bins high = {1};
+		 }
      
-    // did operation_done ranged from 1:0
-			op_done : coverpoint coverage_bus.operation_done{
-       bins low = {0};
-       bins high = {1};
-     }
-     
+          // checking if the result PENABLE went to all the ranges
+         PENABLE : coverpoint coverage_bus.PENABLE{
+         bins low = {0};
+         bins high = {1};
+          }
+		  
+          // checking if the result PSEL went to all the ranges
+         PSEL : coverpoint coverage_bus.PSEL{
+         bins low = {0};
+         bins high = {1};
+          }
+		  
+          // checking if the result PWRITE went to all the ranges
+         PWRITE : coverpoint coverage_bus.PWRITE{
+         bins low = {0};
+         bins high = {1};
+          }
+		  
+          // checking if the result operation_done went to all the ranges
+         Operation_done : coverpoint coverage_bus.operation_done{
+         bins low = {0};
+         bins high = {1};
+          }
+		  
+		 // checking if the result data_out went to all the ranges
+         // Data_out : coverpoint coverage_bus.data_out{
+         // bins low = {[0:DATA_WIDTH-1]};
+		 
+          // }
      
      
      

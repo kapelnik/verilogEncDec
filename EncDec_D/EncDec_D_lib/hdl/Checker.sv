@@ -30,7 +30,19 @@ property rst_active;
 				endproperty
 assert property(rst_active)
   else $error("error with Reset");
-  cover property(rst_active);
+	cover property(rst_active);
+////##
+
+
+//##operation_done properties: 	
+//operation should be done in two to three cycles:
+// PSEL&PENABLE&PWRITE	&& PADDR==00 ( write to control) => ## after 2-3  cycles  - operation_done=1.
+property operation_done_active;
+				@(checker_bus.PSEL) (checker_bus.PENABLE && checker_bus.PWRITE && (checker_bus.PADDR == 2'b00)) ## [1:3] checker_bus.operation_done;
+				endproperty
+assert property(operation_done_active)
+  else $error("error with operation_done");
+	cover property(operation_done_active);
 ////##
 
 //property ena_active;
