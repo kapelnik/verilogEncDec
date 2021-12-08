@@ -32,11 +32,11 @@ logic 		[1:0]				               num_of_errors;
 
  
 //modports declaration
-modport Stimulus (output clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, input  data_out, operation_done, num_of_errors);
+modport Stimulus (output clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE,NOISE input  data_out, operation_done, num_of_errors);
 modport ECC_ENC_DEC (input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, output PRDATA, data_out, operation_done, num_of_errors);
 modport Checker (input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors);
 modport Coverage (input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors);
-//modport vsgoldenmodel (input PWDATA, operation_done,);
+modport vsgoldenmodel (input PWDATA, operation_done,NOISE output gm_DATA_OUT,gm_number_of_errors);
 
 
 
