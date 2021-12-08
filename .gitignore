@@ -33,3 +33,8 @@ Tests/1442/power2_flow.v
 Tests/1442/Stimulus.sv
 Tests/1442/tb_overall.sv
 Tests/1442/visible_watermarking_struct.v
+*.dat
+EncDec_D/EncDec_D_lib/hds/.hdlsidedata/_GoldenModle.v._fpf
+Verification/Data.txt
+EncDec_D/EncDec_D_lib/hds/_@golden@modle._epf
+*.dat
