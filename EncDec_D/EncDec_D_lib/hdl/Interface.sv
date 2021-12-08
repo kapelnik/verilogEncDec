@@ -12,31 +12,34 @@
 `timescale 1ns/10ps
 interface Interface #(
 //input Params
-parameter DATA_WIDTH = 32,
-parameter AMBA_ADDR_WIDTH = 20,
-parameter AMBA_WORD = 32
+parameter DATA_WIDTH 		= 32,
+parameter AMBA_ADDR_WIDTH 	= 20,
+parameter AMBA_WORD 		= 32
 )();
 
 //signals declaration
 logic 								                clk;
 logic 								                rst;
-logic 		[AMBA_ADDR_WIDTH-1:0] 	 PADDR;
-logic 		[AMBA_WORD-1:0] 		      PWDATA;
+logic 		[AMBA_ADDR_WIDTH-1:0] 	 				PADDR;
+logic 		[AMBA_WORD-1:0] 		     	 		PWDATA;
 logic 								                PENABLE;
 logic								                PSEL;
 logic								                PWRITE;
-logic		[AMBA_WORD-1:0] 		       PRDATA;
-logic 		[DATA_WIDTH-1:0] 		     data_out;
+logic		[AMBA_WORD-1:0] 		       			PRDATA;
+logic 		[DATA_WIDTH-1:0] 		     			data_out;
 logic 								                operation_done;
-logic 		[1:0]				               num_of_errors;
-
+logic 		[1:0]				               		num_of_errors;
+logic 		[AMBA_WORD-1:0] 		     	 		NOISE;
+logic								                RegistersW;
+logic								                RegistersR;
+logic 		[AMBA_WORD-1:0] 		     	 		FullWord;
  
 //modports declaration
-modport Stimulus (output clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE,NOISE input  data_out, operation_done, num_of_errors);
-modport ECC_ENC_DEC (input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, output PRDATA, data_out, operation_done, num_of_errors);
-modport Checker (input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors);
-modport Coverage (input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors);
-modport vsgoldenmodel (input PWDATA, operation_done,NOISE output gm_DATA_OUT,gm_number_of_errors);
+modport Stimulus 		(output clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE,NOISE,RegistersW,RegistersR,FullWord input  data_out, operation_done, num_of_errors);
+modport ECC_ENC_DEC 	(input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, output PRDATA, data_out, operation_done, num_of_errors);
+modport Checker 		(input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors);
+modport Coverage 		(input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors);
+modport vsgoldenmodel 	(input PWDATA,PADDR,RegistersW,RegistersR,NOISE, FullWord,operation_done output gm_DATA_OUT,gm_number_of_errors);
 
 
 
