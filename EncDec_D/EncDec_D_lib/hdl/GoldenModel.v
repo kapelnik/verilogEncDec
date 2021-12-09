@@ -47,8 +47,8 @@ end
 
 always@(posedge  gold_bus.operation_done) begin : NOF_control
 	// NOF bus
-	gold_bus.gm_number_of_errors[0] =  (^gold_bus.NOISE) & (|gold_bus.NOISE);
-	gold_bus.gm_number_of_errors[1] = ~(^gold_bus.NOISE) & (|gold_bus.NOISE);
+	gold_bus.gm_number_of_errors[0] =  (^NOISE) & (|NOISE);
+	gold_bus.gm_number_of_errors[1] = ~(^NOISE) & (|NOISE);
 	// Data out
 end
 	
@@ -57,9 +57,9 @@ end
 always @(posedge gold_bus.RegistersR or posedge gold_bus.RegistersW) begin : Register_Selction
   
 
-		if( gold_bus.RegistersR) 
+		if( gold_bus.RegistersW) 
 			begin//OFFSET OF THE ADDRES IS THE SELECTED REGISTER
-				case(gold_bus.PADDR) // Check RTL
+				case(gold_bus.PADDR[3:2]) // Check RTL
 				  2'b00 : CTRL <= gold_bus.PWDATA;
 				  2'b01 : DATA_IN <= gold_bus.PWDATA;
 				  2'b10 : CODEWORD_WIDTH <= gold_bus.PWDATA;
