@@ -37,17 +37,17 @@ ECC_ENC_DEC  #(.DATA_WIDTH(DATA_WIDTH), .AMBA_ADDR_WIDTH(AMBA_ADDR_WIDTH), .AMBA
    .num_of_errors  (tb.num_of_errors)
 );
 
-Coverage cov(
+Coverage #(.DATA_WIDTH(DATA_WIDTH), .AMBA_ADDR_WIDTH(AMBA_ADDR_WIDTH), .AMBA_WORD(AMBA_WORD)) cov(
     .coverage_bus(tb)
     );
     
-Checker check(
+Checker #(.DATA_WIDTH(DATA_WIDTH), .AMBA_ADDR_WIDTH(AMBA_ADDR_WIDTH), .AMBA_WORD(AMBA_WORD)) check(
     .checker_bus(tb)
     );
     
-//GoldModel res_test(
-//    .gold_bus(tb)
-//    );
+GoldenModel #(.DATA_WIDTH(DATA_WIDTH), .AMBA_ADDR_WIDTH(AMBA_ADDR_WIDTH), .AMBA_WORD(AMBA_WORD)) goldmod(
+   .gold_bus(tb)
+   );
 
 // ### Please start your Verilog code here ### 
 

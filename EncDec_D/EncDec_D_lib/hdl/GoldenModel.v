@@ -10,7 +10,7 @@
 
 `resetall
 `timescale 1ns/10ps
-module GoldenModle 
+module GoldenModel 
 #(
     parameter DATA_WIDTH = 32,
 	parameter AMBA_ADDR_WIDTH = 20,
@@ -22,12 +22,12 @@ module GoldenModle
 );
 
 `define NULL 0
-logic [DATA_WIDTH-1:0] 	DataOut,
-logic [AMBA_WORD-1:0] 	CTRL ,
-logic [AMBA_WORD-1:0] 	DATA_IN,
-logic [AMBA_WORD-1:0] 	CODEWORD_WIDTH,
-logic [AMBA_WORD-1:0] 	NOISE,
-logic [AMBA_WORD-1:0] 	RegistersOut
+logic [DATA_WIDTH-1:0] 	DataOut;
+logic [AMBA_WORD-1:0] 	CTRL ;
+logic [AMBA_WORD-1:0] 	DATA_IN;
+logic [AMBA_WORD-1:0] 	CODEWORD_WIDTH;
+logic [AMBA_WORD-1:0] 	NOISE;
+logic [AMBA_WORD-1:0] 	RegistersOut;
 
 // Data Types
 initial
@@ -36,16 +36,16 @@ begin : init_proc
 	
 end
 
-always@(gold_bus.opration_done or gold_bus.RegistersR) begin
+always@(gold_bus.operation_done or gold_bus.RegistersR) begin : Data_Out_Control
 	// Data out
-	if(gold_bus.opration_done == 1'b1)
-		gold_bus.gm_DATA_OUT = DataOut;
+	if(gold_bus.operation_done == 1'b1)
+		gold_bus.gm_DATA_OUT = gold_bus.FullWord;
 	else
 		gold_bus.gm_DATA_OUT = RegistersOut;
 end
 
 
-always@(posedge  gold_bus.opration_done) begin
+always@(posedge  gold_bus.operation_done) begin : NOF_control
 	// NOF bus
 	gold_bus.gm_number_of_errors[0] =  (^gold_bus.NOISE) & (|gold_bus.NOISE);
 	gold_bus.gm_number_of_errors[1] = ~(^gold_bus.NOISE) & (|gold_bus.NOISE);
@@ -53,40 +53,22 @@ always@(posedge  gold_bus.opration_done) begin
 end
 	
 	
-always@() begin
-
-		// Encode - 
-		if(CTRL==2'b00)
-			DataOut = gold_bus.FullWord;		
-		//Decode or Full Channel -
-		else
-		begin
-		case(NOF)
-			2'b10:
-				DataOut = DATA_WIDTH-1{1'b0};		
-			default: 		
-				DataOut = gold_bus.FullWord;				
-			endcase;
-		end
-end	
-	
-	
 	
 always @(posedge gold_bus.RegistersR or posedge gold_bus.RegistersW) begin : Register_Selction
-  begin
+  
 
 		if( gold_bus.RegistersR) 
 			begin//OFFSET OF THE ADDRES IS THE SELECTED REGISTER
 				case(gold_bus.PADDR) // Check RTL
-				  2'b00 : CTRL <= PWDATA;
-				  2'b01 : DATA_IN <= PWDATA;
-				  2'b10 : CODEWORD_WIDTH <= PWDATA;
-				  default : NOISE <= PWDATA;
+				  2'b00 : CTRL <= gold_bus.PWDATA;
+				  2'b01 : DATA_IN <= gold_bus.PWDATA;
+				  2'b10 : CODEWORD_WIDTH <= gold_bus.PWDATA;
+				  default : NOISE <= gold_bus.PWDATA;
 				endcase
 			end
 		else
 		begin
-			case(PADDR) // PREAD: CPU Reads from registers
+			case(gold_bus.PADDR) // PREAD: CPU Reads from registers
 			  2'b00 : RegistersOut <= CTRL;
 			  2'b01 : RegistersOut <= DATA_IN;
 			  2'b10 : RegistersOut <= CODEWORD_WIDTH;
@@ -97,5 +79,23 @@ always @(posedge gold_bus.RegistersR or posedge gold_bus.RegistersW) begin : Reg
 
 
 
+	
+// always@(FullWord,) begin
+
+		// Encode - 
+		// if(CTRL==2'b00)
+			// DataOut = gold_bus.FullWord;		
+		// Decode or Full Channel -
+		// else
+		// begin
+		// case(NOF)
+			// 2'b10:
+				// DataOut = {(DATA_WIDTH-1){1'b0}};		
+			// default: 		
+				// DataOut = gold_bus.FullWord;				
+			// endcase;
+		// end
+// end	
+	
 
 endmodule
