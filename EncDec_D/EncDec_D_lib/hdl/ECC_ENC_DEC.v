@@ -45,8 +45,10 @@ reg [1:0] Next_State,
 		  next_num_of_errors;
 
 //Register for full channel
-reg [31:0] FC_REG ;
-reg [31:0] DATA_IN_Pad;
+reg [31:0] FC_REG,
+		   FC_REG_SAVE;
+reg [31:0] DATA_IN_Pad,
+		   Dec_in;
 
 
 //Registers, output from Register_selctor
@@ -59,7 +61,7 @@ wire [AMBA_WORD-1:0] CTRL_REG,
 // Decoder registers
 wire [1:0] NOF;
 wire [4:0] NOE_Out;
-wire [DATA_WIDTH-1:0] Enc_noise;
+reg [DATA_WIDTH-1:0] Enc_noise;
 
 // Enititys Out put					 
 wire [AMBA_WORD-1:0] Enc_Out,
@@ -116,7 +118,7 @@ Num_Of_Errors Num_Of_Errors(
    .NOE_Out        (NOE_Out)
 );
 
-Error_fix #(.AMBA_WORD(32)) Error_fix(
+Error_fix #(.DATA_WIDTH(DATA_WIDTH)) Error_fix(
    .clk        (clk),
    .rst        (rst),
    .S          (NOE_Out),
@@ -124,7 +126,7 @@ Error_fix #(.AMBA_WORD(32)) Error_fix(
    .Small      (Small),
    .Medium     (Medium),
 //   .Enc_Done   (Enc_Done),
-   .DATA_IN    ({{32-DATA_WIDTH{1'b0}},FC_REG[31:32-DATA_WIDTH]}),
+   .DATA_IN    (Dec_in),
 //   .Error_Done (Error_Done),
    .Dec_Out    (Dec_Out)
 );
@@ -188,7 +190,7 @@ begin : FC_REG_Control //Control bit change
 	case (Next_State)
 		ENCODING: begin	//=================ENCODING State//=================
 					case (CTRL_REG[1:0])
-						2'b10: 		load = 1'b1 ;
+						2'b10: 		load = 1'b0 ;
 						default:	load = 1'b0 ;
 					endcase
 				end
@@ -210,24 +212,62 @@ end
 //#################################
 //FC_control used to implement Full Channel - encoder->noise->encode->decode
 
-assign Enc_noise = Enc_Out[DATA_WIDTH-1:0]^NOISE_REG[DATA_WIDTH-1:0];
+always@(Enc_Out or NOISE_REG or Small or Medium)
+begin : Noise_Adding
+	if(Small)
+		Enc_noise = {Enc_Out[7:0]^NOISE_REG[7:0],{DATA_WIDTH-8{1'b0}}};
+	else if(Medium)
+		Enc_noise = {Enc_Out[15:0]^NOISE_REG[15:0],{DATA_WIDTH-16{1'b0}}};
+	else
+		Enc_noise = Enc_Out[DATA_WIDTH-1:0]^NOISE_REG[DATA_WIDTH-1:0];
+end
 
-always@(posedge clk or negedge rst) 
+always@(FC_REG or Small or Medium)
+begin : Entering_Dec_data
+	if(Small)
+		Dec_in = {{32-8{1'b0}},FC_REG[31:32-8]};
+	else if(Medium)
+		Dec_in = {{32-16{1'b0}},FC_REG[31:32-16]};
+	else
+		Dec_in = FC_REG;
+end
+// assign Enc_noise = Enc_Out[DATA_WIDTH-1:0]^NOISE_REG[DATA_WIDTH-1:0];
+
+always@(Next_State or Enc_noise or FC_REG_SAVE or DATA_IN_Pad) 
 begin: FC_control
-	if(!rst) 
-		begin
-			FC_REG <= {32{1'b0}};	
-		end
-	else 
-		begin
-			if (load)
-				FC_REG  	   <= {Enc_noise,{32-DATA_WIDTH{1'b0}}};
-			else
-				FC_REG         <=	 	 DATA_IN_Pad;
-		end	
+	case (current_state)
+		ENCODING: begin	//=================ENCODING State//=================
+					case (CTRL_REG[1:0])
+						2'b10: 		FC_REG  	   = {Enc_noise,{32-DATA_WIDTH{1'b0}}};
+						default:	FC_REG  = FC_REG_SAVE;
+					endcase
+				end
+		IDLE: begin	////=================DECODING State//=================
+					FC_REG         =	 	 DATA_IN_Pad;
+				end
+		default: begin	////=================Any Other State//=================
+					FC_REG  = FC_REG_SAVE;
+					
+					
+				end
+	endcase
+			// if (load)
+				// FC_REG  	   = {Enc_noise,{32-DATA_WIDTH{1'b0}}};
+			// else
+				// FC_REG         =	 	 DATA_IN_Pad;
+		// end	
 		
 end
 
+always@(posedge clk or negedge rst)
+begin: Saving_data
+	if(!rst)
+		FC_REG_SAVE <= {32{1'b0}};
+	else
+		FC_REG_SAVE <= FC_REG ;
+end
+
+// assign FC_REG = load ? {Enc_noise,{32-DATA_WIDTH{1'b0}}} : DATA_IN_Pad;
 //#################################
 //Noise_Control - This flag used for the state machine to know whether noise has being added or not
 always@(current_state) 
@@ -378,9 +418,26 @@ always@(CTRL_REG or DATA_IN_REG or Small or Medium)
 begin: Zero_padding
 	case (CTRL_REG[1:0])
 	
-		2'b01: 	DATA_IN_Pad = {{DATA_IN_REG[DATA_WIDTH-1:0]},{32-DATA_WIDTH{1'b0}}};		//Decode - need all data width since the parity is already added
+		2'b01: 	
+			begin																		//default - encode or full channel, data received without parity bits
+				if(Small) 
+					begin
+						DATA_IN_Pad = {{DATA_IN_REG[7:0]},{32-8{1'b0}}};		//Data width = 00x: data_in is 8 bits, when the 4 LSB are the values, and 4 MSB are zeroes or dont cares
+					end
+				else 
+				if (Medium) 
+					begin
+						DATA_IN_Pad = {{DATA_IN_REG[15:0]},{32-16{1'b0}}};		//Data width = 01x: data_in is 16 bits, when the 11 LSB are the values, and 5 MSB are zeroes or dont cares
+					end
+				else 
+					begin
+						DATA_IN_Pad = DATA_IN_REG;		//Data width = 10x: data_in is 32 bits, when the 25 LSB are the values, and 6 MSB are zeroes or dont cares
+					end
+			end
+				// DATA_IN_Pad = {{DATA_IN_REG[DATA_WIDTH-1:0]},{32-DATA_WIDTH{1'b0}}};		//Decode - need all data width since the parity is already added
 		
-		default: begin																		//default - encode or full channel, data received without parity bits
+		default: 
+			begin																		//default - encode or full channel, data received without parity bits
 				if(Small) 
 					begin
 						DATA_IN_Pad = {{DATA_IN_REG[3:0]},{28{1'b0}}};		//Data width = 00x: data_in is 8 bits, when the 4 LSB are the values, and 4 MSB are zeroes or dont cares

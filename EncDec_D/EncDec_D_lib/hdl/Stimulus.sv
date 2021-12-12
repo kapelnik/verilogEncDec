@@ -68,13 +68,13 @@ always begin : clock_generator_proc
 end
 
 
-
+logic [1:0] Width = 2'b00;
 
 initial 
 begin : stim_proc
 	amount = new;
 	randNoise = new;
-
+	
   // Initilization
     stim_bus.clk = 1; // start with clock and reset at '1', while enable at '0'
     stim_bus.rst = 0;
@@ -99,6 +99,7 @@ begin : stim_proc
 	//Test for each sample:
 	
 	//********** Encode: **********
+	Width = 2'b00;
 	GenerateNoise();
 	
 	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
@@ -107,7 +108,7 @@ begin : stim_proc
 	RegistersWrite();
 	 
 	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1000}}; 
-	stim_bus.PWDATA ={AMBA_WORD{1'b0}};
+	stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},Width};
 	RegistersWrite();
 	
 	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
@@ -125,7 +126,7 @@ begin : stim_proc
 	RegistersWrite();
 	
 	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
-	stim_bus.PWDATA ={{AMBA_WORD-4{1'b0}},4'b0100};
+	stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
 	RegistersWrite();
 	@(posedge stim_bus.clk); /// The cycle that need to write into the register
 	@(posedge stim_bus.clk); /// The cycle that need to write into the register
@@ -140,7 +141,7 @@ begin : stim_proc
 	RegistersWrite();
 	 
 	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
-	stim_bus.PWDATA ={{AMBA_WORD-4{1'b0}},4'b1000};
+	stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
 	RegistersWrite();
 	@(posedge stim_bus.clk); /// The cycle that need to write into the register
 	@(posedge stim_bus.clk); /// The cycle that need to write into the register

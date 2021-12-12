@@ -12,9 +12,9 @@
 `timescale 1ns/10ps
 module Error_fix 
 #(
-// parameter DATA_WIDTH = 32,
+parameter DATA_WIDTH = 32
 // parameter AMBA_ADDR_WIDTH = 20,
-parameter AMBA_WORD = 32
+// parameter AMBA_WORD = 32
 )
 (
 input   clk,
@@ -26,9 +26,9 @@ input   Medium,
 //input   Enc_Done,
 input  [31:0] DATA_IN,
 //output reg Error_Done = 1'b0,
-output reg [AMBA_WORD-1:0] Dec_Out
+output reg [DATA_WIDTH-1:0] Dec_Out
 );
-reg [AMBA_WORD-1:0] Bit_fix;// = {AMBA_WORD{1'b0}};
+reg [31:0] Bit_fix;// = {AMBA_WORD{1'b0}};
 wire Enable_Fix;// = 1'b0;
 
 
@@ -80,7 +80,7 @@ always @(Enable_Fix or S) begin : Find_Number_Of_Errors // Number of errors
 			endcase
 		end
 	else 
-		Bit_fix <= {AMBA_WORD{1'b0}};
+		Bit_fix <= {32{1'b0}};
    
   end
   
@@ -91,22 +91,22 @@ always @(Enable_Fix or S) begin : Find_Number_Of_Errors // Number of errors
 always @(posedge clk or negedge rst) begin : Error_Fix_Out
 	if(!rst) 
 		begin
-			Dec_Out <= {AMBA_WORD{1'b0}};
+			Dec_Out <= {DATA_WIDTH{1'b0}};
 		end		
 	else 
 		begin
 		if(Small) 
 			begin	
-				Dec_Out	<=	DATA_IN[AMBA_WORD-1:0]^{{2'b00},{Bit_fix[AMBA_WORD-1:5]},{Bit_fix[2:0]}};
+				Dec_Out	<=	DATA_IN[DATA_WIDTH-1:0]^{{2'b00},{Bit_fix[DATA_WIDTH-1:5]},{Bit_fix[2:0]}};
 			end
 		else 
 			if (Medium) 
 				begin
-					Dec_Out	<=	DATA_IN[AMBA_WORD-1:0]^{{1'b0},{Bit_fix[AMBA_WORD-1:5]},{Bit_fix[3:0]}};
+					Dec_Out	<=	DATA_IN[DATA_WIDTH-1:0]^{{1'b0},{Bit_fix[DATA_WIDTH-1:5]},{Bit_fix[3:0]}};
 				end
 			else 
 				begin
-					Dec_Out	<=	DATA_IN^Bit_fix;
+					Dec_Out	<=	DATA_IN[DATA_WIDTH-1:0]^Bit_fix[DATA_WIDTH-1:0];
 				end
 		end
 	
