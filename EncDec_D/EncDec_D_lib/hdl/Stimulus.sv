@@ -96,6 +96,9 @@ begin : stim_proc
 	
 	// Starting work by reading Entering data to registers NOISE(random noise = can be vector 0) and Codewidth
 	
+	//Test for each sample:
+	
+	//********** Encode: **********
 	GenerateNoise();
 	
 	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
@@ -110,6 +113,44 @@ begin : stim_proc
 	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
 	stim_bus.PWDATA ={AMBA_WORD{1'b0}};
 	RegistersWrite();
+	@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	
+	//********** Decode: **********
+	GenerateNoise();
+	
+	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+	stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},8'b10101010} ^ {{AMBA_WORD-8{1'b0}},Noise[7:0]};
+	stim_bus.FullWord ={{AMBA_WORD-8{1'b0}},8'b10101010};
+	RegistersWrite();
+	
+	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+	stim_bus.PWDATA ={{AMBA_WORD-4{1'b0}},4'b0100};
+	RegistersWrite();
+	@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	
+	// ********** Full Channel: **********
+	GenerateNoise();
+	
+	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+	stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},8'b00001010};
+	stim_bus.FullWord ={{AMBA_WORD-8{1'b0}},8'b10101010};
+	RegistersWrite();
+	 
+	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+	stim_bus.PWDATA ={{AMBA_WORD-4{1'b0}},4'b1000};
+	RegistersWrite();
+	@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	@(posedge stim_bus.clk); /// The cycle that need to write into the register
+
+	
+	//********************One Test Finished********************
+	
+	
 	
 	
 	// stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1100}}; /// Sending Noise
@@ -168,9 +209,10 @@ end
 			stim_bus.PENABLE=0;
 			stim_bus.RegistersW=0;
 			stim_bus.PWRITE=0;
+
 			@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		//make sure register in RegSelector got the data
-		RegistersRead();
+		// RegistersRead();
 		end
 	endtask
 	

@@ -67,7 +67,7 @@ always @(posedge gold_bus.RegistersR or posedge gold_bus.RegistersW) begin : Reg
 			end
 		else
 		begin
-			case(gold_bus.PADDR) // PREAD: CPU Reads from registers
+			case(gold_bus.PADDR[3:2]) // PREAD: CPU Reads from registers
 			  2'b00 : gold_bus.RegistersOut <= CTRL;
 			  2'b01 : gold_bus.RegistersOut <= DATA_IN;
 			  2'b10 : gold_bus.RegistersOut <= CODEWORD_WIDTH;
