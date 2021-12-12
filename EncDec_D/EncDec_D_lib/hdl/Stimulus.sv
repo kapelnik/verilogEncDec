@@ -72,7 +72,6 @@ end
 
 initial 
 begin : stim_proc
-
 	amount = new;
 	randNoise = new;
 
@@ -86,41 +85,106 @@ begin : stim_proc
     @(posedge stim_bus.clk); // wait til next rising edge (in other words, wait 20ns)
     stim_bus.rst = 1;
 
-	//**********generateNoise**********//
-		amount.randomize();
-		randNoise.randomize();
-		if(amount.getamount() == 0) 		Noise = {AMBA_WORD{1'b0}};
-		else if(amount.getamount() == 1) 	Noise = randNoise.NoiseVector_1;
-		else								Noise = randNoise.NoiseVector_2;	
-		$display("This new noise %32b",Noise);
-
-	//********************************//
-	randNoise.randomize();
+	// **********generateNoise**********//
+		// How To Write To Registers:
+			// stim_bus.PADDR =  Address Wanted
+			// stim_bus.PWDATA = Data Wanted;
+			// RegistersWrite();
+			//If you want to make sure that the data was written to the registers, use RegistersRead:
+			// RegistersRead();
+	// ********************************//
 	
 	// Starting work by reading Entering data to registers NOISE(random noise = can be vector 0) and Codewidth
-	stim_bus.PWRITE =  1 ;
-	stim_bus.RegistersW =  1 ;
-	stim_bus.PSEL   =  1 ;
-	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1100}}; /// Sending Noise
-	stim_bus.PWDATA = 32'b11111111111111111111111111111111;
-	@(posedge stim_bus.clk); /// The cycle that need to write into the register
-	stim_bus.PENABLE = 1 ;
-	@(posedge stim_bus.clk); /// The cycle that need to write into the register
-	stim_bus.RegistersW=0;
-	stim_bus.PWRITE=0;
-	stim_bus.PENABLE=0;
-	@(posedge stim_bus.clk); /// The cycle that need to write into the register
-	stim_bus.RegistersR=1;
-	stim_bus.PENABLE=1;
-		// stim_bus.
-	// Starting work by reading the data from external files,
+	
+	GenerateNoise();
+	
+	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+	stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},8'b00001010};
+	stim_bus.FullWord ={{AMBA_WORD-8{1'b0}},8'b10101010};
+	RegistersWrite();
+	 
+	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1000}}; 
+	stim_bus.PWDATA ={AMBA_WORD{1'b0}};
+	RegistersWrite();
+	
+	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+	stim_bus.PWDATA ={AMBA_WORD{1'b0}};
+	RegistersWrite();
+	
+	
+	// stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1100}}; /// Sending Noise
+	// stim_bus.PWDATA = Noise;
+	// RegistersWrite();
+	// make sure register in RegSelector got the data
+	// RegistersRead();
+
+	
+	
+	
+	
+	
 	// Starting work by reading the data from external files
   
   
   
 end
 
+	task GenerateNoise();
+	begin
+		//**********generateNoise**********//
+		amount.randomize();
+		randNoise.randomize();
+		if(amount.getamount() == 0) 		Noise = {AMBA_WORD{1'b0}};
+		else if(amount.getamount() == 1) 	Noise = randNoise.NoiseVector_1;
+		else								Noise = randNoise.NoiseVector_2;	
+		$display("This new noise %32b",Noise);
+			stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1100}}; /// Sending Noise
+		stim_bus.PWDATA = Noise;
+		RegistersWrite();
+		//make sure register in RegSelector got the data
+		// RegistersRead();
+	end
+	//********************************//
+	endtask
+	
+	task RegistersWrite();
+			// input logic     	PENABLE;
+			// input logic			PSEL;
+			// input logic			PWRITE;
+			// input logic			RegistersW;
+			// input logic			RegistersR;
+			// input logic [AMBA_WORD-1:0] PWDATA;
+		// input logic [AMBA_ADDR_WIDTH-1:0] PADDRin;
+		 // input logic [AMBA_WORD-1:0] PWDATAin;
+		begin
+			stim_bus.RegistersW = 1;
+			stim_bus.PWRITE = 1;
+			stim_bus.PSEL = 1;
+			// stim_bus.PADDR = PADDRin;
+			// stim_bus.PWDATA = PWDATAin;
+			@(posedge stim_bus.clk); /// The cycle that need to write into the register
+			stim_bus.PENABLE=1;
+			@(posedge stim_bus.clk); /// The cycle that need to write into the register
+			stim_bus.PENABLE=0;
+			stim_bus.RegistersW=0;
+			stim_bus.PWRITE=0;
+			@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		//make sure register in RegSelector got the data
+		RegistersRead();
+		end
+	endtask
+	
+	task RegistersRead();
+		begin
+			stim_bus.RegistersR=1;
+			stim_bus.PENABLE=1;
+			@(posedge stim_bus.clk); /// The cycle that need to write into the register
+			stim_bus.RegistersR=0;
+			stim_bus.PENABLE=0;
+			@(posedge stim_bus.clk); /// The cycle that need to write into the register
 
+		end
+	endtask
 
 
 
