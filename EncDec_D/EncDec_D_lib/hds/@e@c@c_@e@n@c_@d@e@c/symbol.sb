@@ -16,6 +16,7 @@ suid 11,0
 usingSuid 1
 emptyRow *1 (LEmptyRow
 )
+uid 118,0
 optionalChildren [
 *2 (RefLabelRowHdr
 )
@@ -221,6 +222,7 @@ uid 111,0
 pdm (PhysicalDM
 displayShortBounds 1
 editShortBounds 1
+uid 132,0
 optionalChildren [
 *26 (Sheet
 sheetRow (SheetRow
@@ -244,22 +246,26 @@ litem &1
 pos 3
 dimension 20
 )
+uid 134,0
 optionalChildren [
 *28 (MRCItem
 litem &2
 pos 0
 dimension 20
+uid 135,0
 )
 *29 (MRCItem
 litem &3
 pos 1
 dimension 23
+uid 136,0
 )
 *30 (MRCItem
 litem &4
 pos 2
 hidden 1
 dimension 20
+uid 137,0
 )
 *31 (MRCItem
 litem &15
@@ -336,67 +342,80 @@ fontColor "0,0,0"
 font "Tahoma,10,0"
 textAngle 90
 )
+uid 138,0
 optionalChildren [
 *42 (MRCItem
 litem &5
 pos 0
 dimension 20
+uid 139,0
 )
 *43 (MRCItem
 litem &7
 pos 1
 dimension 50
+uid 140,0
 )
 *44 (MRCItem
 litem &8
 pos 2
 dimension 100
+uid 141,0
 )
 *45 (MRCItem
 litem &9
 pos 3
 dimension 50
+uid 142,0
 )
 *46 (MRCItem
 litem &10
 pos 4
 dimension 100
+uid 143,0
 )
 *47 (MRCItem
 litem &11
 pos 5
 dimension 60
+uid 144,0
 )
 *48 (MRCItem
 litem &12
 pos 6
 dimension 100
+uid 145,0
 )
 *49 (MRCItem
 litem &13
 pos 7
 dimension 50
+uid 146,0
 )
 *50 (MRCItem
 litem &14
 pos 8
 dimension 80
+uid 147,0
 )
 ]
 )
 fixedCol 4
 fixedRow 2
 name "Ports"
+uid 133,0
 vaOverrides [
 ]
 )
 ]
 )
+uid 117,0
 )
 genericsCommonDM (CommonDM
 ldm (LogicalDM
 emptyRow *51 (LEmptyRow
 )
+uid 149,0
 optionalChildren [
 *52 (RefLabelRowHdr
 )
@@ -429,21 +448,21 @@ value "32"
 pr "//input Params"
 apr 0
 )
-uid 74,0
+uid 171,0
 )
 *62 (LogGeneric
 generic (GiElement
 name "AMBA_ADDR_WIDTH"
 value "20"
 )
-uid 76,0
+uid 173,0
 )
 *63 (LogGeneric
 generic (GiElement
 name "AMBA_WORD"
 value "32"
 )
-uid 78,0
+uid 175,0
 )
 *64 (LogGeneric
 generic (GiElement
@@ -451,7 +470,7 @@ name "IDLE"
 type "[1:0]"
 value "2'b00"
 )
-uid 80,0
+uid 177,0
 )
 *65 (LogGeneric
 generic (GiElement
@@ -459,7 +478,7 @@ name "ENCODING"
 type "[1:0]"
 value "2'b01"
 )
-uid 82,0
+uid 179,0
 )
 *66 (LogGeneric
 generic (GiElement
@@ -467,7 +486,7 @@ name "DECODING"
 type "[1:0]"
 value "2'b10"
 )
-uid 84,0
+uid 181,0
 )
 *67 (LogGeneric
 generic (GiElement
@@ -475,13 +494,14 @@ name "NOISE"
 type "[1:0]"
 value "2'b11"
 )
-uid 86,0
+uid 183,0
 )
 ]
 )
 pdm (PhysicalDM
 displayShortBounds 1
 editShortBounds 1
+uid 159,0
 optionalChildren [
 *68 (Sheet
 sheetRow (SheetRow
@@ -505,64 +525,68 @@ litem &51
 pos 3
 dimension 20
 )
+uid 161,0
 optionalChildren [
 *70 (MRCItem
 litem &52
 pos 0
 dimension 20
+uid 162,0
 )
 *71 (MRCItem
 litem &53
 pos 1
 dimension 23
+uid 163,0
 )
 *72 (MRCItem
 litem &54
 pos 2
 hidden 1
 dimension 20
+uid 164,0
 )
 *73 (MRCItem
 litem &61
 pos 0
 dimension 20
-uid 75,0
+uid 172,0
 )
 *74 (MRCItem
 litem &62
 pos 1
 dimension 20
-uid 77,0
+uid 174,0
 )
 *75 (MRCItem
 litem &63
 pos 2
 dimension 20
-uid 79,0
+uid 176,0
 )
 *76 (MRCItem
 litem &64
 pos 3
 dimension 20
-uid 81,0
+uid 178,0
 )
 *77 (MRCItem
 litem &65
 pos 4
 dimension 20
-uid 83,0
+uid 180,0
 )
 *78 (MRCItem
 litem &66
 pos 5
 dimension 20
-uid 85,0
+uid 182,0
 )
 *79 (MRCItem
 litem &67
 pos 6
 dimension 20
-uid 87,0
+uid 184,0
 )
 ]
 )
@@ -573,65 +597,73 @@ fontColor "0,0,0"
 font "Tahoma,10,0"
 textAngle 90
 )
+uid 165,0
 optionalChildren [
 *80 (MRCItem
 litem &55
 pos 0
 dimension 20
+uid 166,0
 )
 *81 (MRCItem
 litem &57
 pos 1
 dimension 50
+uid 167,0
 )
 *82 (MRCItem
 litem &58
 pos 2
 dimension 100
+uid 168,0
 )
 *83 (MRCItem
 litem &59
 pos 3
 dimension 50
+uid 169,0
 )
 *84 (MRCItem
 litem &60
 pos 4
 dimension 80
+uid 170,0
 )
 ]
 )
 fixedCol 3
 fixedRow 2
 name "Ports"
+uid 160,0
 vaOverrides [
 ]
 )
 ]
 )
+uid 148,0
 type 1
 )
 VExpander (VariableExpander
 vvMap [
 (vvPair
 variable "HDLDir"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hdl"
+value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hdl"
 )
 (vvPair
 variable "HDSDir"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds"
+value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds"
 )
 (vvPair
 variable "SideDataDesignDir"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb.info"
+value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb.info"
 )
 (vvPair
 variable "SideDataUserDir"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb.user"
+value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb.user"
 )
 (vvPair
 variable "SourceDir"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds"
+value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds"
 )
 (vvPair
 variable "appl"
@@ -647,27 +679,27 @@ value "%(unit)_%(view)_config"
 )
 (vvPair
 variable "d"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@e@c@c_@e@n@c_@d@e@c"
+value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c"
 )
 (vvPair
 variable "d_logical"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\ECC_ENC_DEC"
+value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\ECC_ENC_DEC"
 )
 (vvPair
 variable "date"
-value "12/ 2/2021"
+value "12/12/2021"
 )
 (vvPair
 variable "day"
-value "Thu"
+value "Sun"
 )
 (vvPair
 variable "day_long"
-value "Thursday"
+value "Sunday"
 )
 (vvPair
 variable "dd"
-value "02"
+value "12"
 )
 (vvPair
 variable "entity_name"
@@ -695,7 +727,7 @@ value "kapelnik"
 )
 (vvPair
 variable "graphical_source_date"
-value "12/ 2/2021"
+value "12/12/2021"
 )
 (vvPair
 variable "graphical_source_group"
@@ -707,7 +739,7 @@ value "L330W529"
 )
 (vvPair
 variable "graphical_source_time"
-value "22:13:14"
+value "12:30:33"
 )
 (vvPair
 variable "group"
@@ -719,15 +751,19 @@ value "L330W529"
 )
 (vvPair
 variable "language"
-value "VHDL"
+value "Verilog"
 )
 (vvPair
 variable "library"
-value "ECC_ENC_DEC_lib"
+value "EncDec_D_lib"
 )
 (vvPair
 variable "library_downstream_HdsLintPlugin"
-value "$HDS_PROJECT_DIR\\ECC_ENC_DEC_lib\\designcheck"
+value "$HDS_PROJECT_DIR/EncDec_D_lib/designcheck"
+)
+(vvPair
+variable "library_downstream_QuestaSimCompiler"
+value "$HDS_PROJECT_DIR/EncDec_D_lib/work"
 )
 (vvPair
 variable "mm"
@@ -747,11 +783,11 @@ value "December"
 )
 (vvPair
 variable "p"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb"
+value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb"
 )
 (vvPair
 variable "p_logical"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\ECC_ENC_DEC\\symbol.sb"
+value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\ECC_ENC_DEC\\symbol.sb"
 )
 (vvPair
 variable "package_name"
@@ -759,7 +795,7 @@ value "<Undefined Variable>"
 )
 (vvPair
 variable "project_name"
-value "ECC_ENC_DEC"
+value "EncDec_D"
 )
 (vvPair
 variable "series"
@@ -807,7 +843,7 @@ value "symbol"
 )
 (vvPair
 variable "time"
-value "22:13:14"
+value "12:30:33"
 )
 (vvPair
 variable "unit"
@@ -836,6 +872,7 @@ value "21"
 ]
 )
 LanguageMgr "Verilog2001LangMgr"
+uid 116,0
 optionalChildren [
 *85 (SymbolBody
 uid 8,0
@@ -1401,8 +1438,8 @@ uid 11,0
 va (VaSet
 font "arial,8,1"
 )
-xt "35700,16000,43700,17000"
-st "ECC_ENC_DEC_lib"
+xt "35700,16000,41600,17000"
+st "EncDec_D_lib"
 blo "35700,16800"
 )
 second (Text
@@ -1716,7 +1753,6 @@ showHdrWhenContentsEmpty 1
 elements [
 ]
 )
-udl 1
 portInstanceVisAsIs 1
 portInstanceVis (PortSigDisplay
 sIVOD 1
@@ -1859,6 +1895,7 @@ xt "2000,9000,2000,9000"
 tm "SyDeclarativeTextMgr"
 )
 )
-lastUid 115,0
+lastUid 184,0
+postModuleDirective "//States"
 activeModelName "Symbol:CDM"
 )

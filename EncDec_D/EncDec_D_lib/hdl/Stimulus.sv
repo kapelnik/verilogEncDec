@@ -79,6 +79,10 @@ begin : stim_proc
   // Initilization
     stim_bus.clk = 1; // start with clock and reset at '1', while enable at '0'
     stim_bus.rst = 0;
+    stim_bus.PSEL = 0;
+    stim_bus.PWRITE = 0;
+	stim_bus.PENABLE= 0;
+
     @(posedge stim_bus.clk); // wait til next rising edge (in other words, wait 20ns)
     stim_bus.rst = 1;
 
@@ -102,6 +106,12 @@ begin : stim_proc
 	@(posedge stim_bus.clk); /// The cycle that need to write into the register
 	stim_bus.PENABLE = 1 ;
 	@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	stim_bus.RegistersW=0;
+	stim_bus.PWRITE=0;
+	stim_bus.PENABLE=0;
+	@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	stim_bus.RegistersR=1;
+	stim_bus.PENABLE=1;
 		// stim_bus.
 	// Starting work by reading the data from external files,
 	// Starting work by reading the data from external files

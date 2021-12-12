@@ -40,13 +40,14 @@ wire start_work;
 
 
 //when PSEL&PENABLE are 1 start work, depending on R/W -> PWRITE,PADDR
-assign start_work = PSEL&PENABLE ;
+assign start_work = PSEL;
+
 
 
 always @(posedge clk or negedge rst) begin : Register_Selction
   if(!rst) 
 	  begin
-		PRDATA <= {AMBA_WORD{1'b0}};
+		
 		CTRL <= {AMBA_WORD{1'b0}};
 		DATA_IN <= {AMBA_WORD{1'b0}};
 		CODEWORD_WIDTH <= {AMBA_WORD{1'b0}};
@@ -65,15 +66,15 @@ always @(posedge clk or negedge rst) begin : Register_Selction
 						  default : NOISE <= PWDATA;
 						endcase
 					end
-			    else 
-				begin
-					case(PADDR) // PREAD: CPU Reads from registers
-					  2'b00 : PRDATA <= CTRL;
-					  2'b01 : PRDATA <= DATA_IN;
-					  2'b10 : PRDATA <= CODEWORD_WIDTH;
-					  default : PRDATA <= NOISE;
-					endcase
-				end
+			    // else 
+				// begin
+					// case(PADDR) // PREAD: CPU Reads from registers
+					  // 2'b00 : PRDATA <= CTRL;
+					  // 2'b01 : PRDATA <= DATA_IN;
+					  // 2'b10 : PRDATA <= CODEWORD_WIDTH;
+					  // default : PRDATA <= NOISE;
+					// endcase
+				// end
 			end
 	  end
 end

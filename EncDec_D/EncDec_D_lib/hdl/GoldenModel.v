@@ -20,14 +20,13 @@ module GoldenModel
    // Port Declarations
    Interface.vsgoldenmodel gold_bus
 );
-
+ 
 `define NULL 0
 logic [DATA_WIDTH-1:0] 	DataOut;
 logic [AMBA_WORD-1:0] 	CTRL ;
 logic [AMBA_WORD-1:0] 	DATA_IN;
 logic [AMBA_WORD-1:0] 	CODEWORD_WIDTH;
 logic [AMBA_WORD-1:0] 	NOISE;
-logic [AMBA_WORD-1:0] 	RegistersOut;
 
 // Data Types
 initial
@@ -41,7 +40,7 @@ always@(gold_bus.operation_done or gold_bus.RegistersR) begin : Data_Out_Control
 	if(gold_bus.operation_done == 1'b1)
 		gold_bus.gm_DATA_OUT = gold_bus.FullWord;
 	else
-		gold_bus.gm_DATA_OUT = RegistersOut;
+		gold_bus.gm_DATA_OUT = DATA_IN;
 end
 
 
@@ -69,10 +68,10 @@ always @(posedge gold_bus.RegistersR or posedge gold_bus.RegistersW) begin : Reg
 		else
 		begin
 			case(gold_bus.PADDR) // PREAD: CPU Reads from registers
-			  2'b00 : RegistersOut <= CTRL;
-			  2'b01 : RegistersOut <= DATA_IN;
-			  2'b10 : RegistersOut <= CODEWORD_WIDTH;
-			  default : RegistersOut <= NOISE;
+			  2'b00 : gold_bus.RegistersOut <= CTRL;
+			  2'b01 : gold_bus.RegistersOut <= DATA_IN;
+			  2'b10 : gold_bus.RegistersOut <= CODEWORD_WIDTH;
+			  default : gold_bus.RegistersOut <= NOISE;
 			endcase
 		end
 	end

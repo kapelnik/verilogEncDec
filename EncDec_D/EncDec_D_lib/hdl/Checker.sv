@@ -19,6 +19,7 @@ parameter AMBA_WORD = 32
 ( 
    // Port Declarations
    Interface.Checker checker_bus
+   // modport Checker 		(input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors, gm_DATA_OUT,gm_number_of_errors);
 );
 
 
@@ -38,11 +39,25 @@ assert property(rst_active)
 //operation should be done in two to three cycles:
 // PSEL&PENABLE&PWRITE	&& PADDR==00 ( write to control) => ## after 2-3  cycles  - operation_done=1.
 property operation_done_active;
-				@(checker_bus.PSEL) (checker_bus.PENABLE && checker_bus.PWRITE && (checker_bus.PADDR == 2'b00)) ## [1:3] checker_bus.operation_done;
+				@(checker_bus.clk) ( checker_bus.PSEL && checker_bus.PENABLE && checker_bus.PWRITE && (checker_bus.PADDR[3:0] == 4'b0000)) |-> ## [1:3] checker_bus.operation_done;
 				endproperty
 assert property(operation_done_active)
   else $error("error with operation_done");
 	cover property(operation_done_active);
+	
+property ResultCheck;
+				@(checker_bus.operation_done) (checker_bus.operation_done == 1) |-> (checker_bus.gm_number_of_errors == checker_bus.num_of_errors) && (checker_bus.data_out == checker_bus.gm_DATA_OUT);
+				endproperty
+assert property(ResultCheck)
+  else $error("error with ResultCheck");
+	cover property(ResultCheck);
+	
+property RegistersReadCheck;
+				@(checker_bus.clk) ((checker_bus.PENABLE == 1'b1)&& (checker_bus.PSEL == 1'b1) && (checker_bus.PWRITE == 1'b0)) |->  (checker_bus.PRDATA == checker_bus.RegistersOut);
+				endproperty
+assert property(RegistersReadCheck)
+  else $error("error with RegistersReadCheck");
+	cover property(RegistersReadCheck);
 ////##
 
 //property ena_active;

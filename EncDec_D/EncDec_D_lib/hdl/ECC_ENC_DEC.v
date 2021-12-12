@@ -303,15 +303,30 @@ end
 
 //#################################
 //Assert PRDATA output to PRDATA_REG from RegisterSelector
-always@(posedge clk or negedge rst) 
-begin: REGISTERS_READ
-	if(!rst) 
-			PRDATA<= {AMBA_WORD{1'b0}};
-	else 
-			PRDATA<= PRDATA_REG;
+// always@(posedge clk or negedge rst) 
+// begin: REGISTERS_READ
+	// if(!rst) 
+			// PRDATA<= {AMBA_WORD{1'b0}};
+	// else 
+			// PRDATA<= PRDATA_REG;
+// end
+
+always @(posedge clk or negedge rst) begin : Register_Selction_Read
+	if(!rst)
+		PRDATA <= {AMBA_WORD{1'b0}};
+	else
+		begin
+		  if(!PWRITE)
+			begin
+				case(PADDR[3:2]) // PREAD: CPU Reads from registers
+				  2'b00 : PRDATA <= CTRL_REG;
+				  2'b01 : PRDATA <= DATA_IN_REG;
+				  2'b10 : PRDATA <= CODEWORD_WIDTH_REG;
+				  default : PRDATA <= NOISE_REG;
+				endcase
+			end
+		end
 end
-
-
 
 
 
