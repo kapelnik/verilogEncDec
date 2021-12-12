@@ -233,7 +233,7 @@ begin : Entering_Dec_data
 end
 // assign Enc_noise = Enc_Out[DATA_WIDTH-1:0]^NOISE_REG[DATA_WIDTH-1:0];
 
-always@(Next_State or Enc_noise or FC_REG_SAVE or DATA_IN_Pad) 
+always@(current_state or Enc_noise or FC_REG_SAVE or DATA_IN_Pad or CTRL_REG) 
 begin: FC_control
 	case (current_state)
 		ENCODING: begin	//=================ENCODING State//=================
