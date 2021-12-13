@@ -53,10 +53,16 @@ class RandNoise;
 		// $display("new NoiseVector2 is: %32b.",NoiseVector_2);
 	endfunction 
 endclass
-	
-string  dataS = "../Tests/dataS.txt";
-string  dataM = "../Tests/dataM.txt";
-string  dataL = "../Tests/dataL.txt";
+
+
+//For scanning a file:	
+string  dataS = "../../../Tests/dataS";
+string  dataM = "../../../Tests/dataM";
+string  dataL = "../../../Tests/dataL";
+string val,FileScanned,line;
+integer data_file_0,data_file_1,data_file_2;
+logic 	[31:0] 				Sample;
+
 
 logic 	[AMBA_WORD-1:0]		Noise;
 
@@ -74,7 +80,7 @@ initial
 begin : stim_proc
 	amount = new;
 	randNoise = new;
-	
+
   // Initilization
     stim_bus.clk = 1; // start with clock and reset at '1', while enable at '0'
     stim_bus.rst = 0;
@@ -98,60 +104,225 @@ begin : stim_proc
 	
 	//Test for each sample:
 	
-	//********** Encode: **********
+	 //**************************************************************************************//
+	//*********************************Test Codewidth = 8 : ********************************//
+	//Set codeword width = 00: (8bit)
 	Width = 2'b00;
 	GenerateNoise();
-	
-	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
-	stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},8'b00001010};
-	stim_bus.FullWord ={{AMBA_WORD-8{1'b0}},8'b10101010};
-	RegistersWrite();
-	 
 	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1000}}; 
 	stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},Width};
 	RegistersWrite();
 	
-	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
-	stim_bus.PWDATA ={AMBA_WORD{1'b0}};
-	RegistersWrite();
-	@(posedge stim_bus.clk); /// The cycle that need to write into the register
-	@(posedge stim_bus.clk); /// The cycle that need to write into the register
-	
-	//********** Decode: **********
-	GenerateNoise();
-	
-	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
-	stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},8'b10101010} ^ {{AMBA_WORD-8{1'b0}},Noise[7:0]};
-	stim_bus.FullWord ={{AMBA_WORD-8{1'b0}},8'b10101010};
-	RegistersWrite();
-	
-	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
-	stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
-	RegistersWrite();
-	@(posedge stim_bus.clk); /// The cycle that need to write into the register
-	@(posedge stim_bus.clk); /// The cycle that need to write into the register
-	@(posedge stim_bus.clk); /// The cycle that need to write into the register
-	
-	// ********** Full Channel: **********
-	GenerateNoise();
-	
-	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
-	stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},8'b00001010};
-	stim_bus.FullWord ={{AMBA_WORD-8{1'b0}},8'b10101010};
-	RegistersWrite();
-	 
-	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
-	stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
-	RegistersWrite();
-	@(posedge stim_bus.clk); /// The cycle that need to write into the register
-	@(posedge stim_bus.clk); /// The cycle that need to write into the register
-	@(posedge stim_bus.clk); /// The cycle that need to write into the register
-	@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	data_file_0 = $fopen($sformatf({dataS, val, ".txt"}), "r"); // opening file in reading format
+    if (data_file_0 == `NULL) begin // checking if we mangaed to open it
+      $display("data_file_0 handle was NULL");
+      $finish;
+	end
+	// For each line in dataS.txt, run full test with random noise:
+	while(!$feof(data_file_0) )
+	begin
+		
+		//Get next sample from data file:
+		$fgets(line,data_file_0);
+		Sample = line.atobin();
+		//For the Golden Model to know what is the real full word with parity, no errors:
+		stim_bus.FullWord ={{AMBA_WORD-8{1'b0}},Sample[7:0]};
 
+		//********** Encode: **********
+		//NOISE_REG:
+		GenerateNoise();
+		
+		//DATA_IN_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},{4'b0000},{Sample[3:0]}};
+		RegistersWrite();
+		 
+		//CTRL_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PWDATA ={AMBA_WORD{1'b0}};
+		RegistersWrite();
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		
+		//********** Decode: **********
+		//NOISE_REG:
+		GenerateNoise();
+		
+		//DATA_IN_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},Sample[7:0]} ^ {{AMBA_WORD-8{1'b0}},Noise[7:0]};
+		RegistersWrite();
+		
+		//CTRL_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
+		RegistersWrite();
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		
+		// ********** Full Channel: **********
+		//NOISE_REG:
+		GenerateNoise();
+		
+		//DATA_IN_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},{4'b0000},{Sample[3:0]}};
+		RegistersWrite();
+		 
+		//CTRL_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
+		RegistersWrite();
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	end
 	
-	//********************One Test Finished********************
 	
+	 //**************************************************************************************//
+	//*********************************Test Codewidth = 16 : ********************************//
+	//Set codeword width = 01: (16bit)
+	Width = 2'b01;
+	GenerateNoise();
+	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1000}}; 
+	stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},Width};
+	RegistersWrite();
 	
+	data_file_1 = $fopen($sformatf({dataM, val, ".txt"}), "r"); // opening file in reading format
+    if (data_file_1 == `NULL) begin // checking if we mangaed to open it
+      $display("data_file_0 handle was NULL");
+      $finish;
+	end
+	// For each line in dataS.txt, run full test with random noise:
+	while(!$feof(data_file_1) )
+	begin
+		$fgets(line,data_file_1);
+		Sample = line.atobin();
+		//********** Encode: **********
+		//NOISE_REG:
+		GenerateNoise();
+		
+		//DATA_IN_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-16{1'b0}},{8'b00000000},{Sample[7:0]}};
+		RegistersWrite();
+		 
+		//CTRL_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PWDATA ={AMBA_WORD{1'b0}};
+		RegistersWrite();
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		
+		//********** Decode: **********
+		//NOISE_REG:
+		GenerateNoise();
+		
+		//DATA_IN_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-16{1'b0}},Sample[15:0]} ^ {{AMBA_WORD-16{1'b0}},Noise[15:0]};
+		RegistersWrite();
+		
+		//CTRL_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
+		RegistersWrite();
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		
+		// ********** Full Channel: **********
+		//NOISE_REG:
+		GenerateNoise();
+		
+		//DATA_IN_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-16{1'b0}},{8'b00000000},{Sample[7:0]}};
+		RegistersWrite();
+		 
+		//CTRL_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
+		RegistersWrite();
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	end
+	
+		
+	 //**************************************************************************************//
+	//*********************************Test Codewidth = 32 : ********************************//
+	//Set codeword width = 10: (32bit)
+	Width = 2'b10;
+	GenerateNoise();
+	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1000}}; 
+	stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},Width};
+	RegistersWrite();
+	
+	data_file_2 = $fopen($sformatf({dataL, val, ".txt"}), "r"); // opening file in reading format
+    if (data_file_2 == `NULL) begin // checking if we mangaed to open it
+      $display("data_file_2 handle was NULL");
+      $finish;
+	end
+	// For each line in dataS.txt, run full test with random noise:
+	while(!$feof(data_file_2) )
+	begin
+		$fgets(line,data_file_2);
+		Sample = line.atobin();
+		//********** Encode: **********
+		//NOISE_REG:
+		GenerateNoise();
+		
+		//DATA_IN_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-26{1'b0}},{Sample[25:0]}};
+		RegistersWrite();
+		 
+		//CTRL_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PWDATA ={AMBA_WORD{1'b0}};
+		RegistersWrite();
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		
+		//********** Decode: **********
+		//NOISE_REG:
+		GenerateNoise();
+		
+		//DATA_IN_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PWDATA =Sample^Noise;
+		RegistersWrite();
+		
+		//CTRL_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
+		RegistersWrite();
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		
+		// ********** Full Channel: **********
+		//NOISE_REG:
+		GenerateNoise();
+		
+		//DATA_IN_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-26{1'b0}},{Sample[25:0]}};
+		RegistersWrite();
+		 
+		//CTRL_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
+		RegistersWrite();
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	end
 	
 	
 	// stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1100}}; /// Sending Noise
