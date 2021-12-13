@@ -51,7 +51,10 @@ covergroup signals_test @(posedge coverage_bus.clk);
          bins low = {0};
          bins high = {1};
           }
-		  
+		 // checking if the Noise went to all the ranges
+        Noise : coverpoint coverage_bus.PWDATA{
+         bins low = {[0:4294967295]};
+          }
 		 // checking if the result data_out went to all the ranges
          // Data_out : coverpoint coverage_bus.data_out{
          // bins low = {[0:DATA_WIDTH-1]};
