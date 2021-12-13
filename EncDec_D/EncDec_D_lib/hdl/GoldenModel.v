@@ -98,25 +98,4 @@ always @(posedge gold_bus.RegistersR or posedge gold_bus.RegistersW) begin : Reg
 		end
 	end
 
-
-
-	
-// always@(FullWord,) begin
-
-		// Encode - 
-		// if(CTRL==2'b00)
-			// DataOut = gold_bus.FullWord;		
-		// Decode or Full Channel -
-		// else
-		// begin
-		// case(NOF)
-			// 2'b10:
-				// DataOut = {(DATA_WIDTH-1){1'b0}};		
-			// default: 		
-				// DataOut = gold_bus.FullWord;				
-			// endcase;
-		// end
-// end	
-	
-
 endmodule

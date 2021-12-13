@@ -179,7 +179,7 @@ begin : stim_proc
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 	end
-	
+	 $fclose(data_file_0);
 	//check for synchronous reset
 	@(posedge stim_bus.clk); /// The cycle that need to write into the register
 	stim_bus.rst = 0;
@@ -255,18 +255,14 @@ begin : stim_proc
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
 		RegistersWrite();
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-					//check for usynchronous reset
-	#1.2;
-	stim_bus.rst = 0;
-	#100.2;
-	stim_bus.rst = 1;
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 	end
 	
 		
-		
+			 $fclose(data_file_1);
+
 	//check for usynchronous reset
 	#1.2;
 	stim_bus.rst = 0;
@@ -290,6 +286,7 @@ begin : stim_proc
 	// For each line in dataS.txt, run full test with random noise:
 	while(!$feof(data_file_2) )
 	begin
+
 		$fgets(line,data_file_2);
 		Sample = line.atobin();
 		stim_bus.FullWord =Sample;
@@ -339,13 +336,19 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
 		RegistersWrite();
+					// check for usynchronous reset
+	// #1.2;
+	// stim_bus.rst = 0;
+	// #100.2;
+	// stim_bus.rst = 1;
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 	end
 	
-	
+		 $fclose(data_file_2);
+
 	// stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1100}}; /// Sending Noise
 	// stim_bus.PWDATA = Noise;
 	// RegistersWrite();
