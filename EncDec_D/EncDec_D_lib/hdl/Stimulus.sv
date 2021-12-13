@@ -180,7 +180,13 @@ begin : stim_proc
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 	end
 	
-	
+	//check for synchronous reset
+	@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	stim_bus.rst = 0;
+	@(posedge stim_bus.clk); /// The cycle that need to write into the register
+	stim_bus.rst = 1;
+
+		
 	 //**************************************************************************************//
 	//*********************************Test Codewidth = 16 : ********************************//
 	//Set codeword width = 01: (16bit)
@@ -249,12 +255,24 @@ begin : stim_proc
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
 		RegistersWrite();
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+					//check for usynchronous reset
+	#1.2;
+	stim_bus.rst = 0;
+	#100.2;
+	stim_bus.rst = 1;
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 	end
 	
 		
+		
+	//check for usynchronous reset
+	#1.2;
+	stim_bus.rst = 0;
+	#100.2;
+	stim_bus.rst = 1;
+
 	 //**************************************************************************************//
 	//*********************************Test Codewidth = 32 : ********************************//
 	//Set codeword width = 10: (32bit)
@@ -353,25 +371,18 @@ end
 		if(amount.getamount() == 0) 		Noise = {AMBA_WORD{1'b0}};
 		else if(amount.getamount() == 1) 	Noise = randNoise.NoiseVector_1;
 		else								Noise = randNoise.NoiseVector_2;	
-		$display("This new noise %32b",Noise);
-			stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1100}}; /// Sending Noise
+		$display("New Noise: %32b",Noise);
+		// Writing to Noise_Reg
+		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1100}}; 
 		stim_bus.PWDATA = Noise;
 		RegistersWrite();
 		//make sure register in RegSelector got the data
-		// RegistersRead();
+		RegistersRead();
 	end
 	//********************************//
 	endtask
 	
 	task RegistersWrite();
-			// input logic     	PENABLE;
-			// input logic			PSEL;
-			// input logic			PWRITE;
-			// input logic			RegistersW;
-			// input logic			RegistersR;
-			// input logic [AMBA_WORD-1:0] PWDATA;
-		// input logic [AMBA_ADDR_WIDTH-1:0] PADDRin;
-		 // input logic [AMBA_WORD-1:0] PWDATAin;
 		begin
 			stim_bus.RegistersW = 1;
 			stim_bus.PWRITE = 1;
@@ -387,6 +398,8 @@ end
 
 			@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		//make sure register in RegSelector got the data
+			// RegistersRead();
+
 		end
 	endtask
 	
