@@ -66,11 +66,11 @@ always @(*) begin : Check_Number_Of_Errors// Number of errors
 		begin
 			// NOF[0] <= S[0] | S[1] | S[2] | S[3] | S[4] ;
 			// NOF[1] <= 1'b0;
-			NOF = 2'b01 ; 
+			NOF <= 2'b01 ; 
 		end
 		else
 			begin
-				NOF[0] <= 1'b0;
+				NOF[0] <= S[5];
 				NOF[1] <= S[0] | S[1] | S[2] | S[3] | S[4] ;
 			end
    

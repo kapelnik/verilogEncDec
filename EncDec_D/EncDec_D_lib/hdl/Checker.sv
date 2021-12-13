@@ -32,12 +32,8 @@ property rst_active;
 assert property(rst_active)
   else $error("error with Reset");
 	cover property(rst_active);
-////##
 
 
-//##operation_done properties: 	
-//operation should be done in two to three cycles:
-// PSEL&PENABLE&PWRITE	&& PADDR==00 ( write to control) => ## after 2-3  cycles  - operation_done=1.
 property operation_done_active;
 				@(checker_bus.clk) disable iff (!checker_bus.rst) ( checker_bus.PSEL && checker_bus.PENABLE && checker_bus.PWRITE && (checker_bus.PADDR[3:0] == 4'b0000)) |-> ## [1:8] checker_bus.operation_done;
 				endproperty
@@ -65,15 +61,15 @@ property RegistersReadCheck;
 assert property(RegistersReadCheck)
   else $error("error with RegistersReadCheck");
 	cover property(RegistersReadCheck);
-////##
+	
+//make sure num_of_errors dont go to 3 when operation_done=1
+property NumOfErrorsBoundaryCheck;
+				@(checker_bus.operation_done)  (checker_bus.operation_done == 1) |-> (checker_bus.num_of_errors!=2'b11);
+				endproperty
+assert property(NumOfErrorsBoundaryCheck)
+  else $fatal("error with NumOfErrorsBoundaryCheck");
+	cover property(NumOfErrorsBoundaryCheck);
 
-//property ena_active;
-//				@(checker_bus.ena) checker_bus.ena==1 |=> (checker_bus.iw_pixel >= 0) && (checker_bus.iw_pixel <= 255);
-//				endproperty
-
-//assert property(ena_active)
-//  else $error("error with enable");
-//  cover property(ena_active);
 
 
 endmodule

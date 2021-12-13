@@ -369,6 +369,7 @@ end
 	task GenerateNoise();
 	begin
 		//**********generateNoise**********//
+		
 		amount.randomize();
 		randNoise.randomize();
 		if(amount.getamount() == 0) 		Noise = {AMBA_WORD{1'b0}};
@@ -379,6 +380,8 @@ end
 		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1100}}; 
 		stim_bus.PWDATA = Noise;
 		RegistersWrite();
+		//for coverage check:
+		stim_bus.NOISE = Noise;
 		//make sure register in RegSelector got the data
 		RegistersRead();
 	end

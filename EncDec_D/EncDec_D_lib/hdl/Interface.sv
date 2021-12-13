@@ -30,17 +30,18 @@ logic		[AMBA_WORD-1:0] 		       			RegistersOut;
 logic 		[DATA_WIDTH-1:0] 		     			data_out;
 logic 								                operation_done;
 logic 		[1:0]				               		num_of_errors;
-// logic 		[AMBA_WORD-1:0] 		     	 		NOISE;
+logic 		[AMBA_WORD-1:0] 		     	 		NOISE;
 logic								                RegistersW;
 logic								                RegistersR;
 logic 		[AMBA_WORD-1:0] 		     	 		FullWord;
 logic 		[DATA_WIDTH-1:0] 		     			gm_DATA_OUT;
 logic 		[1:0]				               		gm_number_of_errors;
+
 //modports declaration
-modport Stimulus 		(output clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE,RegistersW,RegistersR,FullWord, input  data_out, operation_done, num_of_errors);
+modport Stimulus 		(output clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE,RegistersW,RegistersR,FullWord, NOISE, input  data_out, operation_done, num_of_errors);
 modport ECC_ENC_DEC 	(input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, output PRDATA, data_out, operation_done, num_of_errors);
 modport Checker 		(input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors, RegistersOut, gm_DATA_OUT, gm_number_of_errors);
-modport Coverage 		(input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors);
+modport Coverage 		(input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors, NOISE);
 modport vsgoldenmodel 	(input PWDATA,PADDR,RegistersW,RegistersR, FullWord,operation_done, output RegistersOut, gm_DATA_OUT,gm_number_of_errors);
 
 
