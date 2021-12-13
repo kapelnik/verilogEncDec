@@ -378,8 +378,15 @@ begin : N_NOF_CONTROL
 	case (current_state)
 		NOISE: begin	//=================ENCODING State//=================
 					next_num_of_errors = NOF;
+				end	
+		DECODING: begin	//=================ENCODING State//=================
+					next_num_of_errors = NOF;
 				end			
-		default: begin	////=================IDLE State//=================
+		ENCODING: begin	//=================ENCODING State//=================
+					next_num_of_errors = 2'b00;
+				end							
+		default: begin	////=================OTHER States//=================
+
 					case(num_of_errors)
 						2'b00: next_num_of_errors = 2'b00;
 						2'b01: next_num_of_errors = 2'b01;

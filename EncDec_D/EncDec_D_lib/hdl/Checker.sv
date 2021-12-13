@@ -46,7 +46,7 @@ assert property(operation_done_active)
 	cover property(operation_done_active);
 	
 property ResultCheck;
-				@(checker_bus.operation_done) (checker_bus.operation_done == 1) |-> (checker_bus.data_out == checker_bus.gm_DATA_OUT);
+				@(checker_bus.operation_done) ((checker_bus.operation_done == 1) && (checker_bus.num_of_errors != 2))|-> (checker_bus.data_out == checker_bus.gm_DATA_OUT);
 				endproperty
 assert property(ResultCheck)
   else $error("error with ResultCheck");

@@ -45,25 +45,32 @@ end
 
 
 always@(posedge  gold_bus.operation_done) begin : NOF_control
-	// NOF bus
-	case(CODEWORD_WIDTH[1:0]) // Check RTL
-				  2'b00 : 
-					begin
-						gold_bus.gm_number_of_errors[0] =  (^NOISE[7:0]) & (|NOISE[7:0]);
-						gold_bus.gm_number_of_errors[1] = ~(^NOISE[7:0]) & (|NOISE[7:0]);
-					end
-				  2'b01 :
-					begin
-						gold_bus.gm_number_of_errors[0] =  (^NOISE[15:0]) & (|NOISE[15:0]);
-						gold_bus.gm_number_of_errors[1] = ~(^NOISE[15:0]) & (|NOISE[15:0]);
-					end
-				  default :
-					begin
-						gold_bus.gm_number_of_errors[0] =  (^NOISE) & (|NOISE);
-						gold_bus.gm_number_of_errors[1] = ~(^NOISE) & (|NOISE);
-					end
-				endcase
-	// Data out
+	if(CTRL[1:0] == 2'b00 ) begin
+		gold_bus.gm_number_of_errors = 2'b00;
+	end
+	
+	else
+	begin
+			// NOF bus
+		case(CODEWORD_WIDTH[1:0]) // Check RTL
+					  2'b00 : 
+						begin
+							gold_bus.gm_number_of_errors[0] =  (^NOISE[7:0]) & (|NOISE[7:0]);
+							gold_bus.gm_number_of_errors[1] = ~(^NOISE[7:0]) & (|NOISE[7:0]);
+						end
+					  2'b01 :
+						begin
+							gold_bus.gm_number_of_errors[0] =  (^NOISE[15:0]) & (|NOISE[15:0]);
+							gold_bus.gm_number_of_errors[1] = ~(^NOISE[15:0]) & (|NOISE[15:0]);
+						end
+					  default :
+						begin
+							gold_bus.gm_number_of_errors[0] =  (^NOISE) & (|NOISE);
+							gold_bus.gm_number_of_errors[1] = ~(^NOISE) & (|NOISE);
+						end
+					endcase
+		// Data out
+	end
 end
 	
 	

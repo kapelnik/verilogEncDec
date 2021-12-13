@@ -63,10 +63,11 @@ always @(*) begin : Check_Number_Of_Errors// Number of errors
 	//When S[5] is 1 we know theres at least 2 errors
 	//else check if S0|..|S5 to know if theres 1 error or not
 		if(S[5])
-			begin
-				NOF[0] <= S[0] | S[1] | S[2] | S[3] | S[4] ;
-				NOF[1] <= 1'b0;
-			end
+		begin
+			// NOF[0] <= S[0] | S[1] | S[2] | S[3] | S[4] ;
+			// NOF[1] <= 1'b0;
+			NOF = 2'b01 ; 
+		end
 		else
 			begin
 				NOF[0] <= 1'b0;

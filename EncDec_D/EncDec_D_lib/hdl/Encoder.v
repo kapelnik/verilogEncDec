@@ -58,7 +58,7 @@ wire [24:0] xor_gates ;
   //S <= DATA_IN[13]^DATA_IN[12]; NOT USED
   assign xor_gates[14]   = DATA_IN[12]^DATA_IN[11];	// T
   //U <= DATA_IN[11]^DATA_IN[10];
-  // assign xor_gates[15]   = DATA_IN[10]^DATA_IN[9];	//// V
+  assign xor_gates[15]   = 1'b0;	//// V
   assign xor_gates[16]   = DATA_IN[9]^DATA_IN[8];	// W
   //X <= DATA_IN[8]^DATA_IN[7]; NOT USED
   assign xor_gates[17]   = DATA_IN[7]^DATA_IN[6];	// Y
@@ -99,7 +99,7 @@ wire [24:0] xor_gates ;
     assign YOUT[15:6] = DATA_IN[15:6];
     
     // This block is for the parity of the large input
-    assign YOUT[5] = Large ?  xor_gates[1]^xor_gates[6]^xor_gates[11]^xor_gates[17]^DATA_IN[27]^DATA_IN[20]^DATA_IN[18]^DATA_IN[13]^DATA_IN[11]^DATA_IN[8] 	    			: DATA_IN[5];//C27
+    assign YOUT[5] = Large ?  xor_gates[1]^xor_gates[6]^xor_gates[11]^xor_gates[17]^DATA_IN[27]^DATA_IN[20]^DATA_IN[18]^DATA_IN[13]^DATA_IN[11]^DATA_IN[10]^DATA_IN[8] 	    			: DATA_IN[5];//C27
     assign YOUT[4] = Large ?  xor_gates[24]^xor_gates[21]^xor_gates[10]^DATA_IN[17] 																	  	    			: DATA_IN[4];//C28
     assign YOUT[3] = Large ?  xor_gates[24]^xor_gates[22]^xor_gates[14]^DATA_IN[10]																		 	    			: DATA_IN[3];//C29
     assign YOUT[2] = Large ?  xor_gates[19]^xor_gates[21]^xor_gates[22]^xor_gates[16]^DATA_IN[7]  													    					: DATA_IN[2];//C30

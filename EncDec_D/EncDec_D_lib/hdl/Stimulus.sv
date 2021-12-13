@@ -116,7 +116,7 @@ begin : stim_proc
 	data_file_0 = $fopen($sformatf({dataS, val, ".txt"}), "r"); // opening file in reading format
     if (data_file_0 == `NULL) begin // checking if we mangaed to open it
       $display("data_file_0 handle was NULL");
-      $finish;
+      // $finish;
 	end
 	// For each line in dataS.txt, run full test with random noise:
 	while(!$feof(data_file_0) )
@@ -134,7 +134,7 @@ begin : stim_proc
 		
 		//DATA_IN_REG:
 		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
-		stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},{4'b0000},{Sample[3:0]}};
+		stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},{4'b0000},{Sample[7:4]}};
 		RegistersWrite();
 		 
 		//CTRL_REG:
@@ -167,7 +167,7 @@ begin : stim_proc
 		
 		//DATA_IN_REG:
 		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
-		stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},{4'b0000},{Sample[3:0]}};
+		stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},{4'b0000},{Sample[7:4]}};
 		RegistersWrite();
 		 
 		//CTRL_REG:
@@ -192,7 +192,7 @@ begin : stim_proc
 	
 	data_file_1 = $fopen($sformatf({dataM, val, ".txt"}), "r"); // opening file in reading format
     if (data_file_1 == `NULL) begin // checking if we mangaed to open it
-      $display("data_file_0 handle was NULL");
+      $display("data_file_1 handle was NULL");
       $finish;
 	end
 	// For each line in dataS.txt, run full test with random noise:
@@ -200,13 +200,15 @@ begin : stim_proc
 	begin
 		$fgets(line,data_file_1);
 		Sample = line.atobin();
+		stim_bus.FullWord ={{AMBA_WORD-8{1'b0}},Sample[15:0]};
+
 		//********** Encode: **********
 		//NOISE_REG:
 		GenerateNoise();
 		
 		//DATA_IN_REG:
 		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
-		stim_bus.PWDATA ={{AMBA_WORD-16{1'b0}},{8'b00000000},{Sample[7:0]}};
+		stim_bus.PWDATA ={{AMBA_WORD-16{1'b0}},{8'b00000000},{Sample[15:5]}};
 		RegistersWrite();
 		 
 		//CTRL_REG:
@@ -239,7 +241,7 @@ begin : stim_proc
 		
 		//DATA_IN_REG:
 		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
-		stim_bus.PWDATA ={{AMBA_WORD-16{1'b0}},{8'b00000000},{Sample[7:0]}};
+		stim_bus.PWDATA ={{AMBA_WORD-16{1'b0}},{8'b00000000},{Sample[15:5]}};
 		RegistersWrite();
 		 
 		//CTRL_REG:
@@ -272,13 +274,14 @@ begin : stim_proc
 	begin
 		$fgets(line,data_file_2);
 		Sample = line.atobin();
+		stim_bus.FullWord =Sample;
 		//********** Encode: **********
 		//NOISE_REG:
 		GenerateNoise();
 		
 		//DATA_IN_REG:
 		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
-		stim_bus.PWDATA ={{AMBA_WORD-26{1'b0}},{Sample[25:0]}};
+		stim_bus.PWDATA ={{AMBA_WORD-26{1'b0}},{Sample[31:6]}};
 		RegistersWrite();
 		 
 		//CTRL_REG:
@@ -311,7 +314,7 @@ begin : stim_proc
 		
 		//DATA_IN_REG:
 		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
-		stim_bus.PWDATA ={{AMBA_WORD-26{1'b0}},{Sample[25:0]}};
+		stim_bus.PWDATA ={{AMBA_WORD-26{1'b0}},{Sample[31:6]}};
 		RegistersWrite();
 		 
 		//CTRL_REG:
@@ -384,7 +387,6 @@ end
 
 			@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		//make sure register in RegSelector got the data
-		// RegistersRead();
 		end
 	endtask
 	
