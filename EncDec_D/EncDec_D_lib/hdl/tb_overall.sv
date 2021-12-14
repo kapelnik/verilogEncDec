@@ -16,6 +16,8 @@ parameter DATA_WIDTH = 32,
 parameter AMBA_ADDR_WIDTH = 20,
 parameter AMBA_WORD = 32
 );
+logic clk = 0;
+logic rst = 0;
 
 Interface  #(.DATA_WIDTH(DATA_WIDTH), .AMBA_ADDR_WIDTH(AMBA_ADDR_WIDTH), .AMBA_WORD(AMBA_WORD)) tb();
 
@@ -48,7 +50,28 @@ Checker #(.DATA_WIDTH(DATA_WIDTH), .AMBA_ADDR_WIDTH(AMBA_ADDR_WIDTH), .AMBA_WORD
 GoldenModel #(.DATA_WIDTH(DATA_WIDTH), .AMBA_ADDR_WIDTH(AMBA_ADDR_WIDTH), .AMBA_WORD(AMBA_WORD)) goldmod(
    .gold_bus(tb)
    );
+assign tb.clk = clk;
+assign tb.rst = rst;    
 
+
+always begin : clock_generator_proc
+  #10 clk = ~clk;
+end
+
+
+initial 
+begin : stim_proc
+		rst = 0 ;
+		
+		@(posedge clk) ;
+		rst = 1 ;
+		
+		repeat(300)@(posedge clk) ;
+		#1.2;
+	rst = 0;
+	#100.2;
+	rst = 1;
+end
 // ### Please start your Verilog code here ### 
 
 endmodule

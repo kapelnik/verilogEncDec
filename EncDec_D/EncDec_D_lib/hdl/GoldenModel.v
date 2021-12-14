@@ -27,7 +27,7 @@ logic [AMBA_WORD-1:0] 	CTRL ;
 logic [AMBA_WORD-1:0] 	DATA_IN;
 logic [AMBA_WORD-1:0] 	CODEWORD_WIDTH;
 logic [AMBA_WORD-1:0] 	NOISE;
-
+logic flag;
 // Data Types
 initial
 begin : init_proc
@@ -35,10 +35,22 @@ begin : init_proc
 	
 end
 
+assign flag = gold_bus.RegistersW & (~gold_bus.PADDR[3]) & gold_bus.PADDR[2] ;
+
+always@(gold_bus.rst or flag) begin : Reseting
+	if(!gold_bus.rst)
+		DataOut = {DATA_WIDTH{1'b0}};
+	else
+		begin
+			if(flag)
+				DataOut = gold_bus.FullWord ;
+		end
+end 
+
 always@(gold_bus.operation_done or gold_bus.RegistersR) begin : Data_Out_Control
 	// Data out
 	if(gold_bus.operation_done == 1'b1)
-		gold_bus.gm_DATA_OUT = gold_bus.FullWord;
+		gold_bus.gm_DATA_OUT = DataOut;
 	else
 		gold_bus.gm_DATA_OUT = DATA_IN;
 end

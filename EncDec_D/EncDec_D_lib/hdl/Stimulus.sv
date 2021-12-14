@@ -69,9 +69,9 @@ logic 	[AMBA_WORD-1:0]		Noise;
 noise_amount amount;
 RandNoise randNoise;
 //clk simulation:
-always begin : clock_generator_proc
-  #10 stim_bus.clk = ~stim_bus.clk;
-end
+// always begin : clock_generator_proc
+  // #10 stim_bus.clk = ~stim_bus.clk;
+// end
 
 
 logic [1:0] Width = 2'b00;
@@ -82,14 +82,14 @@ begin : stim_proc
 	randNoise = new;
 
   // Initilization
-    stim_bus.clk = 1; // start with clock and reset at '1', while enable at '0'
-    stim_bus.rst = 0;
+    // stim_bus.clk = 1; // start with clock and reset at '1', while enable at '0'
+    // stim_bus.rst = 0;
     stim_bus.PSEL = 0;
     stim_bus.PWRITE = 0;
 	stim_bus.PENABLE= 0;
 
     @(posedge stim_bus.clk); // wait til next rising edge (in other words, wait 20ns)
-    stim_bus.rst = 1;
+    // stim_bus.rst = 1;
 
 	// **********generateNoise**********//
 		// How To Write To Registers:
@@ -182,9 +182,9 @@ begin : stim_proc
 	 $fclose(data_file_0);
 	//check for synchronous reset
 	@(posedge stim_bus.clk); /// The cycle that need to write into the register
-	stim_bus.rst = 0;
+	// stim_bus.rst = 0;
 	@(posedge stim_bus.clk); /// The cycle that need to write into the register
-	stim_bus.rst = 1;
+	// stim_bus.rst = 1;
 
 		
 	 //**************************************************************************************//
@@ -264,10 +264,10 @@ begin : stim_proc
 			 $fclose(data_file_1);
 
 	//check for usynchronous reset
-	#1.2;
-	stim_bus.rst = 0;
-	#100.2;
-	stim_bus.rst = 1;
+	// #1.2;
+	// stim_bus.rst = 0;
+	// #100.2;
+	// stim_bus.rst = 1;
 
 	 //**************************************************************************************//
 	//*********************************Test Codewidth = 32 : ********************************//
