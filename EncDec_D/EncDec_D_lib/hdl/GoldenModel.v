@@ -22,23 +22,35 @@ module GoldenModel
 );
  
 `define NULL 0
-logic [DATA_WIDTH-1:0] 	DataOut;
-logic [AMBA_WORD-1:0] 	CTRL ;
-logic [AMBA_WORD-1:0] 	DATA_IN;
-logic [AMBA_WORD-1:0] 	CODEWORD_WIDTH;
-logic [AMBA_WORD-1:0] 	NOISE;
-
+reg [DATA_WIDTH-1:0] 	DataOut;
+reg [AMBA_WORD-1:0] 	CTRL ;
+reg [AMBA_WORD-1:0] 	DATA_IN;
+reg [AMBA_WORD-1:0] 	CODEWORD_WIDTH;
+reg [AMBA_WORD-1:0] 	NOISE;
+reg flag;
 // Data Types
-initial
-begin : init_proc
+// initial
+// begin : init_proc
 
 	
-end
+// end
+
+assign flag = gold_bus.RegistersW & (~gold_bus.PADDR[3]) & gold_bus.PADDR[2] ;
+
+always@(gold_bus.rst or flag) begin : Reseting
+	if(!gold_bus.rst)
+		DataOut = {DATA_WIDTH{1'b0}};
+	else
+		begin
+			if(flag)
+				DataOut = gold_bus.FullWord ;
+		end
+end 
 
 always@(gold_bus.operation_done or gold_bus.RegistersR) begin : Data_Out_Control
 	// Data out
 	if(gold_bus.operation_done == 1'b1)
-		gold_bus.gm_DATA_OUT = gold_bus.FullWord;
+		gold_bus.gm_DATA_OUT = DataOut;
 	else
 		gold_bus.gm_DATA_OUT = DATA_IN;
 end
@@ -75,27 +87,37 @@ end
 	
 	
 	
-always @(posedge gold_bus.RegistersR or posedge gold_bus.RegistersW) begin : Register_Selction
-  
-
-		if( gold_bus.RegistersW) 
-			begin//OFFSET OF THE ADDRES IS THE SELECTED REGISTER
-				case(gold_bus.PADDR[3:2]) // Check RTL
-				  2'b00 : CTRL <= gold_bus.PWDATA;
-				  2'b01 : DATA_IN <= gold_bus.PWDATA;
-				  2'b10 : CODEWORD_WIDTH <= gold_bus.PWDATA;
-				  default : NOISE <= gold_bus.PWDATA;
-				endcase
-			end
-		else
+always @(posedge gold_bus.RegistersR or posedge gold_bus.RegistersW or negedge gold_bus.rst) 
+begin : Register_Selction
+	if(!gold_bus.rst)
 		begin
-			case(gold_bus.PADDR[3:2]) // PREAD: CPU Reads from registers
-			  2'b00 : gold_bus.RegistersOut <= CTRL;
-			  2'b01 : gold_bus.RegistersOut <= DATA_IN;
-			  2'b10 : gold_bus.RegistersOut <= CODEWORD_WIDTH;
-			  default : gold_bus.RegistersOut <= NOISE;
-			endcase
+			CTRL = {AMBA_WORD{1'b0}};
+			DATA_IN = {AMBA_WORD{1'b0}};
+			CODEWORD_WIDTH = {AMBA_WORD{1'b0}};
+			NOISE = {AMBA_WORD{1'b0}};
+			gold_bus.RegistersOut = {AMBA_WORD{1'b0}} ;
 		end
-	end
-
+  
+	else
+		begin
+				if( gold_bus.RegistersW) 
+					begin//OFFSET OF THE ADDRES IS THE SELECTED REGISTER
+						case(gold_bus.PADDR[3:2]) // Check RTL
+						  2'b00 : CTRL = gold_bus.PWDATA;
+						  2'b01 : DATA_IN = gold_bus.PWDATA;
+						  2'b10 : CODEWORD_WIDTH = gold_bus.PWDATA;
+						  default : NOISE = gold_bus.PWDATA;
+						endcase
+					end
+				else
+				begin
+					case(gold_bus.PADDR[3:2]) // PREAD: CPU Reads from registers
+					  2'b00 : gold_bus.RegistersOut = CTRL;
+					  2'b01 : gold_bus.RegistersOut = DATA_IN;
+					  2'b10 : gold_bus.RegistersOut = CODEWORD_WIDTH;
+					  default : gold_bus.RegistersOut = NOISE;
+					endcase
+				end
+		end
+end
 endmodule
