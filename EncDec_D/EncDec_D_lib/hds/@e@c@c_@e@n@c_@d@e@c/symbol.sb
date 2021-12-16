@@ -647,23 +647,23 @@ VExpander (VariableExpander
 vvMap [
 (vvPair
 variable "HDLDir"
-value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hdl"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hdl"
 )
 (vvPair
 variable "HDSDir"
-value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds"
 )
 (vvPair
 variable "SideDataDesignDir"
-value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb.info"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb.info"
 )
 (vvPair
 variable "SideDataUserDir"
-value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb.user"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb.user"
 )
 (vvPair
 variable "SourceDir"
-value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds"
 )
 (vvPair
 variable "appl"
@@ -679,27 +679,27 @@ value "%(unit)_%(view)_config"
 )
 (vvPair
 variable "d"
-value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c"
 )
 (vvPair
 variable "d_logical"
-value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\ECC_ENC_DEC"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\ECC_ENC_DEC"
 )
 (vvPair
 variable "date"
-value "12/12/2021"
+value "12/16/2021"
 )
 (vvPair
 variable "day"
-value "Sun"
+value "Thu"
 )
 (vvPair
 variable "day_long"
-value "Sunday"
+value "Thursday"
 )
 (vvPair
 variable "dd"
-value "12"
+value "16"
 )
 (vvPair
 variable "entity_name"
@@ -723,11 +723,11 @@ value "symbol"
 )
 (vvPair
 variable "graphical_source_author"
-value "kapelnik"
+value "benmaorr"
 )
 (vvPair
 variable "graphical_source_date"
-value "12/12/2021"
+value "12/16/2021"
 )
 (vvPair
 variable "graphical_source_group"
@@ -735,11 +735,11 @@ value "UNKNOWN"
 )
 (vvPair
 variable "graphical_source_host"
-value "L330W529"
+value "L330W530"
 )
 (vvPair
 variable "graphical_source_time"
-value "12:30:33"
+value "11:43:25"
 )
 (vvPair
 variable "group"
@@ -747,7 +747,7 @@ value "UNKNOWN"
 )
 (vvPair
 variable "host"
-value "L330W529"
+value "L330W530"
 )
 (vvPair
 variable "language"
@@ -783,11 +783,11 @@ value "December"
 )
 (vvPair
 variable "p"
-value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@e@c@c_@e@n@c_@d@e@c\\symbol.sb"
 )
 (vvPair
 variable "p_logical"
-value "D:\\Users\\kapelnik\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\ECC_ENC_DEC\\symbol.sb"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\ECC_ENC_DEC\\symbol.sb"
 )
 (vvPair
 variable "package_name"
@@ -823,7 +823,7 @@ value "<TBD>"
 )
 (vvPair
 variable "task_QuestaSimPath"
-value "C:\\Program Files\\questasim64_2019.2\\win64"
+value "C:\\Program Files\\questasim64_10.6a\\win64"
 )
 (vvPair
 variable "task_VCSPath"
@@ -843,7 +843,7 @@ value "symbol"
 )
 (vvPair
 variable "time"
-value "12:30:33"
+value "11:43:25"
 )
 (vvPair
 variable "unit"
@@ -851,7 +851,7 @@ value "ECC_ENC_DEC"
 )
 (vvPair
 variable "user"
-value "kapelnik"
+value "benmaorr"
 )
 (vvPair
 variable "version"
@@ -910,8 +910,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,10000,23000,10800"
-st "input  wire                        clk;
-"
+st "input  wire                        clk;"
 )
 thePort (LogicalPort
 lang 5
@@ -958,8 +957,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,10800,23000,11600"
-st "input  wire                        rst;
-"
+st "input  wire                        rst;"
 )
 thePort (LogicalPort
 lang 5
@@ -1006,8 +1004,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,11600,24500,12400"
-st "input  wire [AMBA_ADDR_WIDTH-1:0]  PADDR;
-"
+st "input  wire [AMBA_ADDR_WIDTH-1:0]  PADDR;"
 )
 thePort (LogicalPort
 lang 5
@@ -1055,8 +1052,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,12400,25000,13200"
-st "input  wire [AMBA_WORD-1:0]        PWDATA;
-"
+st "input  wire [AMBA_WORD-1:0]        PWDATA;"
 )
 thePort (LogicalPort
 lang 5
@@ -1104,8 +1100,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,13200,25500,14000"
-st "input  wire                        PENABLE;
-"
+st "input  wire                        PENABLE;"
 )
 thePort (LogicalPort
 lang 5
@@ -1152,8 +1147,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,14000,24000,14800"
-st "input  wire                        PSEL;
-"
+st "input  wire                        PSEL;"
 )
 thePort (LogicalPort
 lang 5
@@ -1200,8 +1194,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,14800,25000,15600"
-st "input  wire                        PWRITE;
-"
+st "input  wire                        PWRITE;"
 )
 thePort (LogicalPort
 lang 5
@@ -1249,8 +1242,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,15600,25000,16400"
-st "output reg [AMBA_WORD-1:0]         PRDATA;
-"
+st "output reg [AMBA_WORD-1:0]         PRDATA;"
 )
 thePort (LogicalPort
 lang 5
@@ -1300,8 +1292,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,16400,26000,17200"
-st "output reg [DATA_WIDTH-1:0]        data_out;
-"
+st "output reg [DATA_WIDTH-1:0]        data_out;"
 )
 thePort (LogicalPort
 lang 5
@@ -1351,8 +1342,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,17200,29000,18000"
-st "output reg                         operation_done;
-"
+st "output reg                         operation_done;"
 )
 thePort (LogicalPort
 lang 5
@@ -1401,8 +1391,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,18000,28500,18800"
-st "output reg [1:0]                   num_of_errors;
-"
+st "output reg [1:0]                   num_of_errors;"
 )
 thePort (LogicalPort
 lang 5
@@ -1472,8 +1461,7 @@ AMBA_WORD       32
 IDLE            2'b00  
 ENCODING        2'b01  
 DECODING        2'b10  
-NOISE           2'b11  
-"
+NOISE           2'b11  "
 )
 header "Parameter Declarations"
 showHdrWhenContentsEmpty 1
@@ -1895,7 +1883,7 @@ xt "2000,9000,2000,9000"
 tm "SyDeclarativeTextMgr"
 )
 )
-lastUid 184,0
+lastUid 206,0
 postModuleDirective "//States"
 activeModelName "Symbol:CDM"
 )
