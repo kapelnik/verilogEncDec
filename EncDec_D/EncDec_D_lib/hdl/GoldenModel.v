@@ -120,4 +120,7 @@ begin : Register_Selction
 				end
 		end
 end
+
+assign gold_bus.CTRL_REG = CTRL ; 
+
 endmodule

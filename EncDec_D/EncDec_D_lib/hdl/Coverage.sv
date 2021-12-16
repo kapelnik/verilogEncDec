@@ -28,31 +28,31 @@ integer test ;
 //Cover Groups:
 covergroup signals_test @(posedge coverage_bus.clk);
 		// did reset ranged from 1:0
-				reset : coverpoint coverage_bus.rst{
+		reset : coverpoint coverage_bus.rst{
 		   bins low = {0};
 		   bins high = {1};
 		 }
      
           // checking if the result PENABLE went to all the ranges
-         PENABLE : coverpoint coverage_bus.PENABLE{
+        PENABLE : coverpoint coverage_bus.PENABLE{
          bins low = {0};
          bins high = {1};
           }
 		  
           // checking if the result PSEL went to all the ranges
-         PSEL : coverpoint coverage_bus.PSEL{
+        PSEL : coverpoint coverage_bus.PSEL{
          bins low = {0};
          bins high = {1};
           }
 		  
           // checking if the result PWRITE went to all the ranges
-         PWRITE : coverpoint coverage_bus.PWRITE{
+        PWRITE : coverpoint coverage_bus.PWRITE{
          bins low = {0};
          bins high = {1};
           }
 		  
           // checking if the result operation_done went to all the ranges
-         Operation_done : coverpoint coverage_bus.operation_done{
+        Operation_done : coverpoint coverage_bus.operation_done{
          bins low = {0};
          bins high = {1};
           }
@@ -72,7 +72,7 @@ endgroup
 
 covergroup amount_of_noise_test @(posedge coverage_bus.operation_done);
 		 // checking if the amount of noise is good or passing the oreder for only 2 error at max
-        amount : coverpoint coverage_bus.num_of_errors{
+        amount : coverpoint coverage_bus.num_of_errors iff(coverage_bus.CTRL_REG[1:0] != 2'b00){
 		 bins no_error = {0};
          bins one_error = {1};
 		 bins two_error = {2};
@@ -83,31 +83,45 @@ endgroup
 
 always@(posedge coverage_bus.operation_done)
 begin
-	test = sample_walking_1(coverage_bus.NOISE);
+	if(coverage_bus.CTRL_REG[1:0] != 2'b00)
+		test = sample_walking_1(coverage_bus.NOISE);
 end
 		  
 covergroup walking_1_cg @(posedge coverage_bus.operation_done);
-   walking_1: coverpoint test {
+   walking_1: coverpoint test iff(coverage_bus.CTRL_REG[1:0] != 2'b00){
       bins Noise_index[AMBA_WORD] = {[0:AMBA_WORD-1]};
-	  bins no_noise = default ;
+	  bins no_noise = {-1 };
    }
 endgroup
    
 function integer sample_walking_1(bit[AMBA_WORD-1:0] x);
 	integer temp ;
-   for(int i=0;i<AMBA_WORD;i++)begin
+	
+   for(integer i=0;i<AMBA_WORD;i++)begin
     temp = sample(x, i);
 	if(temp > -1 )
 		return temp; 
    end
-   return temp ;
+   return -1 ;
 endfunction
 
+// function integer one_hot(bit[AMBA_WORD-1:0] x);
+	// integer flag = 0 ;
+		// flag = 0;
+		// for(integer i=0;i<AMBA_WORD;i++) begin
+			// if(x[i] == 1)
+				// flag++ ;
+		// end
+		
+		// if(flag == 1)
+			// return 1;
+		// else
+			// return 0;
+// endfunction
 
-function integer sample(bit[AMBA_WORD-1:0] x, int position);
-   if (x[position]==1 && $onehot(x) )begin
+function integer sample(bit[AMBA_WORD-1:0] x, integer position);
+   if (x[position]==1 && $onehot(x) )
         return position;
-   end
    else
 		return -1;
 endfunction
