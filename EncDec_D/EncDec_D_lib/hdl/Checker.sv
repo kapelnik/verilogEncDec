@@ -34,7 +34,7 @@ assert property(rst_active)
 	cover property(rst_active);
 	
 property RegistersReadCheck;
-				@(checker_bus.clk) ((checker_bus.PENABLE == 1'b1)&& (checker_bus.PSEL == 1'b1) && (checker_bus.PWRITE == 1'b0)) |->  (checker_bus.PRDATA == checker_bus.RegistersOut);
+				@(checker_bus.clk) disable iff (!checker_bus.rst) ((checker_bus.PENABLE == 1'b1)&& (checker_bus.PSEL == 1'b1) && (checker_bus.PWRITE == 1'b0)) |->  (checker_bus.PRDATA == checker_bus.RegistersOut);
 				endproperty
 assert property(RegistersReadCheck)
   else $error("error with RegistersReadCheck");

@@ -41,16 +41,31 @@ endclass
 
 
 class RandNoise;
-	rand bit [AMBA_WORD-1:0] NoiseVector_1;
-	rand bit [AMBA_WORD-1:0] NoiseVector_2;
-	rand bit [AMBA_ADDR_WIDTH-5:0] NoiseVector_3;
+	rand bit [7:0] NoiseVector_8_1;
+	rand bit [7:0] NoiseVector_8_2;
 	
-	constraint uptoOne{$countones(NoiseVector_1) == 1;}
-	constraint uptoTwo{$countones(NoiseVector_2) == 2;}
+	rand bit [15:0] NoiseVector_16_1;
+	rand bit [15:0] NoiseVector_16_2;
+	
+	rand bit [31:0] NoiseVector_32_1;
+	rand bit [31:0] NoiseVector_32_2;
+	
+	
+	rand bit [AMBA_ADDR_WIDTH-5:0] NoiseVector_Addr;
+
+
+	constraint uptoOne8{$countones(NoiseVector_8_1) == 1;}
+	constraint uptoTwo8{$countones(NoiseVector_8_2) == 2;}
+	
+	constraint uptoOne16{$countones(NoiseVector_16_1) == 1;}
+	constraint uptoTwo16{$countones(NoiseVector_16_2) == 2;}
+	
+	constraint uptoOne32{$countones(NoiseVector_32_1) == 1;}
+	constraint uptoTwo32{$countones(NoiseVector_32_2) == 2;}
 	
 	function void post_randomize();
-		// $display("new NoiseVector1 is: %32b.",NoiseVector_1);
-		// $display("new NoiseVector2 is: %32b.",NoiseVector_2);
+		// $display("new NoiseVector_321 is: %32b.",NoiseVector_32_1);
+		// $display("new NoiseVector_322 is: %32b.",NoiseVector_32_2);
 	endfunction 
 endclass
 
@@ -108,8 +123,8 @@ begin : stim_proc
 	//*********************************Test Codewidth = 8 : ********************************//
 	//Set codeword width = 00: (8bit)
 	Width = 2'b00;
-	GenerateNoise();
-	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1000}}; 
+	// GenerateNoise(3);
+	stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b1000}}; 
 	stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},Width};
 	RegistersWrite();
 	
@@ -130,15 +145,15 @@ begin : stim_proc
 
 		//********** Encode: **********
 		//NOISE_REG:
-		GenerateNoise();
+		GenerateNoise(0);
 		
 		//DATA_IN_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0100}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},{4'b0000},{Sample[7:4]}};
 		RegistersWrite();
 		 
 		//CTRL_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={AMBA_WORD{1'b0}};
 		RegistersWrite();
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
@@ -146,15 +161,15 @@ begin : stim_proc
 		
 		//********** Decode: **********
 		//NOISE_REG:
-		GenerateNoise();
+		GenerateNoise(0);
 		
 		//DATA_IN_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0100}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},Sample[7:0]} ^ {{AMBA_WORD-8{1'b0}},Noise[7:0]};
 		RegistersWrite();
 		
 		//CTRL_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
 		RegistersWrite();
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
@@ -163,15 +178,15 @@ begin : stim_proc
 		
 		// ********** Full Channel: **********
 		//NOISE_REG:
-		GenerateNoise();
+		GenerateNoise(0);
 		
 		//DATA_IN_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0100}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-8{1'b0}},{4'b0000},{Sample[7:4]}};
 		RegistersWrite();
 		 
 		//CTRL_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
 		RegistersWrite();
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
@@ -191,8 +206,8 @@ begin : stim_proc
 	//*********************************Test Codewidth = 16 : ********************************//
 	//Set codeword width = 01: (16bit)
 	Width = 2'b01;
-	GenerateNoise();
-	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1000}}; 
+	// GenerateNoise(3);
+	stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b1000}}; 
 	stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},Width};
 	RegistersWrite();
 	
@@ -210,15 +225,15 @@ begin : stim_proc
 
 		//********** Encode: **********
 		//NOISE_REG:
-		GenerateNoise();
+		GenerateNoise(1);
 		
 		//DATA_IN_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0100}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-16{1'b0}},{8'b00000000},{Sample[15:5]}};
 		RegistersWrite();
 		 
 		//CTRL_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={AMBA_WORD{1'b0}};
 		RegistersWrite();
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
@@ -226,15 +241,15 @@ begin : stim_proc
 		
 		//********** Decode: **********
 		//NOISE_REG:
-		GenerateNoise();
+		GenerateNoise(1);
 		
 		//DATA_IN_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0100}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-16{1'b0}},Sample[15:0]} ^ {{AMBA_WORD-16{1'b0}},Noise[15:0]};
 		RegistersWrite();
 		
 		//CTRL_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
 		RegistersWrite();
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
@@ -243,15 +258,15 @@ begin : stim_proc
 		
 		// ********** Full Channel: **********
 		//NOISE_REG:
-		GenerateNoise();
+		GenerateNoise(1);
 		
 		//DATA_IN_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0100}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-16{1'b0}},{8'b00000000},{Sample[15:5]}};
 		RegistersWrite();
 		 
 		//CTRL_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
 		RegistersWrite();
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
@@ -262,7 +277,6 @@ begin : stim_proc
 	
 		
 			 $fclose(data_file_1);
-
 	//check for usynchronous reset
 	// #1.2;
 	// stim_bus.rst = 0;
@@ -273,8 +287,8 @@ begin : stim_proc
 	//*********************************Test Codewidth = 32 : ********************************//
 	//Set codeword width = 10: (32bit)
 	Width = 2'b10;
-	GenerateNoise();
-	stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1000}}; 
+	// GenerateNoise(3);
+	stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b1000}}; 
 	stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},Width};
 	RegistersWrite();
 	
@@ -292,15 +306,15 @@ begin : stim_proc
 		stim_bus.FullWord =Sample;
 		//********** Encode: **********
 		//NOISE_REG:
-		GenerateNoise();
+		GenerateNoise(2);
 		
 		//DATA_IN_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0100}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-26{1'b0}},{Sample[31:6]}};
 		RegistersWrite();
 		 
 		//CTRL_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={AMBA_WORD{1'b0}};
 		RegistersWrite();
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
@@ -308,15 +322,15 @@ begin : stim_proc
 		
 		//********** Decode: **********
 		//NOISE_REG:
-		GenerateNoise();
+		GenerateNoise(2);
 		
 		//DATA_IN_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0100}}; 
 		stim_bus.PWDATA =Sample^Noise;
 		RegistersWrite();
 		
 		//CTRL_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
 		RegistersWrite();
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
@@ -325,15 +339,15 @@ begin : stim_proc
 		
 		// ********** Full Channel: **********
 		//NOISE_REG:
-		GenerateNoise();
+		GenerateNoise(2);
 		
 		//DATA_IN_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0100}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0100}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-26{1'b0}},{Sample[31:6]}};
 		RegistersWrite();
 		 
 		//CTRL_REG:
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b0000}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
 		RegistersWrite();
 					// check for usynchronous reset
@@ -348,8 +362,7 @@ begin : stim_proc
 	end
 	
 		 $fclose(data_file_2);
-
-	// stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1100}}; /// Sending Noise
+	// stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b1100}}; /// Sending Noise
 	// stim_bus.PWDATA = Noise;
 	// RegistersWrite();
 	// make sure register in RegSelector got the data
@@ -366,20 +379,37 @@ begin : stim_proc
   
 end
 
-	task GenerateNoise();
+	task GenerateNoise(integer i);
 	begin
 		//**********generateNoise**********//
-		
 		amount.randomize();
 		randNoise.randomize();
-		if(amount.getamount() == 0) 		Noise = {AMBA_WORD{1'b0}};
-		else if(amount.getamount() == 1) 	Noise = randNoise.NoiseVector_1;
-		else								Noise = randNoise.NoiseVector_2;	
-		// $display("New Noise: %32b",Noise);
+		case (i)
+			0:	begin//8bit
+				if(amount.getamount() == 0) 		Noise = {AMBA_WORD{1'b0}};
+				else if(amount.getamount() == 1) 	Noise = {{AMBA_WORD-8{1'b0}},randNoise.NoiseVector_8_1};
+				else								Noise = {{AMBA_WORD-8{1'b0}},randNoise.NoiseVector_8_2};
+			end
+			1:	begin//16bit
+				if(amount.getamount() == 0) 		Noise = {AMBA_WORD{1'b0}};
+				else if(amount.getamount() == 1) 	Noise = {{AMBA_WORD-16{1'b0}},randNoise.NoiseVector_16_1};
+				else								Noise = {{AMBA_WORD-16{1'b0}},randNoise.NoiseVector_16_1};
+			end
+			2:	begin//32bit
+				if(amount.getamount() == 0) 		Noise = {AMBA_WORD{1'b0}};
+				else if(amount.getamount() == 1) 	Noise = randNoise.NoiseVector_32_1;
+				else								Noise = randNoise.NoiseVector_32_2;
+			end
+			default:	begin//Noise for addr
+													Noise[AMBA_ADDR_WIDTH:4]  = randNoise.NoiseVector_Addr;
+			end
+		endcase
+		// if (i !=3)
+			// $display("i: %d , New Noise: %32b",i,Noise);
 		//for coverage check:
 		stim_bus.NOISE = Noise;
 		// Writing to Noise_Reg
-		stim_bus.PADDR =  {randNoise.NoiseVector_3,{4'b1100}}; 
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b1100}}; 
 		stim_bus.PWDATA = Noise;
 		RegistersWrite();
 		

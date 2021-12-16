@@ -87,7 +87,7 @@ end
 	
 	
 	
-always @(posedge gold_bus.RegistersR or posedge gold_bus.RegistersW or negedge gold_bus.rst) 
+always @( gold_bus.RegistersR or  gold_bus.RegistersW or  gold_bus.rst) 
 begin : Register_Selction
 	if(!gold_bus.rst)
 		begin
