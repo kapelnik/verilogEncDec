@@ -443,11 +443,13 @@ end
 	
 	task RegistersRead();
 		begin
+			stim_bus.PSEL = 1;
 			stim_bus.RegistersR=1;
 			stim_bus.PENABLE=1;
 			@(posedge stim_bus.clk); /// The cycle that need to write into the register
 			stim_bus.RegistersR=0;
 			stim_bus.PENABLE=0;
+			stim_bus.PSEL = 0;
 			@(posedge stim_bus.clk); /// The cycle that need to write into the register
 
 		end

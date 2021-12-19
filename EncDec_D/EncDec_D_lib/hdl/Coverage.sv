@@ -56,6 +56,7 @@ covergroup signals_test @(posedge coverage_bus.clk);
          bins low = {0};
          bins high = {1};
           }
+		 PENABLE_X_PSEL: cross PENABLE,PSEL;
 endgroup
 
 
@@ -92,9 +93,9 @@ covergroup walking_1_cg @(negedge coverage_bus.operation_done);
    
 endgroup
 
-covergroup APB_bus @(posedge coverage_bus.clk);
+covergroup APB_bus @(negedge coverage_bus.clk);
 
-   APB_PENABLE: coverpoint coverage_bus.PENABLE iff(coverage_bus.PSEL == 1){
+   APB_PENABLE: coverpoint coverage_bus.PENABLE{
       bins low_to_high_PENABLE = (0 => 1);
       bins high_to_low_PENABLE = (1 => 0);
    }
@@ -102,7 +103,11 @@ covergroup APB_bus @(posedge coverage_bus.clk);
       bins low_to_high_PSEL = (0 => 1);
       bins high_to_low_PSEL = (1 => 0);
    }
-   PENABLE_X_PSEL: cross APB_PENABLE,APB_PSEL;
+   APB_PSEL_state: coverpoint coverage_bus.PSEL{
+      bins low_PSEL = {0};
+      bins high_PSEL = {1};
+   }
+   PENABLE_X_PSEL: cross APB_PENABLE,APB_PSEL_state;
    
    
 endgroup
