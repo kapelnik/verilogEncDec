@@ -432,7 +432,8 @@ end
 			stim_bus.PENABLE=0;
 			stim_bus.RegistersW=0;
 			stim_bus.PWRITE=0;
-
+			if(stim_bus.PADDR[3:2] == 2'b00)
+				stim_bus.PSEL = 0;
 			@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		//make sure register in RegSelector got the data
 			 RegistersRead();
