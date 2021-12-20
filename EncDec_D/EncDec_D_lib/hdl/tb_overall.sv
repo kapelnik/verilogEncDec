@@ -66,7 +66,7 @@ begin : stim_proc
 		@(posedge clk) ;
 		rst = 1 ;
 		
-		repeat(300)@(posedge clk) ;
+		repeat(306)@(posedge clk) ;
 		#1.2;
 	rst = 0;
 	#100.2;

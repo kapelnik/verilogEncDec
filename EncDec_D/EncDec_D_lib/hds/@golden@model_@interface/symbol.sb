@@ -11,7 +11,7 @@ appVersion "2019.2 (Build 5)"
 model (Symbol
 commonDM (CommonDM
 ldm (LogicalDM
-suid 10,0
+suid 11,0
 usingSuid 1
 emptyRow *1 (LEmptyRow
 )
@@ -182,6 +182,20 @@ suid 10,0
 )
 uid 40,0
 )
+*25 (LogPort
+port (LogicalPort
+lang 5
+m 1
+decl (Decl
+n "CTRL_REG"
+t "wire"
+b "[AMBA_WORD-1:0]"
+o 11
+suid 11,0
+)
+)
+uid 169,0
+)
 ]
 )
 pdm (PhysicalDM
@@ -189,7 +203,7 @@ displayShortBounds 1
 editShortBounds 1
 uid 108,0
 optionalChildren [
-*25 (Sheet
+*26 (Sheet
 sheetRow (SheetRow
 headerVa (MVa
 cellColor "49152,49152,49152"
@@ -206,91 +220,97 @@ cellColor "39936,56832,65280"
 fontColor "0,0,0"
 font "Tahoma,10,0"
 )
-emptyMRCItem *26 (MRCItem
+emptyMRCItem *27 (MRCItem
 litem &1
-pos 10
+pos 11
 dimension 20
 )
 uid 110,0
 optionalChildren [
-*27 (MRCItem
+*28 (MRCItem
 litem &2
 pos 0
 dimension 20
 uid 111,0
 )
-*28 (MRCItem
+*29 (MRCItem
 litem &3
 pos 1
 dimension 23
 uid 112,0
 )
-*29 (MRCItem
+*30 (MRCItem
 litem &4
 pos 2
 hidden 1
 dimension 20
 uid 113,0
 )
-*30 (MRCItem
+*31 (MRCItem
 litem &15
 pos 0
 dimension 20
 uid 23,0
 )
-*31 (MRCItem
+*32 (MRCItem
 litem &16
 pos 1
 dimension 20
 uid 25,0
 )
-*32 (MRCItem
+*33 (MRCItem
 litem &17
 pos 2
 dimension 20
 uid 27,0
 )
-*33 (MRCItem
+*34 (MRCItem
 litem &18
 pos 3
 dimension 20
 uid 29,0
 )
-*34 (MRCItem
+*35 (MRCItem
 litem &19
 pos 4
 dimension 20
 uid 31,0
 )
-*35 (MRCItem
+*36 (MRCItem
 litem &20
 pos 5
 dimension 20
 uid 33,0
 )
-*36 (MRCItem
+*37 (MRCItem
 litem &21
 pos 6
 dimension 20
 uid 35,0
 )
-*37 (MRCItem
+*38 (MRCItem
 litem &22
 pos 7
 dimension 20
 uid 37,0
 )
-*38 (MRCItem
+*39 (MRCItem
 litem &23
 pos 8
 dimension 20
 uid 39,0
 )
-*39 (MRCItem
+*40 (MRCItem
 litem &24
 pos 9
 dimension 20
 uid 41,0
+)
+*41 (MRCItem
+litem &25
+pos 10
+dimension 20
+uid 170,0
 )
 ]
 )
@@ -303,55 +323,55 @@ textAngle 90
 )
 uid 114,0
 optionalChildren [
-*40 (MRCItem
+*42 (MRCItem
 litem &5
 pos 0
 dimension 20
 uid 115,0
 )
-*41 (MRCItem
+*43 (MRCItem
 litem &7
 pos 1
 dimension 50
 uid 116,0
 )
-*42 (MRCItem
+*44 (MRCItem
 litem &8
 pos 2
 dimension 100
 uid 117,0
 )
-*43 (MRCItem
+*45 (MRCItem
 litem &9
 pos 3
 dimension 50
 uid 118,0
 )
-*44 (MRCItem
+*46 (MRCItem
 litem &10
 pos 4
 dimension 100
 uid 119,0
 )
-*45 (MRCItem
+*47 (MRCItem
 litem &11
 pos 5
 dimension 60
 uid 120,0
 )
-*46 (MRCItem
+*48 (MRCItem
 litem &12
 pos 6
 dimension 100
 uid 121,0
 )
-*47 (MRCItem
+*49 (MRCItem
 litem &13
 pos 7
 dimension 50
 uid 122,0
 )
-*48 (MRCItem
+*50 (MRCItem
 litem &14
 pos 8
 dimension 80
@@ -372,32 +392,32 @@ uid 93,0
 )
 genericsCommonDM (CommonDM
 ldm (LogicalDM
-emptyRow *49 (LEmptyRow
+emptyRow *51 (LEmptyRow
 )
 uid 125,0
 optionalChildren [
-*50 (RefLabelRowHdr
+*52 (RefLabelRowHdr
 )
-*51 (TitleRowHdr
+*53 (TitleRowHdr
 )
-*52 (FilterRowHdr
+*54 (FilterRowHdr
 )
-*53 (RefLabelColHdr
+*55 (RefLabelColHdr
 tm "RefLabelColHdrMgr"
 )
-*54 (RowExpandColHdr
+*56 (RowExpandColHdr
 tm "RowExpandColHdrMgr"
 )
-*55 (GroupColHdr
+*57 (GroupColHdr
 tm "GroupColHdrMgr"
 )
-*56 (NameColHdr
+*58 (NameColHdr
 tm "GenericNameColHdrMgr"
 )
-*57 (InitColHdr
+*59 (InitColHdr
 tm "GenericValueColHdrMgr"
 )
-*58 (EolColHdr
+*60 (EolColHdr
 tm "GenericEolColHdrMgr"
 )
 ]
@@ -407,7 +427,7 @@ displayShortBounds 1
 editShortBounds 1
 uid 135,0
 optionalChildren [
-*59 (Sheet
+*61 (Sheet
 sheetRow (SheetRow
 headerVa (MVa
 cellColor "49152,49152,49152"
@@ -424,27 +444,27 @@ cellColor "39936,56832,65280"
 fontColor "0,0,0"
 font "Tahoma,10,0"
 )
-emptyMRCItem *60 (MRCItem
-litem &49
+emptyMRCItem *62 (MRCItem
+litem &51
 pos 0
 dimension 20
 )
 uid 137,0
 optionalChildren [
-*61 (MRCItem
-litem &50
+*63 (MRCItem
+litem &52
 pos 0
 dimension 20
 uid 138,0
 )
-*62 (MRCItem
-litem &51
+*64 (MRCItem
+litem &53
 pos 1
 dimension 23
 uid 139,0
 )
-*63 (MRCItem
-litem &52
+*65 (MRCItem
+litem &54
 pos 2
 hidden 1
 dimension 20
@@ -461,32 +481,32 @@ textAngle 90
 )
 uid 141,0
 optionalChildren [
-*64 (MRCItem
-litem &53
+*66 (MRCItem
+litem &55
 pos 0
 dimension 20
 uid 142,0
 )
-*65 (MRCItem
-litem &55
+*67 (MRCItem
+litem &57
 pos 1
 dimension 50
 uid 143,0
 )
-*66 (MRCItem
-litem &56
+*68 (MRCItem
+litem &58
 pos 2
 dimension 100
 uid 144,0
 )
-*67 (MRCItem
-litem &57
+*69 (MRCItem
+litem &59
 pos 3
 dimension 50
 uid 145,0
 )
-*68 (MRCItem
-litem &58
+*70 (MRCItem
+litem &60
 pos 4
 dimension 80
 uid 146,0
@@ -549,19 +569,19 @@ value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\
 )
 (vvPair
 variable "date"
-value "12/16/2021"
+value "12/20/2021"
 )
 (vvPair
 variable "day"
-value "Thu"
+value "Mon"
 )
 (vvPair
 variable "day_long"
-value "Thursday"
+value "Monday"
 )
 (vvPair
 variable "dd"
-value "16"
+value "20"
 )
 (vvPair
 variable "entity_name"
@@ -589,7 +609,7 @@ value "benmaorr"
 )
 (vvPair
 variable "graphical_source_date"
-value "12/16/2021"
+value "12/20/2021"
 )
 (vvPair
 variable "graphical_source_group"
@@ -597,11 +617,11 @@ value "UNKNOWN"
 )
 (vvPair
 variable "graphical_source_host"
-value "L330W530"
+value "L330W529"
 )
 (vvPair
 variable "graphical_source_time"
-value "11:27:24"
+value "19:53:34"
 )
 (vvPair
 variable "group"
@@ -609,7 +629,7 @@ value "UNKNOWN"
 )
 (vvPair
 variable "host"
-value "L330W530"
+value "L330W529"
 )
 (vvPair
 variable "language"
@@ -685,7 +705,7 @@ value "<TBD>"
 )
 (vvPair
 variable "task_QuestaSimPath"
-value "C:\\Program Files\\questasim64_10.6a\\win64"
+value "C:\\Program Files\\questasim64_2019.2\\win64"
 )
 (vvPair
 variable "task_VCSPath"
@@ -705,7 +725,7 @@ value "symbol"
 )
 (vvPair
 variable "time"
-value "11:27:24"
+value "19:53:34"
 )
 (vvPair
 variable "unit"
@@ -736,10 +756,10 @@ value "21"
 LanguageMgr "Verilog2001LangMgr"
 uid 92,0
 optionalChildren [
-*69 (SymbolBody
+*71 (SymbolBody
 uid 8,0
 optionalChildren [
-*70 (CptPort
+*72 (CptPort
 uid 42,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -771,8 +791,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,8800,23000,9600"
-st "input  wire                        rst;
-"
+st "input  wire                        rst;"
 )
 thePort (LogicalPort
 lang 5
@@ -784,7 +803,7 @@ suid 1,0
 )
 )
 )
-*71 (CptPort
+*73 (CptPort
 uid 47,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -816,8 +835,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,5600,25000,6400"
-st "input  wire [AMBA_WORD-1:0]        PWDATA;
-"
+st "input  wire [AMBA_WORD-1:0]        PWDATA;"
 )
 thePort (LogicalPort
 lang 5
@@ -830,7 +848,7 @@ suid 2,0
 )
 )
 )
-*72 (CptPort
+*74 (CptPort
 uid 52,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -862,8 +880,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,4800,24500,5600"
-st "input  wire [AMBA_ADDR_WIDTH-1:0]  PADDR;
-"
+st "input  wire [AMBA_ADDR_WIDTH-1:0]  PADDR;"
 )
 thePort (LogicalPort
 lang 5
@@ -876,7 +893,7 @@ suid 3,0
 )
 )
 )
-*73 (CptPort
+*75 (CptPort
 uid 57,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -908,8 +925,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,7200,27000,8000"
-st "input  wire                        RegistersW;
-"
+st "input  wire                        RegistersW;"
 )
 thePort (LogicalPort
 lang 5
@@ -921,7 +937,7 @@ suid 4,0
 )
 )
 )
-*74 (CptPort
+*76 (CptPort
 uid 62,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -953,8 +969,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,6400,27000,7200"
-st "input  wire                        RegistersR;
-"
+st "input  wire                        RegistersR;"
 )
 thePort (LogicalPort
 lang 5
@@ -966,7 +981,7 @@ suid 5,0
 )
 )
 )
-*75 (CptPort
+*77 (CptPort
 uid 67,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -998,8 +1013,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,4000,26000,4800"
-st "input  wire [AMBA_WORD-1:0]        FullWord;
-"
+st "input  wire [AMBA_WORD-1:0]        FullWord;"
 )
 thePort (LogicalPort
 lang 5
@@ -1012,7 +1026,7 @@ suid 6,0
 )
 )
 )
-*76 (CptPort
+*78 (CptPort
 uid 72,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -1044,8 +1058,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,8000,29000,8800"
-st "input  wire                        operation_done;
-"
+st "input  wire                        operation_done;"
 )
 thePort (LogicalPort
 lang 5
@@ -1057,7 +1070,7 @@ suid 7,0
 )
 )
 )
-*77 (CptPort
+*79 (CptPort
 uid 77,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -1067,7 +1080,7 @@ va (VaSet
 vasetType 1
 fg "0,65535,0"
 )
-xt "36000,19625,36750,20375"
+xt "39000,19625,39750,20375"
 )
 tg (CPTG
 uid 79,0
@@ -1077,10 +1090,10 @@ f (Text
 uid 80,0
 va (VaSet
 )
-xt "21800,19500,35000,20500"
+xt "24800,19500,38000,20500"
 st "RegistersOut : [AMBA_WORD-1:0]"
 ju 2
-blo "35000,20300"
+blo "38000,20300"
 tm "CptPortNameMgr"
 )
 )
@@ -1089,9 +1102,8 @@ uid 81,0
 va (VaSet
 font "Courier New,8,0"
 )
-xt "2000,9600,28000,10400"
-st "output wire [AMBA_WORD-1:0]        RegistersOut;
-"
+xt "2000,10400,28000,11200"
+st "output wire [AMBA_WORD-1:0]        RegistersOut;"
 )
 thePort (LogicalPort
 lang 5
@@ -1105,7 +1117,7 @@ suid 8,0
 )
 )
 )
-*78 (CptPort
+*80 (CptPort
 uid 82,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -1115,7 +1127,7 @@ va (VaSet
 vasetType 1
 fg "0,65535,0"
 )
-xt "36000,20625,36750,21375"
+xt "39000,20625,39750,21375"
 )
 tg (CPTG
 uid 84,0
@@ -1125,10 +1137,10 @@ f (Text
 uid 85,0
 va (VaSet
 )
-xt "20600,20500,35000,21500"
+xt "23600,20500,38000,21500"
 st "gm_DATA_OUT : [DATA_WIDTH-1:0]"
 ju 2
-blo "35000,21300"
+blo "38000,21300"
 tm "CptPortNameMgr"
 )
 )
@@ -1137,9 +1149,8 @@ uid 86,0
 va (VaSet
 font "Courier New,8,0"
 )
-xt "2000,10400,27500,11200"
-st "output wire [DATA_WIDTH-1:0]       gm_DATA_OUT;
-"
+xt "2000,11200,27500,12000"
+st "output wire [DATA_WIDTH-1:0]       gm_DATA_OUT;"
 )
 thePort (LogicalPort
 lang 5
@@ -1153,7 +1164,7 @@ suid 9,0
 )
 )
 )
-*79 (CptPort
+*81 (CptPort
 uid 87,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -1163,7 +1174,7 @@ va (VaSet
 vasetType 1
 fg "0,65535,0"
 )
-xt "36000,21625,36750,22375"
+xt "39000,21625,39750,22375"
 )
 tg (CPTG
 uid 89,0
@@ -1173,10 +1184,10 @@ f (Text
 uid 90,0
 va (VaSet
 )
-xt "24200,21500,35000,22500"
+xt "27200,21500,38000,22500"
 st "gm_number_of_errors : [1:0]"
 ju 2
-blo "35000,22300"
+blo "38000,22300"
 tm "CptPortNameMgr"
 )
 )
@@ -1185,9 +1196,8 @@ uid 91,0
 va (VaSet
 font "Courier New,8,0"
 )
-xt "2000,11200,31500,12000"
-st "output wire [1:0]                  gm_number_of_errors;
-"
+xt "2000,12000,31500,12800"
+st "output wire [1:0]                  gm_number_of_errors;"
 )
 thePort (LogicalPort
 lang 5
@@ -1201,6 +1211,53 @@ suid 10,0
 )
 )
 )
+*82 (CptPort
+uid 171,0
+ps "OnEdgeStrategy"
+shape (Triangle
+uid 172,0
+ro 90
+va (VaSet
+vasetType 1
+fg "0,65535,0"
+)
+xt "39000,22625,39750,23375"
+)
+tg (CPTG
+uid 173,0
+ps "CptPortTextPlaceStrategy"
+stg "RightVerticalLayoutStrategy"
+f (Text
+uid 174,0
+va (VaSet
+)
+xt "25100,22500,38000,23500"
+st "CTRL_REG : [AMBA_WORD-1:0]"
+ju 2
+blo "38000,23300"
+tm "CptPortNameMgr"
+)
+)
+dt (MLText
+uid 175,0
+va (VaSet
+font "Courier New,8,0"
+)
+xt "2000,9600,26000,10400"
+st "output wire [AMBA_WORD-1:0]        CTRL_REG;"
+)
+thePort (LogicalPort
+lang 5
+m 1
+decl (Decl
+n "CTRL_REG"
+t "wire"
+b "[AMBA_WORD-1:0]"
+o 11
+suid 11,0
+)
+)
+)
 ]
 shape (Rectangle
 uid 9,0
@@ -1210,8 +1267,9 @@ fg "65535,65535,0"
 lineColor "0,32896,0"
 lineWidth 2
 )
-xt "13000,19000,36000,40000"
+xt "13000,19000,39000,40000"
 )
+oxt "13000,19000,36000,40000"
 biTextGroup (BiTextGroup
 uid 10,0
 ps "CenterOffsetStrategy"
@@ -1236,7 +1294,7 @@ st "GoldenModel_Interface"
 blo "19200,17800"
 )
 )
-gi *80 (GenericInterface
+gi *83 (GenericInterface
 uid 13,0
 ps "CenterOffsetStrategy"
 matrix (Matrix
@@ -1266,7 +1324,7 @@ sIVOD 1
 sF 0
 )
 )
-*81 (CommentText
+*84 (CommentText
 uid 16,0
 shape (Rectangle
 uid 17,0
@@ -1305,11 +1363,11 @@ xShown 1
 yShown 1
 color "26368,26368,26368"
 )
-packageList *82 (PackageList
+packageList *85 (PackageList
 uid 19,0
 stg "VerticalLayoutStrategy"
 textVec [
-*83 (Text
+*86 (Text
 uid 20,0
 va (VaSet
 isHidden 1
@@ -1319,7 +1377,7 @@ xt "20000,0,25400,1000"
 st "Package List"
 blo "20000,800"
 )
-*84 (MLText
+*87 (MLText
 uid 21,0
 va (VaSet
 isHidden 1
@@ -1332,11 +1390,11 @@ tm "PackageList"
 )
 ]
 )
-windowSize "953,0,1927,1047"
-viewArea "2203,-71,36579,41079"
+windowSize "582,10,1558,1057"
+viewArea "7904,4000,42312,45078"
 cachedDiagramExtent "-2000,0,73000,49000"
 hasePageBreakOrigin 1
-pageBreakOrigin "0,0"
+pageBreakOrigin "-73000,0"
 defaultCommentText (CommentText
 shape (Rectangle
 layer 0
@@ -1447,7 +1505,7 @@ st "<cell>"
 blo "22200,16800"
 )
 )
-gi *85 (GenericInterface
+gi *88 (GenericInterface
 ps "CenterOffsetStrategy"
 matrix (Matrix
 text (MLText
@@ -1463,7 +1521,6 @@ showHdrWhenContentsEmpty 1
 elements [
 ]
 )
-udl 1
 portInstanceVisAsIs 1
 portInstanceVis (PortSigDisplay
 sIVOD 1
@@ -1548,7 +1605,7 @@ o 0
 )
 )
 )
-DeclarativeBlock *86 (SymDeclBlock
+DeclarativeBlock *89 (SymDeclBlock
 uid 1,0
 stg "SymDeclLayoutStrategy"
 declLabel (Text
@@ -1604,6 +1661,6 @@ xt "2000,3000,2000,3000"
 tm "SyDeclarativeTextMgr"
 )
 )
-lastUid 146,0
+lastUid 197,0
 activeModelName "Symbol"
 )
