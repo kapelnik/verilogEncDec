@@ -52,8 +52,7 @@ class RandNoise;
 	
 	
 	rand bit [AMBA_ADDR_WIDTH-5:0] NoiseVector_Addr;
-
-
+	
 	constraint uptoOne8{$countones(NoiseVector_8_1) == 1;}
 	constraint uptoTwo8{$countones(NoiseVector_8_2) == 2;}
 	
@@ -156,8 +155,15 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={AMBA_WORD{1'b0}};
 		RegistersWrite();
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		
+		//CTRL_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
+		stim_bus.PWDATA ={AMBA_WORD{1'b0}};
+		RegistersWrite();
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
 		
 		//********** Decode: **********
 		//NOISE_REG:
@@ -172,9 +178,17 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
 		RegistersWrite();
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		
+		//CTRL_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
+		RegistersWrite();
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
 		
 		// ********** Full Channel: **********
 		//NOISE_REG:
@@ -189,9 +203,18 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
 		RegistersWrite();
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		
+		//CTRL_REG:
+		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
+		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
+		RegistersWrite();
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 	end
 	 $fclose(data_file_0);
@@ -236,8 +259,8 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={AMBA_WORD{1'b0}};
 		RegistersWrite();
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
 		
 		//********** Decode: **********
 		//NOISE_REG:
@@ -252,9 +275,9 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
 		RegistersWrite();
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
 		
 		// ********** Full Channel: **********
 		//NOISE_REG:
@@ -269,9 +292,9 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
 		RegistersWrite();
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 	end
 	
@@ -317,8 +340,8 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={AMBA_WORD{1'b0}};
 		RegistersWrite();
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
 		
 		//********** Decode: **********
 		//NOISE_REG:
@@ -333,9 +356,9 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
 		RegistersWrite();
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
 		
 		// ********** Full Channel: **********
 		//NOISE_REG:
@@ -355,9 +378,9 @@ begin : stim_proc
 	// stim_bus.rst = 0;
 	// #100.2;
 	// stim_bus.rst = 1;
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
+		// @(posedge stim_bus.clk); /// The cycle that need to write into the register
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 	end
 	
@@ -384,7 +407,7 @@ end
 		//**********generateNoise**********//
 		amount.randomize();
 		randNoise.randomize();
-		case (i)
+		case(i)
 			0:	begin//8bit
 				if(amount.getamount() == 0) 		Noise = {AMBA_WORD{1'b0}};
 				else if(amount.getamount() == 1) 	Noise = {{AMBA_WORD-8{1'b0}},randNoise.NoiseVector_8_1};
@@ -414,7 +437,7 @@ end
 		RegistersWrite();
 		
 		//make sure register in RegSelector got the data
-		RegistersRead();
+		// RegistersRead();
 	end
 	//********************************//
 	endtask
@@ -432,8 +455,8 @@ end
 			stim_bus.PENABLE=0;
 			stim_bus.RegistersW=0;
 			stim_bus.PWRITE=0;
-			if(stim_bus.PADDR[3:2] == 2'b00)
-				stim_bus.PSEL = 0;
+			// if(stim_bus.PADDR[3:2] == 2'b00)
+				// stim_bus.PSEL = 0;
 			@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		//make sure register in RegSelector got the data
 			 RegistersRead();

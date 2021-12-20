@@ -21,11 +21,13 @@ parameter AMBA_WORD = 32
 );
 
 integer test ;
-
+logic [1:0] APB_bus_Test ;
 // initial begin
 	// $display("Coverage = %0.2f %%",cg_inst.get_inst_covarge());
 // end
 //Cover Groups:
+
+assign APB_bus_Test = {coverage_bus.PENABLE,coverage_bus.PSEL};
 covergroup signals_test @(posedge coverage_bus.clk);
 		// did reset ranged from 1:0
 		reset : coverpoint coverage_bus.rst{
@@ -56,7 +58,16 @@ covergroup signals_test @(posedge coverage_bus.clk);
          bins low = {0};
          bins high = {1};
           }
-		 PENABLE_X_PSEL: cross PENABLE,PSEL;
+		 // PENABLE_X_PSEL: cross PENABLE,PSEL;
+		 APB_bus_rule_test : coverpoint  APB_bus_Test{
+		 bins Good = {2'b00,2'b01,2'b11} ;
+		 illegal_bins bad = {2'b10} ;
+		 }
+		 
+		 // {
+		 // bins APB_Good = {{high,high},{low,high},{low,low}};
+		 // illegal_bins APB_error = {high,low};
+		 // };
 endgroup
 
 
@@ -84,34 +95,15 @@ begin
 		test = sample_walking_1(coverage_bus.NOISE);
 end
 		  
-covergroup walking_1_cg @(negedge coverage_bus.operation_done);
+covergroup Error_spot @(negedge coverage_bus.operation_done);
 
-   walking_1: coverpoint test iff(coverage_bus.CTRL_REG[1:0] != 2'b00){
+   One_error_spot: coverpoint test iff(coverage_bus.CTRL_REG[1:0] != 2'b00){
       bins Noise_index[AMBA_WORD] = {[0:AMBA_WORD-1]};
 	  bins no_noise = {-1 };
    }
    
 endgroup
 
-covergroup APB_bus @(negedge coverage_bus.clk);
-
-   APB_PENABLE: coverpoint coverage_bus.PENABLE{
-      bins low_to_high_PENABLE = (0 => 1);
-      bins high_to_low_PENABLE = (1 => 0);
-   }
-   APB_PSEL: coverpoint coverage_bus.PSEL{
-      bins low_to_high_PSEL = (0 => 1);
-      bins high_to_low_PSEL = (1 => 0);
-   }
-   APB_PSEL_state: coverpoint coverage_bus.PSEL{
-      bins low_PSEL = {0};
-      bins high_PSEL = {1};
-   }
-   PENABLE_X_PSEL: cross APB_PENABLE,APB_PSEL_state;
-   
-   
-endgroup
-   
 function integer sample_walking_1(bit[AMBA_WORD-1:0] x);
 	integer temp ;
 	
@@ -122,6 +114,36 @@ function integer sample_walking_1(bit[AMBA_WORD-1:0] x);
    end
    return -1 ;
 endfunction
+
+function integer sample(bit[AMBA_WORD-1:0] x, integer position);
+   if (x[position]==1 && $onehot(x) )
+        return position;
+   else
+		return -1;
+endfunction
+
+// covergroup APB_bus @(negedge coverage_bus.clk);
+
+   // APB_PENABLE: coverpoint coverage_bus.PENABLE{
+      // bins low_to_high_PENABLE = (0 => 1);
+      // bins high_to_low_PENABLE = (1 => 0);
+   // }
+   // APB_PSEL: coverpoint coverage_bus.PSEL{
+      // bins low_to_high_PSEL = (0 => 1);
+      // bins high_to_low_PSEL = (1 => 0);
+   // }
+   // APB_PSEL_state: coverpoint coverage_bus.PSEL{
+      // bins low_PSEL = {0};
+      // bins high_PSEL = {1};
+   // }
+   
+   // PENABLE_X_PSEL: cross APB_PENABLE,APB_PSEL_state;
+   
+   
+// endgroup
+
+   
+
 
 // function integer one_hot(bit[AMBA_WORD-1:0] x);
 	// integer flag = 0 ;
@@ -152,18 +174,9 @@ endfunction
 		// return -1 ;
 // endfunction
 
-function integer sample(bit[AMBA_WORD-1:0] x, integer position);
-   if (x[position]==1 && $onehot(x) )
-        return position;
-   else
-		return -1;
-endfunction
 
-always@(posedge coverage_bus.operation_done)
-begin
-	if(coverage_bus.CTRL_REG[1:0] != 2'b00)
-		test = sample_walking_1(coverage_bus.NOISE);
-end
+
+
 
 // function integer Two_errors (bit[AMBA_WORD-1:0] x);
 	// for(integer i = 0 ; i < AMBA_WORD+1 ; i++)begin
@@ -189,8 +202,8 @@ end
 	// initial begin
 		signals_test 						tst1 = new();
 		amount_of_noise_test 				tst3 = new();
-		walking_1_cg 						tst4 = new();
-		APB_bus								tst5 = new();
+		Error_spot 						tst4 = new();
+		// APB_bus								tst5 = new();
 		// $display("signals_test Coverage = %0.2F %%",signals_test.get_inst_coverage());
 		// $display("Noise_test Coverage = %0.2F %%",Noise_test.get_inst_coverage());
 		// $display("amount_of_noise_test Coverage = %0.2F %%",amount_of_noise_test.get_inst_coverage());
