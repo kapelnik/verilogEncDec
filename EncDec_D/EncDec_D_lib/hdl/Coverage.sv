@@ -22,9 +22,8 @@ parameter AMBA_WORD = 32
 
 integer test ;
 logic [1:0] APB_bus_Test ;
-// initial begin
-	// $display("Coverage = %0.2f %%",cg_inst.get_inst_covarge());
-// end
+
+
 //Cover Groups:
 
 //This is an internal signal for coverage on the APB protocol simulated at stimulus
@@ -92,22 +91,22 @@ endgroup
 always@(posedge coverage_bus.operation_done)
 begin
 	if(coverage_bus.CTRL_REG[1:0] != 2'b00)
-		test = sample_walking_1(coverage_bus.NOISE);
+		test = sample_walking_1(coverage_bus.NOISE[DATA_WIDTH-1:0]);
 end
 		  
 covergroup Error_spot @(negedge coverage_bus.operation_done);
 
    One_error_spot: coverpoint test iff(coverage_bus.CTRL_REG[1:0] != 2'b00){
-      bins Noise_index[AMBA_WORD] = {[0:AMBA_WORD-1]};
+      bins Noise_index[DATA_WIDTH] = {[0:DATA_WIDTH-1]};
 	  bins Noise_two_zero = {-1 };
    }
    
 endgroup
 
-function integer sample_walking_1(bit[AMBA_WORD-1:0] x);
+function integer sample_walking_1(bit[DATA_WIDTH-1:0] x);
 	integer temp ;
 	
-   for(integer i=0;i<AMBA_WORD;i++)begin
+   for(integer i=0;i<DATA_WIDTH;i++)begin
     temp = sample(x, i);
 	if(temp > -1 )
 		return temp; 
@@ -116,14 +115,16 @@ function integer sample_walking_1(bit[AMBA_WORD-1:0] x);
 endfunction
 
 //for each index in NOISE vector, if onehot is true, sample this index.
-function integer sample(bit[AMBA_WORD-1:0] x, integer position);
+function integer sample(bit[DATA_WIDTH-1:0] x, integer position);
    if (x[position]==1 && $onehot(x) )
         return position;
    else
 		return -1;
 endfunction
 
-
+function integer Sample_two(bit[AMBA_WORD-1:0] x,Init);
+	
+endfunction
 //add all covergroups to the Coverage:
 		signals_test 						test1 = new();
 		amount_of_noise_test 				test2 = new();

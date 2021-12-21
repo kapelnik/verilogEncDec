@@ -116,7 +116,7 @@ begin : stim_proc
 	//Set codeword width = 00: (8bit)
 	Width = 2'b00;
 	//a pard of the validation process is to make sure the DUT knows to look only at the offset of the adderess ( the 4 LSBs)
-	GenerateNoise(3);
+	GenerateNoise(2);
 	stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b1000}}; 
 	stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},Width};
 	RegistersWrite();
@@ -152,12 +152,12 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={AMBA_WORD{1'b0}};
 		RegistersWrite();
-		
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		//CTRL_REG:
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={AMBA_WORD{1'b0}};
 		RegistersWrite();
-		
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		//********** Decode: **********
 		//NOISE_REG:
 		GenerateNoise(0);
@@ -171,12 +171,12 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
 		RegistersWrite();
-		
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		//CTRL_REG:
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
 		RegistersWrite();
-		
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		// ********** Full Channel: **********
 		//NOISE_REG:
 		GenerateNoise(0);
@@ -191,12 +191,13 @@ begin : stim_proc
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
 		RegistersWrite();
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register(full channel requires 4 cycles)
-		
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		//CTRL_REG:
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
 		RegistersWrite();
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register(full channel requires 4 cycles)
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 	end
 	 $fclose(data_file_0);
 	@(posedge stim_bus.clk); /// 
@@ -210,7 +211,7 @@ begin : stim_proc
 	//in this test we take each sample from the database gener from matlab, and use it for encode, decode, and full channel, with randomly generated noise vectors:
 	//Set codeword width = 01: (16bit)
 	Width = 2'b01;
-	GenerateNoise(3);
+	GenerateNoise(2);
 	stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b1000}}; 
 	stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},Width};
 	RegistersWrite();
@@ -240,7 +241,7 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={AMBA_WORD{1'b0}};
 		RegistersWrite();
-		
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		//********** Decode: **********
 		//NOISE_REG:
 		GenerateNoise(1);
@@ -254,7 +255,7 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
 		RegistersWrite();
-		
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		// ********** Full Channel: **********
 		//NOISE_REG:
 		GenerateNoise(1);
@@ -269,6 +270,7 @@ begin : stim_proc
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
 		RegistersWrite();
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 	end
 	
 	 $fclose(data_file_1);
@@ -279,7 +281,7 @@ begin : stim_proc
 	//in this test we take each sample from the database gener from matlab, and use it for encode, decode, and full channel, with randomly generated noise vectors:
 	//Set codeword width = 10: (32bit)
 	Width = 2'b10;
-	GenerateNoise(3);
+	GenerateNoise(2);
 	stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b1000}}; 
 	stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},Width};
 	RegistersWrite();
@@ -310,7 +312,7 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={AMBA_WORD{1'b0}};
 		RegistersWrite();
-		
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		//********** Decode: **********
 		//NOISE_REG:
 		GenerateNoise(2);
@@ -324,7 +326,7 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
 		RegistersWrite();
-		
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		// ********** Full Channel: **********
 		//NOISE_REG:
 		GenerateNoise(2);
@@ -339,7 +341,7 @@ begin : stim_proc
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b10};
 		RegistersWrite();
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
-		
+		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 	end
 	
 		 $fclose(data_file_2);

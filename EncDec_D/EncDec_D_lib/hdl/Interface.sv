@@ -50,7 +50,7 @@ logic		[AMBA_WORD-1:0] 		       			CTRL_REG;
 //the following ports are the declarations of BUSs of each entity:
 modport Stimulus 		(input clk, rst, output   PADDR, PWDATA, PENABLE, PSEL, PWRITE,RegistersW,RegistersR,FullWord, NOISE);
 modport ECC_ENC_DEC 	(input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, output PRDATA, data_out, operation_done, num_of_errors);
-modport Checker 		(input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors, RegistersOut, gm_DATA_OUT, gm_number_of_errors);
+modport Checker 		(input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors, RegistersOut,CTRL_REG, gm_DATA_OUT, gm_number_of_errors);
 modport Coverage 		(input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors, NOISE,CTRL_REG, gm_number_of_errors);
 modport vsgoldenmodel 	(input rst, PWDATA,PADDR,RegistersW,RegistersR, FullWord,operation_done, output RegistersOut, gm_DATA_OUT,gm_number_of_errors,CTRL_REG);
 

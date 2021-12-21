@@ -34,15 +34,16 @@ output reg [1:0]					num_of_errors
 
 );
 //States 
-parameter [1:0] IDLE 			= 2'b00,
-				ENCODING 		= 2'b01,
-				DECODING 		= 2'b10,
-				NOISE 			= 2'b11;
+parameter [2:0] IDLE 			= 3'b000,
+				ENCODING 		= 3'b001,
+				DECODING 		= 3'b010,
+				NOISE 			= 3'b011,
+				FINISH			= 3'b100;
 
 //State reg controlled by the state machine
-reg [1:0] current_state;
-reg [1:0] Next_State,
-		  next_num_of_errors;
+reg [2:0] current_state,
+		  Next_State;
+reg [1:0] next_num_of_errors;
 
 //Register for full channel
 reg [31:0] FC_REG,
@@ -141,7 +142,7 @@ begin: Top_state_machine // Next state chosing
 				ENCODING: begin	//=================ENCODING State//=================
 							case (CTRL_REG[1:0])
 								2'b00: begin
-										Next_State			       	=       IDLE;
+										Next_State			       	=       FINISH;
 									end
 								2'b01: begin
 										Next_State					= 		 DECODING;
@@ -157,15 +158,17 @@ begin: Top_state_machine // Next state chosing
 											Next_State  =      DECODING ;
 										end
 									end
-								default: Next_State			       	=       IDLE;
+								default: Next_State			       	=       FINISH;
 							endcase
 						end
 				DECODING: begin	////=================DECODING State//=================
-							Next_State			       	=       IDLE;
+							Next_State			       	=       FINISH;
 						end
 				NOISE 	: begin	////=================NOISE State//=================
 							Next_State			       	=       DECODING;
 						end	
+				FINISH  :
+							Next_State					=      	IDLE;
 				default: begin	////=================IDLE State//=================
 							if(start_work)  /// (PADDR[3:2] == 2'b00) & PENABLE & PWRITE
 								begin
@@ -240,13 +243,16 @@ end
 always@(current_state or Enc_noise or FC_REG_SAVE or DATA_IN_Pad or CTRL_REG) 
 begin: FC_control
 	case (current_state)
-		ENCODING: begin	//=================ENCODING State//=================
-					case (CTRL_REG[1:0])
-						2'b10: 		FC_REG  	   = {Enc_noise,{32-DATA_WIDTH{1'b0}}};
-						default:	FC_REG  = FC_REG_SAVE;
-					endcase
-				end
-		IDLE: begin	////=================DECODING State//=================
+		// ENCODING: begin	//=================ENCODING State//=================
+					// case (CTRL_REG[1:0])
+						// 2'b10: 		FC_REG  	   = {Enc_noise,{32-DATA_WIDTH{1'b0}}};
+						// default:	
+						// FC_REG  = FC_REG_SAVE;
+					// endcase
+				// end
+		NOISE   :
+				FC_REG  	   = {Enc_noise,{32-DATA_WIDTH{1'b0}}};
+		ENCODING: begin	////=================DECODING State//=================
 					FC_REG         =	 	 DATA_IN_Pad;
 				end
 		default: begin	////=================Any Other State//=================
@@ -307,15 +313,18 @@ end
 always@(current_state or CTRL_REG) 
 begin : Next_operation_done_Control
 	case (current_state)
-		ENCODING: begin	//=================ENCODING State//=================
-					case (CTRL_REG[1:0])
-						2'b00: begin
-								next_operation_done         =	 	 1'b1;
-							   end
-						default: next_operation_done         =	 	 1'b0;
-					endcase
-				end
-		DECODING: begin	////=================DECODING State//=================
+		// ENCODING: begin	//=================ENCODING State//=================
+					// case (CTRL_REG[1:0])
+						// 2'b00: begin
+								// next_operation_done         =	 	 1'b1;
+							   // end
+						// default: next_operation_done         =	 	 1'b0;
+					// endcase
+				// end
+		// DECODING: begin	////=================DECODING State//=================
+					// next_operation_done         =	 	 1'b1;
+				// end
+		FINISH: begin	////=================DECODING State//=================
 					next_operation_done         =	 	 1'b1;
 				end
 		default: begin	////=================IDLE State//=================

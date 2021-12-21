@@ -16,6 +16,7 @@ suid 12,0
 usingSuid 1
 emptyRow *1 (LEmptyRow
 )
+uid 113,0
 optionalChildren [
 *2 (RefLabelRowHdr
 )
@@ -158,34 +159,18 @@ port (LogicalPort
 lang 5
 m 1
 decl (Decl
-n "PRDATA"
-t "reg"
-b "[AMBA_WORD-1:0]"
-preAdd 0
-posAdd 0
-o 8
-suid 8,0
-)
-)
-uid 98,0
-)
-*23 (LogPort
-port (LogicalPort
-lang 5
-m 1
-decl (Decl
 n "CTRL"
 t "reg"
 b "[AMBA_WORD-1:0]"
 preAdd 0
 posAdd 0
-o 9
+o 8
 suid 9,0
 )
 )
 uid 100,0
 )
-*24 (LogPort
+*23 (LogPort
 port (LogicalPort
 lang 5
 m 1
@@ -195,13 +180,13 @@ t "reg"
 b "[AMBA_WORD-1:0]"
 preAdd 0
 posAdd 0
-o 10
+o 9
 suid 10,0
 )
 )
 uid 102,0
 )
-*25 (LogPort
+*24 (LogPort
 port (LogicalPort
 lang 5
 m 1
@@ -211,13 +196,13 @@ t "reg"
 b "[AMBA_WORD-1:0]"
 preAdd 0
 posAdd 0
-o 11
+o 10
 suid 11,0
 )
 )
 uid 104,0
 )
-*26 (LogPort
+*25 (LogPort
 port (LogicalPort
 lang 5
 m 1
@@ -227,7 +212,7 @@ t "reg"
 b "[AMBA_WORD-1:0]"
 preAdd 0
 posAdd 0
-o 12
+o 11
 suid 12,0
 )
 )
@@ -238,8 +223,9 @@ uid 106,0
 pdm (PhysicalDM
 displayShortBounds 1
 editShortBounds 1
+uid 127,0
 optionalChildren [
-*27 (Sheet
+*26 (Sheet
 sheetRow (SheetRow
 headerVa (MVa
 cellColor "49152,49152,49152"
@@ -256,97 +242,95 @@ cellColor "39936,56832,65280"
 fontColor "0,0,0"
 font "Tahoma,10,0"
 )
-emptyMRCItem *28 (MRCItem
+emptyMRCItem *27 (MRCItem
 litem &1
 pos 3
 dimension 20
 )
+uid 129,0
 optionalChildren [
-*29 (MRCItem
+*28 (MRCItem
 litem &2
 pos 0
 dimension 20
+uid 130,0
 )
-*30 (MRCItem
+*29 (MRCItem
 litem &3
 pos 1
 dimension 23
+uid 131,0
 )
-*31 (MRCItem
+*30 (MRCItem
 litem &4
 pos 2
 hidden 1
 dimension 20
+uid 132,0
 )
-*32 (MRCItem
+*31 (MRCItem
 litem &15
 pos 0
 dimension 20
 uid 85,0
 )
-*33 (MRCItem
+*32 (MRCItem
 litem &16
 pos 1
 dimension 20
 uid 87,0
 )
-*34 (MRCItem
+*33 (MRCItem
 litem &17
 pos 2
 dimension 20
 uid 89,0
 )
-*35 (MRCItem
+*34 (MRCItem
 litem &18
 pos 3
 dimension 20
 uid 91,0
 )
-*36 (MRCItem
+*35 (MRCItem
 litem &19
 pos 4
 dimension 20
 uid 93,0
 )
-*37 (MRCItem
+*36 (MRCItem
 litem &20
 pos 5
 dimension 20
 uid 95,0
 )
-*38 (MRCItem
+*37 (MRCItem
 litem &21
 pos 6
 dimension 20
 uid 97,0
 )
-*39 (MRCItem
+*38 (MRCItem
 litem &22
 pos 7
 dimension 20
-uid 99,0
+uid 101,0
 )
-*40 (MRCItem
+*39 (MRCItem
 litem &23
 pos 8
 dimension 20
-uid 101,0
+uid 103,0
 )
-*41 (MRCItem
+*40 (MRCItem
 litem &24
 pos 9
 dimension 20
-uid 103,0
-)
-*42 (MRCItem
-litem &25
-pos 10
-dimension 20
 uid 105,0
 )
-*43 (MRCItem
-litem &26
-pos 11
+*41 (MRCItem
+litem &25
+pos 10
 dimension 20
 uid 107,0
 )
@@ -359,112 +343,123 @@ fontColor "0,0,0"
 font "Tahoma,10,0"
 textAngle 90
 )
+uid 133,0
 optionalChildren [
-*44 (MRCItem
+*42 (MRCItem
 litem &5
 pos 0
 dimension 20
+uid 134,0
 )
-*45 (MRCItem
+*43 (MRCItem
 litem &7
 pos 1
 dimension 50
+uid 135,0
 )
-*46 (MRCItem
+*44 (MRCItem
 litem &8
 pos 2
 dimension 100
+uid 136,0
 )
-*47 (MRCItem
+*45 (MRCItem
 litem &9
 pos 3
 dimension 50
+uid 137,0
 )
-*48 (MRCItem
+*46 (MRCItem
 litem &10
 pos 4
 dimension 100
+uid 138,0
 )
-*49 (MRCItem
+*47 (MRCItem
 litem &11
 pos 5
 dimension 60
+uid 139,0
 )
-*50 (MRCItem
+*48 (MRCItem
 litem &12
 pos 6
 dimension 100
+uid 140,0
 )
-*51 (MRCItem
+*49 (MRCItem
 litem &13
 pos 7
 dimension 50
+uid 141,0
 )
-*52 (MRCItem
+*50 (MRCItem
 litem &14
 pos 8
 dimension 80
+uid 142,0
 )
 ]
 )
 fixedCol 4
 fixedRow 2
 name "Ports"
+uid 128,0
 vaOverrides [
 ]
 )
 ]
 )
+uid 112,0
 )
 genericsCommonDM (CommonDM
 ldm (LogicalDM
-emptyRow *53 (LEmptyRow
+emptyRow *51 (LEmptyRow
 )
+uid 144,0
 optionalChildren [
-*54 (RefLabelRowHdr
+*52 (RefLabelRowHdr
 )
-*55 (TitleRowHdr
+*53 (TitleRowHdr
 )
-*56 (FilterRowHdr
+*54 (FilterRowHdr
 )
-*57 (RefLabelColHdr
+*55 (RefLabelColHdr
 tm "RefLabelColHdrMgr"
 )
-*58 (RowExpandColHdr
+*56 (RowExpandColHdr
 tm "RowExpandColHdrMgr"
 )
-*59 (GroupColHdr
+*57 (GroupColHdr
 tm "GroupColHdrMgr"
 )
-*60 (NameColHdr
+*58 (NameColHdr
 tm "GenericNameColHdrMgr"
 )
-*61 (InitColHdr
+*59 (InitColHdr
 tm "GenericValueColHdrMgr"
 )
-*62 (EolColHdr
+*60 (EolColHdr
 tm "GenericEolColHdrMgr"
 )
-*63 (LogGeneric
+*61 (LogGeneric
 generic (GiElement
 name "AMBA_WORD"
 value "32"
 pr "// parameter DATA_WIDTH = 32,
 // parameter AMBA_ADDR_WIDTH = 20,"
 apr 0
-po ")
-)"
-apo 0
 )
-uid 79,0
+uid 166,0
 )
 ]
 )
 pdm (PhysicalDM
 displayShortBounds 1
 editShortBounds 1
+uid 154,0
 optionalChildren [
-*64 (Sheet
+*62 (Sheet
 sheetRow (SheetRow
 headerVa (MVa
 cellColor "49152,49152,49152"
@@ -481,33 +476,37 @@ cellColor "39936,56832,65280"
 fontColor "0,0,0"
 font "Tahoma,10,0"
 )
-emptyMRCItem *65 (MRCItem
-litem &53
+emptyMRCItem *63 (MRCItem
+litem &51
 pos 3
 dimension 20
 )
+uid 156,0
 optionalChildren [
-*66 (MRCItem
-litem &54
+*64 (MRCItem
+litem &52
 pos 0
 dimension 20
+uid 157,0
 )
-*67 (MRCItem
-litem &55
+*65 (MRCItem
+litem &53
 pos 1
 dimension 23
+uid 158,0
 )
-*68 (MRCItem
-litem &56
+*66 (MRCItem
+litem &54
 pos 2
 hidden 1
 dimension 20
+uid 159,0
 )
-*69 (MRCItem
-litem &63
+*67 (MRCItem
+litem &61
 pos 0
 dimension 20
-uid 80,0
+uid 167,0
 )
 ]
 )
@@ -518,65 +517,73 @@ fontColor "0,0,0"
 font "Tahoma,10,0"
 textAngle 90
 )
+uid 160,0
 optionalChildren [
-*70 (MRCItem
-litem &57
+*68 (MRCItem
+litem &55
 pos 0
 dimension 20
+uid 161,0
+)
+*69 (MRCItem
+litem &57
+pos 1
+dimension 50
+uid 162,0
+)
+*70 (MRCItem
+litem &58
+pos 2
+dimension 100
+uid 163,0
 )
 *71 (MRCItem
 litem &59
-pos 1
+pos 3
 dimension 50
+uid 164,0
 )
 *72 (MRCItem
 litem &60
-pos 2
-dimension 100
-)
-*73 (MRCItem
-litem &61
-pos 3
-dimension 50
-)
-*74 (MRCItem
-litem &62
 pos 4
 dimension 80
+uid 165,0
 )
 ]
 )
 fixedCol 3
 fixedRow 2
 name "Ports"
+uid 155,0
 vaOverrides [
 ]
 )
 ]
 )
+uid 143,0
 type 1
 )
 VExpander (VariableExpander
 vvMap [
 (vvPair
 variable "HDLDir"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hdl"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hdl"
 )
 (vvPair
 variable "HDSDir"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds"
 )
 (vvPair
 variable "SideDataDesignDir"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@register_selctor\\symbol.sb.info"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@register_selctor\\symbol.sb.info"
 )
 (vvPair
 variable "SideDataUserDir"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@register_selctor\\symbol.sb.user"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@register_selctor\\symbol.sb.user"
 )
 (vvPair
 variable "SourceDir"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds"
 )
 (vvPair
 variable "appl"
@@ -592,27 +599,27 @@ value "%(unit)_%(view)_config"
 )
 (vvPair
 variable "d"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@register_selctor"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@register_selctor"
 )
 (vvPair
 variable "d_logical"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\Register_selctor"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\Register_selctor"
 )
 (vvPair
 variable "date"
-value "12/ 2/2021"
+value "12/21/2021"
 )
 (vvPair
 variable "day"
-value "Thu"
+value "Tue"
 )
 (vvPair
 variable "day_long"
-value "Thursday"
+value "Tuesday"
 )
 (vvPair
 variable "dd"
-value "02"
+value "21"
 )
 (vvPair
 variable "entity_name"
@@ -636,11 +643,11 @@ value "symbol"
 )
 (vvPair
 variable "graphical_source_author"
-value "kapelnik"
+value "benmaorr"
 )
 (vvPair
 variable "graphical_source_date"
-value "12/ 2/2021"
+value "12/21/2021"
 )
 (vvPair
 variable "graphical_source_group"
@@ -652,7 +659,7 @@ value "L330W529"
 )
 (vvPair
 variable "graphical_source_time"
-value "22:13:14"
+value "15:38:38"
 )
 (vvPair
 variable "group"
@@ -664,15 +671,19 @@ value "L330W529"
 )
 (vvPair
 variable "language"
-value "VHDL"
+value "Verilog"
 )
 (vvPair
 variable "library"
-value "ECC_ENC_DEC_lib"
+value "EncDec_D_lib"
 )
 (vvPair
 variable "library_downstream_HdsLintPlugin"
-value "$HDS_PROJECT_DIR\\ECC_ENC_DEC_lib\\designcheck"
+value "$HDS_PROJECT_DIR/EncDec_D_lib/designcheck"
+)
+(vvPair
+variable "library_downstream_QuestaSimCompiler"
+value "$HDS_PROJECT_DIR/EncDec_D_lib/work"
 )
 (vvPair
 variable "mm"
@@ -692,11 +703,11 @@ value "December"
 )
 (vvPair
 variable "p"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\@register_selctor\\symbol.sb"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\@register_selctor\\symbol.sb"
 )
 (vvPair
 variable "p_logical"
-value "C:\\HDS\\ECC_ENC_DEC\\ECC_ENC_DEC_lib\\hds\\Register_selctor\\symbol.sb"
+value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\\Register_selctor\\symbol.sb"
 )
 (vvPair
 variable "package_name"
@@ -704,7 +715,7 @@ value "<Undefined Variable>"
 )
 (vvPair
 variable "project_name"
-value "ECC_ENC_DEC"
+value "EncDec_D"
 )
 (vvPair
 variable "series"
@@ -752,7 +763,7 @@ value "symbol"
 )
 (vvPair
 variable "time"
-value "22:13:14"
+value "15:38:38"
 )
 (vvPair
 variable "unit"
@@ -760,7 +771,7 @@ value "Register_selctor"
 )
 (vvPair
 variable "user"
-value "kapelnik"
+value "benmaorr"
 )
 (vvPair
 variable "version"
@@ -781,11 +792,12 @@ value "21"
 ]
 )
 LanguageMgr "Verilog2001LangMgr"
+uid 111,0
 optionalChildren [
-*75 (SymbolBody
+*73 (SymbolBody
 uid 8,0
 optionalChildren [
-*76 (CptPort
+*74 (CptPort
 uid 19,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -833,7 +845,7 @@ suid 1,0
 )
 )
 )
-*77 (CptPort
+*75 (CptPort
 uid 24,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -881,7 +893,7 @@ suid 2,0
 )
 )
 )
-*78 (CptPort
+*76 (CptPort
 uid 29,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -930,7 +942,7 @@ suid 3,0
 )
 )
 )
-*79 (CptPort
+*77 (CptPort
 uid 34,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -979,7 +991,7 @@ suid 4,0
 )
 )
 )
-*80 (CptPort
+*78 (CptPort
 uid 39,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -1027,7 +1039,7 @@ suid 5,0
 )
 )
 )
-*81 (CptPort
+*79 (CptPort
 uid 44,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -1075,7 +1087,7 @@ suid 6,0
 )
 )
 )
-*82 (CptPort
+*80 (CptPort
 uid 49,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -1123,58 +1135,7 @@ suid 7,0
 )
 )
 )
-*83 (CptPort
-uid 54,0
-ps "OnEdgeStrategy"
-shape (Triangle
-uid 55,0
-ro 90
-va (VaSet
-vasetType 1
-fg "0,65535,0"
-)
-xt "44000,8625,44750,9375"
-)
-tg (CPTG
-uid 56,0
-ps "CptPortTextPlaceStrategy"
-stg "RightVerticalLayoutStrategy"
-f (Text
-uid 57,0
-va (VaSet
-font "arial,8,0"
-)
-xt "39400,8500,43000,9500"
-st "PRDATA"
-ju 2
-blo "43000,9300"
-tm "CptPortNameMgr"
-)
-)
-dt (MLText
-uid 58,0
-va (VaSet
-font "Courier New,8,0"
-)
-xt "2000,15600,21500,16400"
-st "output reg [AMBA_WORD-1:0]   PRDATA;
-"
-)
-thePort (LogicalPort
-lang 5
-m 1
-decl (Decl
-n "PRDATA"
-t "reg"
-b "[AMBA_WORD-1:0]"
-preAdd 0
-posAdd 0
-o 8
-suid 8,0
-)
-)
-)
-*84 (CptPort
+*81 (CptPort
 uid 59,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -1207,7 +1168,7 @@ uid 63,0
 va (VaSet
 font "Courier New,8,0"
 )
-xt "2000,16400,20500,17200"
+xt "2000,15600,20500,16400"
 st "output reg [AMBA_WORD-1:0]   CTRL;
 "
 )
@@ -1220,12 +1181,12 @@ t "reg"
 b "[AMBA_WORD-1:0]"
 preAdd 0
 posAdd 0
-o 9
+o 8
 suid 9,0
 )
 )
 )
-*85 (CptPort
+*82 (CptPort
 uid 64,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -1258,7 +1219,7 @@ uid 68,0
 va (VaSet
 font "Courier New,8,0"
 )
-xt "2000,17200,22000,18000"
+xt "2000,16400,22000,17200"
 st "output reg [AMBA_WORD-1:0]   DATA_IN;
 "
 )
@@ -1271,12 +1232,12 @@ t "reg"
 b "[AMBA_WORD-1:0]"
 preAdd 0
 posAdd 0
-o 10
+o 9
 suid 10,0
 )
 )
 )
-*86 (CptPort
+*83 (CptPort
 uid 69,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -1309,7 +1270,7 @@ uid 73,0
 va (VaSet
 font "Courier New,8,0"
 )
-xt "2000,18000,26000,18800"
+xt "2000,17200,26000,18000"
 st "output reg [AMBA_WORD-1:0]   CODEWORD_WIDTH;
 "
 )
@@ -1322,12 +1283,12 @@ t "reg"
 b "[AMBA_WORD-1:0]"
 preAdd 0
 posAdd 0
-o 11
+o 10
 suid 11,0
 )
 )
 )
-*87 (CptPort
+*84 (CptPort
 uid 74,0
 ps "OnEdgeStrategy"
 shape (Triangle
@@ -1360,7 +1321,7 @@ uid 78,0
 va (VaSet
 font "Courier New,8,0"
 )
-xt "2000,18800,21000,19600"
+xt "2000,18000,21000,18800"
 st "output reg [AMBA_WORD-1:0]   NOISE;
 "
 )
@@ -1373,7 +1334,7 @@ t "reg"
 b "[AMBA_WORD-1:0]"
 preAdd 0
 posAdd 0
-o 12
+o 11
 suid 12,0
 )
 )
@@ -1398,8 +1359,8 @@ uid 11,0
 va (VaSet
 font "arial,8,1"
 )
-xt "34200,14000,42200,15000"
-st "ECC_ENC_DEC_lib"
+xt "34200,14000,40100,15000"
+st "EncDec_D_lib"
 blo "34200,14800"
 )
 second (Text
@@ -1412,7 +1373,7 @@ st "Register_selctor"
 blo "34200,15800"
 )
 )
-gi *88 (GenericInterface
+gi *85 (GenericInterface
 uid 13,0
 ps "CenterOffsetStrategy"
 matrix (Matrix
@@ -1422,14 +1383,12 @@ uid 15,0
 va (VaSet
 font "Courier New,8,0"
 )
-xt "28000,400,46500,6000"
+xt "28000,400,46500,4400"
 st "Parameter Declarations
 
 // parameter DATA_WIDTH = 32,
 // parameter AMBA_ADDR_WIDTH = 20,
 AMBA_WORD 32  
-)
-)
 "
 )
 header "Parameter Declarations"
@@ -1442,9 +1401,6 @@ value "32"
 pr "// parameter DATA_WIDTH = 32,
 // parameter AMBA_ADDR_WIDTH = 20,"
 apr 0
-po ")
-)"
-apo 0
 )
 ]
 )
@@ -1459,7 +1415,7 @@ sTC 0
 sF 0
 )
 )
-*89 (CommentText
+*86 (CommentText
 uid 16,0
 shape (Rectangle
 uid 17,0
@@ -1487,7 +1443,7 @@ visibleHeight 4600
 visibleWidth 14600
 )
 )
-*90 (CommentText
+*87 (CommentText
 uid 81,0
 shape (Rectangle
 uid 82,0
@@ -1530,11 +1486,11 @@ xShown 1
 yShown 1
 color "26368,26368,26368"
 )
-packageList *91 (PackageList
+packageList *88 (PackageList
 uid 108,0
 stg "VerticalLayoutStrategy"
 textVec [
-*92 (Text
+*89 (Text
 uid 109,0
 va (VaSet
 isHidden 1
@@ -1544,7 +1500,7 @@ xt "20000,5000,25400,6000"
 st "Package List"
 blo "20000,5800"
 )
-*93 (MLText
+*90 (MLText
 uid 110,0
 va (VaSet
 isHidden 1
@@ -1670,7 +1626,7 @@ st "<cell>"
 blo "22200,16800"
 )
 )
-gi *94 (GenericInterface
+gi *91 (GenericInterface
 ps "CenterOffsetStrategy"
 matrix (Matrix
 text (MLText
@@ -1686,7 +1642,6 @@ showHdrWhenContentsEmpty 1
 elements [
 ]
 )
-udl 1
 portInstanceVisAsIs 1
 portInstanceVis (PortSigDisplay
 sIVOD 1
@@ -1773,7 +1728,7 @@ o 0
 )
 )
 )
-DeclarativeBlock *95 (SymDeclBlock
+DeclarativeBlock *92 (SymDeclBlock
 uid 1,0
 stg "SymDeclLayoutStrategy"
 declLabel (Text
@@ -1829,6 +1784,6 @@ xt "2000,9000,2000,9000"
 tm "SyDeclarativeTextMgr"
 )
 )
-lastUid 110,0
+lastUid 167,0
 activeModelName "Symbol:CDM"
 )

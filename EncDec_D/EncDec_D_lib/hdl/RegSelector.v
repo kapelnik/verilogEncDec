@@ -39,9 +39,12 @@ wire start_work;
 
 
 //when PSEL&PENABLE are 1 start work, depending on R/W -> PWRITE,PADDR
-assign start_work = PSEL & PENABLE;
+ assign start_work = PSEL & PENABLE ;
 
-
+// always@(PENABLE or PSEL) 
+// begin : Timing_Control 
+	// start_work = PENABLE & PSEL;
+// end
 
 always @(posedge clk or negedge rst) begin : Register_Selction
   if(!rst) 
@@ -65,15 +68,6 @@ always @(posedge clk or negedge rst) begin : Register_Selction
 						  default : NOISE <= PWDATA;
 						endcase
 					end
-			    // else 
-				// begin
-					// case(PADDR) // PREAD: CPU Reads from registers
-					  // 2'b00 : PRDATA <= CTRL;
-					  // 2'b01 : PRDATA <= DATA_IN;
-					  // 2'b10 : PRDATA <= CODEWORD_WIDTH;
-					  // default : PRDATA <= NOISE;
-					// endcase
-				// end
 			end
 	  end
 end

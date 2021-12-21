@@ -44,7 +44,7 @@ assert property(RegistersReadCheck)
 	
 // make sure that after 1 to 4 cycles from the change of the ctrl_reg, operation_done is set to 1
 property operation_done_active;
-				@(posedge checker_bus.clk) disable iff (!checker_bus.rst) ( checker_bus.PSEL && checker_bus.PENABLE && checker_bus.PWRITE && (checker_bus.PADDR[3:0] == 4'b0000)) |-> ## [1:4] checker_bus.operation_done;
+				@(posedge checker_bus.clk) disable iff (!checker_bus.rst) ( checker_bus.PSEL && checker_bus.PENABLE && checker_bus.PWRITE && (checker_bus.PADDR[3:0] == 4'b0000)) |-> ## [2:5] checker_bus.operation_done;
 				endproperty
 assert property(operation_done_active)
   else $error("error with operation_done");	//display the error 
@@ -59,7 +59,7 @@ assert property(ResultCheck)
 	cover property(ResultCheck);
 	
 property NumOfErrorsCheck;
-				@(checker_bus.operation_done) (checker_bus.operation_done == 1) |-> (checker_bus.gm_number_of_errors == checker_bus.num_of_errors);
+				@(checker_bus.operation_done) disable iff (checker_bus.CTRL_REG[1:0]== 2'b00) (checker_bus.operation_done == 1) |-> (checker_bus.gm_number_of_errors == checker_bus.num_of_errors);
 				endproperty
 assert property(NumOfErrorsCheck)
   else $error("error with Num Of Errors Check");	//display the error 
