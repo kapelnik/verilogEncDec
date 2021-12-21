@@ -41,7 +41,7 @@ assert property(RegistersReadCheck)
 	cover property(RegistersReadCheck);
 	
 property operation_done_active;
-				@(checker_bus.clk) disable iff (!checker_bus.rst) ( checker_bus.PSEL && checker_bus.PENABLE && checker_bus.PWRITE && (checker_bus.PADDR[3:0] == 4'b0000)) |-> ## [1:8] checker_bus.operation_done;
+				@(posedge checker_bus.clk) disable iff (!checker_bus.rst) ( checker_bus.PSEL && checker_bus.PENABLE && checker_bus.PWRITE && (checker_bus.PADDR[3:0] == 4'b0000)) |-> ## [1:4] checker_bus.operation_done;
 				endproperty
 assert property(operation_done_active)
   else $error("error with operation_done");

@@ -99,7 +99,7 @@ covergroup Error_spot @(negedge coverage_bus.operation_done);
 
    One_error_spot: coverpoint test iff(coverage_bus.CTRL_REG[1:0] != 2'b00){
       bins Noise_index[AMBA_WORD] = {[0:AMBA_WORD-1]};
-	  bins no_noise = {-1 };
+	  bins Noise_two_zero = {-1 };
    }
    
 endgroup

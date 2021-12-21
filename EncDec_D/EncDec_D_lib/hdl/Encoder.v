@@ -34,7 +34,7 @@ output reg 	[AMBA_WORD-1:0] Enc_Out
  // in the design, we minimized the XOR gates by using repeating calculations for C1, … , Cn. 
 //reg A,B,C,E,F,G,H,I,J,K,M,O,P,R,T,V,W,Y,Z,AC,ACE,ACEG,AE,IK,PR;
 wire [31:0] YOUT;// 		= {32{1'b0}};
-wire [24:0] xor_gates ;
+wire [23:0] xor_gates ;
 
 
   assign xor_gates[0]   = DATA_IN[31]^DATA_IN[30];   // A
@@ -58,23 +58,23 @@ wire [24:0] xor_gates ;
   //S <= DATA_IN[13]^DATA_IN[12]; NOT USED
   assign xor_gates[14]   = DATA_IN[12]^DATA_IN[11];	// T
   //U <= DATA_IN[11]^DATA_IN[10];
-  assign xor_gates[15]   = 1'b0;	//// V
-  assign xor_gates[16]   = DATA_IN[9]^DATA_IN[8];	// W
+  // assign xor_gates[15]   = 1'b0;	//// V
+  assign xor_gates[15]   = DATA_IN[9]^DATA_IN[8];	// W
   //X <= DATA_IN[8]^DATA_IN[7]; NOT USED
-  assign xor_gates[17]   = DATA_IN[7]^DATA_IN[6];	// Y
-  assign xor_gates[18]   = DATA_IN[31]^DATA_IN[29]^DATA_IN[27];	// Z
+  assign xor_gates[16]   = DATA_IN[7]^DATA_IN[6];	// Y
+  assign xor_gates[17]   = DATA_IN[31]^DATA_IN[29]^DATA_IN[27];	// Z
   // AC  <= A^C;
   // ACE <= AC^E;
   // ACEG<= ACE^G;
-  // xor_gates[20]  <=A^E;
+  // xor_gates[19]  <=A^E;
   // IK  <=I^K;
   // PR  <=P^R;
-  assign xor_gates[19]  = xor_gates[0]^xor_gates[2];	// AC
-  assign xor_gates[20]  = xor_gates[0]^xor_gates[3];	// AE
-  assign xor_gates[21]  =xor_gates[7]^xor_gates[9];	// IK
-  assign xor_gates[22]  =xor_gates[12]^xor_gates[13];	// PR
-  assign xor_gates[23] = xor_gates[19]^xor_gates[3];	// ACE
-  assign xor_gates[24]= xor_gates[23]^xor_gates[5];	// ACEG
+  assign xor_gates[18]  = xor_gates[0]^xor_gates[2];	// AC
+  assign xor_gates[19]  = xor_gates[0]^xor_gates[3];	// AE
+  assign xor_gates[20]  =xor_gates[7]^xor_gates[9];	// IK
+  assign xor_gates[21]  =xor_gates[12]^xor_gates[13];	// PR
+  assign xor_gates[22] = xor_gates[18]^xor_gates[3];	// ACE
+  assign xor_gates[23]= xor_gates[22]^xor_gates[5];	// ACEG
 
 //============================================================//
 //always @(*) begin : Encode_Data
@@ -91,20 +91,20 @@ wire [24:0] xor_gates ;
     
     // This block is for the parity of the medium input
     assign YOUT[20] = Medium ?  DATA_IN[31]^DATA_IN[28]^DATA_IN[21]^xor_gates[4]^xor_gates[7]    : DATA_IN[20];//C12
-    assign YOUT[19] = Medium ?  DATA_IN[25]^xor_gates[23]                         				 : DATA_IN[19];//C13
+    assign YOUT[19] = Medium ?  DATA_IN[25]^xor_gates[22]                         				 : DATA_IN[19];//C13
     assign YOUT[18] = Medium ?  xor_gates[0]^xor_gates[2]^xor_gates[6]^DATA_IN[22]               : DATA_IN[18];//C14
-    assign YOUT[17] = Medium ?  xor_gates[20]^xor_gates[6]^DATA_IN[21]                     	     : DATA_IN[17];//C15
-    assign YOUT[16] = Medium ?  xor_gates[18]^xor_gates[5]^xor_gates[8]                          : DATA_IN[16];//C16
+    assign YOUT[17] = Medium ?  xor_gates[19]^xor_gates[6]^DATA_IN[21]                     	     : DATA_IN[17];//C15
+    assign YOUT[16] = Medium ?  xor_gates[17]^xor_gates[5]^xor_gates[8]                          : DATA_IN[16];//C16
     
     assign YOUT[15:6] = DATA_IN[15:6];
     
     // This block is for the parity of the large input
-    assign YOUT[5] = Large ?  xor_gates[1]^xor_gates[6]^xor_gates[11]^xor_gates[17]^DATA_IN[27]^DATA_IN[20]^DATA_IN[18]^DATA_IN[13]^DATA_IN[11]^DATA_IN[10]^DATA_IN[8] 	    			: DATA_IN[5];//C27
-    assign YOUT[4] = Large ?  xor_gates[24]^xor_gates[21]^xor_gates[10]^DATA_IN[17] 																	  	    			: DATA_IN[4];//C28
-    assign YOUT[3] = Large ?  xor_gates[24]^xor_gates[22]^xor_gates[14]^DATA_IN[10]																		 	    			: DATA_IN[3];//C29
-    assign YOUT[2] = Large ?  xor_gates[19]^xor_gates[21]^xor_gates[22]^xor_gates[16]^DATA_IN[7]  													    					: DATA_IN[2];//C30
-    assign YOUT[1] = Large ?  xor_gates[20]^xor_gates[7]^xor_gates[10]^xor_gates[12]^xor_gates[14]^DATA_IN[8]^DATA_IN[6]^DATA_IN[9]							 		   		: DATA_IN[1];//C31
-    assign YOUT[0] = Large ?  xor_gates[18]^xor_gates[11]^DATA_IN[9]^DATA_IN[10]^xor_gates[17]^DATA_IN[25]^DATA_IN[23]^DATA_IN[21]^DATA_IN[19]^DATA_IN[14]^DATA_IN[12]   	: DATA_IN[0];//C32
+    assign YOUT[5] = Large ?  xor_gates[1]^xor_gates[6]^xor_gates[11]^xor_gates[16]^DATA_IN[27]^DATA_IN[20]^DATA_IN[18]^DATA_IN[13]^DATA_IN[11]^DATA_IN[10]^DATA_IN[8] 	    			: DATA_IN[5];//C27
+    assign YOUT[4] = Large ?  xor_gates[23]^xor_gates[20]^xor_gates[10]^DATA_IN[17] 																	  	    			: DATA_IN[4];//C28
+    assign YOUT[3] = Large ?  xor_gates[23]^xor_gates[21]^xor_gates[14]^DATA_IN[10]																		 	    			: DATA_IN[3];//C29
+    assign YOUT[2] = Large ?  xor_gates[18]^xor_gates[20]^xor_gates[21]^xor_gates[15]^DATA_IN[7]  													    					: DATA_IN[2];//C30
+    assign YOUT[1] = Large ?  xor_gates[19]^xor_gates[7]^xor_gates[10]^xor_gates[12]^xor_gates[14]^DATA_IN[8]^DATA_IN[6]^DATA_IN[9]							 		   		: DATA_IN[1];//C31
+    assign YOUT[0] = Large ?  xor_gates[17]^xor_gates[11]^DATA_IN[9]^DATA_IN[10]^xor_gates[16]^DATA_IN[25]^DATA_IN[23]^DATA_IN[21]^DATA_IN[19]^DATA_IN[14]^DATA_IN[12]   	: DATA_IN[0];//C32
 
 	
  

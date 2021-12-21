@@ -55,8 +55,8 @@ reg [31:0] DATA_IN_Pad,
 wire [AMBA_WORD-1:0] CTRL_REG,
 					 DATA_IN_REG,
 					 CODEWORD_WIDTH_REG,
-					 NOISE_REG,
-					 PRDATA_REG;
+					 NOISE_REG;
+
 
 // Decoder registers
 wire [1:0] NOF;
@@ -89,7 +89,6 @@ Register_selctor #(  .AMBA_WORD(AMBA_WORD) )	Register_selctor(
    .PENABLE        (PENABLE),
    .PSEL           (PSEL),
    .PWRITE         (PWRITE),
-   .PRDATA         (PRDATA_REG),
    .CTRL           (CTRL_REG),
    .DATA_IN        (DATA_IN_REG),
    .CODEWORD_WIDTH (CODEWORD_WIDTH_REG),
@@ -132,48 +131,53 @@ Error_fix #(.DATA_WIDTH(DATA_WIDTH)) Error_fix(
 );
 
 //###########=================Top State Machine=================###########//
-always@(current_state or CTRL_REG or Noise_added or start_work) 
+always@(current_state or CTRL_REG or Noise_added or start_work or rst) 
 begin: Top_state_machine // Next state chosing
-	case (current_state)
-		ENCODING: begin	//=================ENCODING State//=================
-					case (CTRL_REG[1:0])
-						2'b00: begin
-								Next_State			       	=       IDLE;
-							end
-						2'b01: begin
-								Next_State					= 		 DECODING;
-							end
-						2'b10: begin
-								
-								 if(!Noise_added) 
-								begin
-									Next_State	= 		NOISE;
-								end
-								else 
-								begin
-									Next_State  =      DECODING ;
-								end
-							end
-						default: Next_State			       	=       IDLE;
-					endcase
-				end
-		DECODING: begin	////=================DECODING State//=================
-					Next_State			       	=       IDLE;
-				end
-		NOISE 	: begin	////=================NOISE State//=================
-					Next_State			       	=       DECODING;
-				end	
-		default: begin	////=================IDLE State//=================
-					if(start_work)  /// (PADDR[3:2] == 2'b00) & PENABLE & PWRITE
-						begin
-							Next_State = ENCODING;
+	if(!rst)
+		Next_State = IDLE ;
+	else
+		begin
+			case (current_state)
+				ENCODING: begin	//=================ENCODING State//=================
+							case (CTRL_REG[1:0])
+								2'b00: begin
+										Next_State			       	=       IDLE;
+									end
+								2'b01: begin
+										Next_State					= 		 DECODING;
+									end
+								2'b10: begin
+										
+										 if(!Noise_added) 
+										begin
+											Next_State	= 		NOISE;
+										end
+										else 
+										begin
+											Next_State  =      DECODING ;
+										end
+									end
+								default: Next_State			       	=       IDLE;
+							endcase
 						end
-					else 
-						begin
-							Next_State 				= 		IDLE;	
+				DECODING: begin	////=================DECODING State//=================
+							Next_State			       	=       IDLE;
 						end
-				end
-	endcase
+				NOISE 	: begin	////=================NOISE State//=================
+							Next_State			       	=       DECODING;
+						end	
+				default: begin	////=================IDLE State//=================
+							if(start_work)  /// (PADDR[3:2] == 2'b00) & PENABLE & PWRITE
+								begin
+									Next_State = ENCODING;
+								end
+							else 
+								begin
+									Next_State 				= 		IDLE;	
+								end
+						end
+			endcase
+		end
 end
 
 //#################################

@@ -25,7 +25,6 @@ input wire [AMBA_WORD-1:0] PWDATA,
 input wire PENABLE,
 input wire PSEL,
 input wire PWRITE,
-output reg [AMBA_WORD-1:0] PRDATA,
 output reg [AMBA_WORD-1:0] CTRL ,
 output reg [AMBA_WORD-1:0] DATA_IN,
 output reg [AMBA_WORD-1:0] CODEWORD_WIDTH,
@@ -40,7 +39,7 @@ wire start_work;
 
 
 //when PSEL&PENABLE are 1 start work, depending on R/W -> PWRITE,PADDR
-assign start_work = PSEL;
+assign start_work = PSEL & PENABLE;
 
 
 
