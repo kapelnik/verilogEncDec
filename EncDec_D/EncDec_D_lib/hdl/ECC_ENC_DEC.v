@@ -43,7 +43,7 @@ parameter [2:0] IDLE 			= 3'b000,
 //State reg controlled by the state machine
 reg [2:0] current_state,
 		  Next_State;
-reg [1:0] next_num_of_errors;
+reg [1:0]  next_num_of_errors;
 
 //Register for full channel
 reg [31:0] FC_REG,
@@ -132,12 +132,8 @@ Error_fix #(.DATA_WIDTH(DATA_WIDTH)) Error_fix(
 );
 
 //###########=================Top State Machine=================###########//
-always@(current_state or CTRL_REG or Noise_added or start_work or rst) 
+always@(current_state or CTRL_REG or Noise_added or start_work) 
 begin: Top_state_machine // Next state chosing
-	if(!rst)
-		Next_State = IDLE ;
-	else
-		begin
 			case (current_state)
 				ENCODING: begin	//=================ENCODING State//=================
 							case (CTRL_REG[1:0])
@@ -180,7 +176,6 @@ begin: Top_state_machine // Next state chosing
 								end
 						end
 			endcase
-		end
 end
 
 //#################################
@@ -240,7 +235,7 @@ begin : Entering_Dec_data
 end
 // assign Enc_noise = Enc_Out[DATA_WIDTH-1:0]^NOISE_REG[DATA_WIDTH-1:0];
 
-always@(current_state or Enc_noise or FC_REG_SAVE or DATA_IN_Pad or CTRL_REG) 
+always@(current_state or Enc_noise or FC_REG_SAVE or DATA_IN_Pad) 
 begin: FC_control
 	case (current_state)
 		// ENCODING: begin	//=================ENCODING State//=================
@@ -310,7 +305,7 @@ end
 
 //#################################
 //To make sure operation_done get the right value, we keep operation_done in Next_operation_done_Control
-always@(current_state or CTRL_REG) 
+always@(current_state) 
 begin : Next_operation_done_Control
 	case (current_state)
 		// ENCODING: begin	//=================ENCODING State//=================

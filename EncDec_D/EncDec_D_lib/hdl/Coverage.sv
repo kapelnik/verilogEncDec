@@ -20,7 +20,7 @@ parameter AMBA_WORD = 32
   Interface.Coverage coverage_bus
 );
 
-integer test ;
+integer test,test1,test2 ;
 logic [1:0] APB_bus_Test ;
 
 
@@ -91,43 +91,71 @@ endgroup
 always@(posedge coverage_bus.operation_done)
 begin
 	if(coverage_bus.CTRL_REG[1:0] != 2'b00)
-		test = sample_walking_1(coverage_bus.NOISE[DATA_WIDTH-1:0]);
+		begin
+			test = sample_walking_1(coverage_bus.NOISE[DATA_WIDTH-1:0]);
+			// if($countones(coverage_bus.NOISE[DATA_WIDTH-1:0]) == 2) begin
+				// test1 = Sample_two(coverage_bus.NOISE[DATA_WIDTH-1:0],0);
+				// test2 = Sample_two(coverage_bus.NOISE[DATA_WIDTH-1:0],test1+1);
+				
+			// end
+			// else begin
+						// test2 = -1;
+						// test1 = -1;
+					// end
+		end
 end
 		  
 covergroup Error_spot @(negedge coverage_bus.operation_done);
 
    One_error_spot: coverpoint test iff(coverage_bus.CTRL_REG[1:0] != 2'b00){
-      bins Noise_index[DATA_WIDTH] = {[0:DATA_WIDTH-1]};
+      bins Noise_index[] = {[0:DATA_WIDTH-1]};
 	  bins Noise_two_zero = {-1 };
    }
+   // Two_error_spot1: coverpoint test1 iff(coverage_bus.CTRL_REG[1:0] != 2'b00){
+      // bins Noise_index1[DATA_WIDTH] = {[0:DATA_WIDTH-1]};
+	  // bins Noise_two_zero1 = {-1 };
+   // }
+   // Two_error_spot2: coverpoint test2 iff(coverage_bus.CTRL_REG[1:0] != 2'b00){
+      // bins Noise_index2[DATA_WIDTH] = {[0:DATA_WIDTH-1]};
+	  // bins Noise_two_zero2 = {-1 };
+   // }
+	// Two_error_spot : cross Two_error_spot1,Two_error_spot2;
    
 endgroup
 
 function integer sample_walking_1(bit[DATA_WIDTH-1:0] x);
 	integer temp ;
-	
-   for(integer i=0;i<DATA_WIDTH;i++)begin
-    temp = sample(x, i);
-	if(temp > -1 )
-		return temp; 
-   end
-   return -1 ;
+	if($onehot(x)) begin
+	   for(integer i=0;i<DATA_WIDTH;i++)begin
+		temp = sample(x, i);
+		if(temp > -1 )
+			return temp; 
+	   end
+	end
+	else
+		return -1 ;
 endfunction
 
 //for each index in NOISE vector, if onehot is true, sample this index.
 function integer sample(bit[DATA_WIDTH-1:0] x, integer position);
-   if (x[position]==1 && $onehot(x) )
+   if (x[position]==1)
         return position;
    else
 		return -1;
 endfunction
 
-function integer Sample_two(bit[AMBA_WORD-1:0] x,Init);
-	
-endfunction
+// function integer Sample_two(bit[AMBA_WORD-1:0] x,Init);
+	// integer temp ;
+		// for(integer i = Init ; i<DATA_WIDTH ; i++)begin
+			// temp = sample(x, i);
+		// if(temp > -1 )
+			// return temp; 
+	   // end
+	// return -1 ;
+// endfunction
 //add all covergroups to the Coverage:
-		signals_test 						test1 = new();
-		amount_of_noise_test 				test2 = new();
-		Error_spot 							test3 = new();
+		signals_test 						tst1 = new();
+		amount_of_noise_test 				tst2 = new();
+		Error_spot 							tst3 = new();
 
 endmodule
