@@ -54,11 +54,12 @@ assign tb.clk = clk;
 assign tb.rst = rst;    
 
 
+//Simulate a clock for the verification system:
 always begin : clock_generator_proc
   #10 clk = ~clk;
 end
 
-
+// this is a simulation of rst coming from outside(usynchronous rst). try to hit the rst both with and without waiting from clk posedge
 initial 
 begin : stim_proc
 		rst = 0 ;

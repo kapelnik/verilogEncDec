@@ -27,8 +27,11 @@ logic [1:0] APB_bus_Test ;
 // end
 //Cover Groups:
 
+//This is an internal signal for coverage on the APB protocol simulated at stimulus
 assign APB_bus_Test = {coverage_bus.PENABLE,coverage_bus.PSEL};
-covergroup signals_test @(posedge coverage_bus.clk);
+
+//This is the covergroup for all the signals simulated at the stimulus module to make sure all the data has been covered
+covergroup signals_test @(posedge coverage_bus.clk, negedge coverage_bus.rst);
 		// did reset ranged from 1:0
 		reset : coverpoint coverage_bus.rst{
 		   bins low = {0};
@@ -64,10 +67,6 @@ covergroup signals_test @(posedge coverage_bus.clk);
 		 illegal_bins bad = {2'b10} ;
 		 }
 		 
-		 // {
-		 // bins APB_Good = {{high,high},{low,high},{low,low}};
-		 // illegal_bins APB_error = {high,low};
-		 // };
 endgroup
 
 
@@ -89,6 +88,7 @@ covergroup amount_of_noise_test @(negedge coverage_bus.operation_done);
 		
 endgroup
 
+//the next folowing blocks are ment to make sure that the Noise got all the options of one_hot 
 always@(posedge coverage_bus.operation_done)
 begin
 	if(coverage_bus.CTRL_REG[1:0] != 2'b00)
@@ -115,6 +115,7 @@ function integer sample_walking_1(bit[AMBA_WORD-1:0] x);
    return -1 ;
 endfunction
 
+//for each index in NOISE vector, if onehot is true, sample this index.
 function integer sample(bit[AMBA_WORD-1:0] x, integer position);
    if (x[position]==1 && $onehot(x) )
         return position;
@@ -122,91 +123,10 @@ function integer sample(bit[AMBA_WORD-1:0] x, integer position);
 		return -1;
 endfunction
 
-// covergroup APB_bus @(negedge coverage_bus.clk);
 
-   // APB_PENABLE: coverpoint coverage_bus.PENABLE{
-      // bins low_to_high_PENABLE = (0 => 1);
-      // bins high_to_low_PENABLE = (1 => 0);
-   // }
-   // APB_PSEL: coverpoint coverage_bus.PSEL{
-      // bins low_to_high_PSEL = (0 => 1);
-      // bins high_to_low_PSEL = (1 => 0);
-   // }
-   // APB_PSEL_state: coverpoint coverage_bus.PSEL{
-      // bins low_PSEL = {0};
-      // bins high_PSEL = {1};
-   // }
-   
-   // PENABLE_X_PSEL: cross APB_PENABLE,APB_PSEL_state;
-   
-   
-// endgroup
-
-   
-
-
-// function integer one_hot(bit[AMBA_WORD-1:0] x);
-	// integer flag = 0 ;
-		// flag = 0;
-		// for(integer i=0;i<AMBA_WORD;i++) begin
-			// if(x[i] == 1)
-				// flag++ ;
-		// end
-		
-		// if(flag == 1)
-			// return 1;
-		// else
-			// return 0;
-// endfunction
-
-// function integer One_error_spot( bit[AMBA_WORD-1:0] x);
-	// integer temp,flag ;
-	// flag = 0 ;
-	// for(integer i = 0 ; i <AMBA_WORD ; i++) begin
-		// if(x[i] == 1)begin
-			// flag++ ;
-			// temp = i;
-		// end
-	// end
-	// if(flag == 1)
-		// return temp ;
-	// else
-		// return -1 ;
-// endfunction
-
-
-
-
-
-// function integer Two_errors (bit[AMBA_WORD-1:0] x);
-	// for(integer i = 0 ; i < AMBA_WORD+1 ; i++)begin
-		// if(i == AMBA_WORD+1)
-			// return -1;
-		// else
-			// if(x[i] == 1)
-				// if(i != AMBA_WORD)
-					// for(integer j = i+1 ; j < AMBA_WORD+1)begin
-						// if(j == AMBA_WORD+1)
-							// return -1;
-						// else
-							// if(x[j] == 1)
-								// for(integer k = 0 ; )begin
-								// end
-					// end
-				// else
-					// return -1 ;
-	// end
-// endfunction
-//
-// Instance of covergroup regular_test
-	// initial begin
-		signals_test 						tst1 = new();
-		amount_of_noise_test 				tst3 = new();
-		Error_spot 						tst4 = new();
-		// APB_bus								tst5 = new();
-		// $display("signals_test Coverage = %0.2F %%",signals_test.get_inst_coverage());
-		// $display("Noise_test Coverage = %0.2F %%",Noise_test.get_inst_coverage());
-		// $display("amount_of_noise_test Coverage = %0.2F %%",amount_of_noise_test.get_inst_coverage());
-	// end
+//add all covergroups to the Coverage:
+		signals_test 						test1 = new();
+		amount_of_noise_test 				test2 = new();
+		Error_spot 							test3 = new();
 
 endmodule

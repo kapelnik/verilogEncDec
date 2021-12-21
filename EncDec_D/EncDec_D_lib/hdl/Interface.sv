@@ -17,7 +17,15 @@ parameter AMBA_ADDR_WIDTH 	= 20,
 parameter AMBA_WORD 		= 32
 )();
 
-//signals declaration
+//This interface is the implementaion of the way we choose to do the validation process of our DUT
+// DUT:					 	ECC_ENC_DEC module
+//Signals simulator: 		Stimulus module
+//Function Checker: 		Checker module
+//Functional Coverage: 		Coverage module
+//Golden Model: 			vsgoldenmodel
+// The only signal got from outside(not generated within the modules above, are clk and rst, which is being simulated from the overall_tb
+
+//signals declaration: this is the interface of the signals that all the entities involved will use in this test structure:
 logic 								                clk;
 logic 								                rst;
 logic 		[AMBA_ADDR_WIDTH-1:0] 	 				PADDR;
@@ -39,6 +47,7 @@ logic 		[1:0]				               		gm_number_of_errors;
 logic		[AMBA_WORD-1:0] 		       			CTRL_REG;
 
 //modports declaration
+//the following ports are the declarations of BUSs of each entity:
 modport Stimulus 		(input clk, rst, output   PADDR, PWDATA, PENABLE, PSEL, PWRITE,RegistersW,RegistersR,FullWord, NOISE);
 modport ECC_ENC_DEC 	(input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, output PRDATA, data_out, operation_done, num_of_errors);
 modport Checker 		(input clk, rst, PADDR, PWDATA, PENABLE, PSEL, PWRITE, PRDATA, data_out, operation_done, num_of_errors, RegistersOut, gm_DATA_OUT, gm_number_of_errors);
