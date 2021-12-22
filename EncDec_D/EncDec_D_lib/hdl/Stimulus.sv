@@ -171,6 +171,7 @@ begin : stim_proc
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 
 		stim_bus.PWDATA ={{AMBA_WORD-2{1'b0}},2'b01};
 		RegistersWrite();
+
 		@(posedge stim_bus.clk); /// The cycle that need to write into the register
 		//CTRL_REG:
 		stim_bus.PADDR =  {randNoise.NoiseVector_Addr,{4'b0000}}; 

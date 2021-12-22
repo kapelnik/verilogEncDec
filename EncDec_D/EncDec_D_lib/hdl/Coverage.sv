@@ -87,7 +87,7 @@ covergroup amount_of_noise_test @(negedge coverage_bus.operation_done);
 		
 endgroup
 
-//the next folowing blocks are ment to make sure that the Noise got all the options of one_hot 
+//the next folowing blocks are ment to make sure that the Noise got all the options  of TWO ERRORS and ONE ERROR
 always@(posedge coverage_bus.operation_done)
 begin
 	if(coverage_bus.CTRL_REG[1:0] != 2'b00)
@@ -96,7 +96,6 @@ begin
 			if($countones(coverage_bus.NOISE[DATA_WIDTH-1:0]) == 2) begin
 				test1 = Sample_two(coverage_bus.NOISE[DATA_WIDTH-1:0],0);
 				test2 = Sample_two(coverage_bus.NOISE[DATA_WIDTH-1:0],test1+1);
-				
 			end
 			else begin
 						test2 = -1;
@@ -104,7 +103,8 @@ begin
 					end
 		end
 end
-		  
+
+
 covergroup Error_spot @(negedge coverage_bus.operation_done);
 
    One_error_spot: coverpoint test iff(coverage_bus.CTRL_REG[1:0] != 2'b00){
