@@ -143,18 +143,18 @@ begin: Top_state_machine // Next state chosing
 								2'b01: begin
 										Next_State					= 		 DECODING;
 									end
-								2'b10: begin
+								default: begin
 										
-										 if(!Noise_added) 
-										begin
+										 // if(!Noise_added) 
+										// begin
 											Next_State	= 		NOISE;
-										end
-										else 
-										begin
-											Next_State  =      DECODING ;
-										end
+										// end
+										// else 
+										// begin
+											// Next_State  =      DECODING ;
+										// end
 									end
-								default: Next_State			       	=       FINISH;
+								// default: Next_State			       	=       FINISH;
 							endcase
 						end
 				DECODING: begin	////=================DECODING State//=================

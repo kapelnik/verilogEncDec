@@ -72,6 +72,21 @@ begin : stim_proc
 	rst = 0;
 	#100.2;
 	rst = 1;
+			repeat(303)@(posedge clk) ;
+		#1.6;
+	rst = 0;
+	#100.5;
+	rst = 1;
+			repeat(306)@(posedge clk) ;
+		#1.3;
+	rst = 0;
+	#100.8;
+	rst = 1;
+			repeat(306)@(posedge clk) ;
+		#1.7;
+	rst = 0;
+	#100.6;
+	rst = 1;
 end
 // ### Please start your Verilog code here ### 
 

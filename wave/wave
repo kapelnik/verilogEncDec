@@ -1,39 +1,30 @@
 onerror {resume}
 quietly WaveActivateNextPane {} 0
 add wave -noupdate -radix binary /tb_overall/tb/clk
-add wave -noupdate -radix binary /tb_overall/tb/operation_done
-add wave -noupdate -radix binary /tb_overall/dut/CTRL_REG
-add wave -noupdate -radix binary /tb_overall/dut/CODEWORD_WIDTH_REG
-add wave -noupdate -radix binary /tb_overall/dut/NOISE_REG
-add wave -noupdate -radix binary /tb_overall/tb/num_of_errors
-add wave -noupdate -radix binary /tb_overall/tb/gm_number_of_errors
-add wave -noupdate -radix binary /tb_overall/tb/data_out
-add wave -noupdate -radix binary /tb_overall/tb/gm_DATA_OUT
-add wave -noupdate -radix binary /tb_overall/tb/FullWord
-add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/Yin
-add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/DATA_IN
-add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/Small
-add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/Medium
-add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/NOF
-add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/NOE_Out
-add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/Prity_Y
-add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/S
 add wave -noupdate -radix binary /tb_overall/tb/rst
-add wave -noupdate -radix binary /tb_overall/tb/PADDR
+add wave -noupdate -radix hexadecimal /tb_overall/tb/PADDR
 add wave -noupdate -radix binary /tb_overall/tb/PWDATA
 add wave -noupdate -radix binary /tb_overall/tb/PENABLE
 add wave -noupdate -radix binary /tb_overall/tb/PSEL
 add wave -noupdate -radix binary /tb_overall/tb/PWRITE
 add wave -noupdate -radix binary /tb_overall/tb/PRDATA
-add wave -noupdate -radix binary /tb_overall/tb/RegistersOut
+add wave -noupdate -radix binary /tb_overall/tb/operation_done
+add wave -noupdate -radix binary /tb_overall/tb/data_out
+add wave -noupdate -radix binary /tb_overall/tb/num_of_errors
+add wave -noupdate -radix binary /tb_overall/dut/CTRL_REG
+add wave -noupdate -radix binary /tb_overall/dut/DATA_IN_REG
+add wave -noupdate -radix binary /tb_overall/dut/CODEWORD_WIDTH_REG
+add wave -noupdate -radix binary /tb_overall/dut/NOISE_REG
+add wave -noupdate -radix binary /tb_overall/tb/NOISE
 add wave -noupdate -radix binary /tb_overall/tb/RegistersW
 add wave -noupdate -radix binary /tb_overall/tb/RegistersR
-add wave -noupdate -radix binary /tb_overall/gen/data_file_0
-add wave -noupdate -radix binary /tb_overall/gen/data_file_1
-add wave -noupdate -radix binary /tb_overall/gen/data_file_2
+add wave -noupdate -radix binary /tb_overall/tb/FullWord
+add wave -noupdate -radix binary /tb_overall/tb/gm_DATA_OUT
+add wave -noupdate -radix binary /tb_overall/tb/gm_number_of_errors
 add wave -noupdate -radix binary /tb_overall/gen/Sample
 add wave -noupdate -radix binary /tb_overall/gen/Noise
 add wave -noupdate -radix binary /tb_overall/gen/Width
+add wave -noupdate -radix binary /tb_overall/gen/GenerateNoise/i
 add wave -noupdate -radix binary /tb_overall/gen/stim_bus/clk
 add wave -noupdate -radix binary /tb_overall/gen/stim_bus/rst
 add wave -noupdate -radix binary /tb_overall/gen/stim_bus/PADDR
@@ -46,15 +37,18 @@ add wave -noupdate -radix binary /tb_overall/gen/stim_bus/RegistersOut
 add wave -noupdate -radix binary /tb_overall/gen/stim_bus/data_out
 add wave -noupdate -radix binary /tb_overall/gen/stim_bus/operation_done
 add wave -noupdate -radix binary /tb_overall/gen/stim_bus/num_of_errors
+add wave -noupdate -radix binary /tb_overall/gen/stim_bus/NOISE
 add wave -noupdate -radix binary /tb_overall/gen/stim_bus/RegistersW
 add wave -noupdate -radix binary /tb_overall/gen/stim_bus/RegistersR
 add wave -noupdate -radix binary /tb_overall/gen/stim_bus/FullWord
 add wave -noupdate -radix binary /tb_overall/gen/stim_bus/gm_DATA_OUT
 add wave -noupdate -radix binary /tb_overall/gen/stim_bus/gm_number_of_errors
+add wave -noupdate -radix binary /tb_overall/gen/stim_bus/CTRL_REG
 add wave -noupdate -radix binary /tb_overall/dut/clk
 add wave -noupdate -radix binary /tb_overall/dut/rst
 add wave -noupdate -radix binary /tb_overall/dut/PADDR
 add wave -noupdate -radix binary /tb_overall/dut/PWDATA
+add wave -noupdate -radix binary /tb_overall/tb/RegistersOut
 add wave -noupdate -radix binary /tb_overall/dut/PENABLE
 add wave -noupdate -radix binary /tb_overall/dut/PSEL
 add wave -noupdate -radix binary /tb_overall/dut/PWRITE
@@ -69,8 +63,6 @@ add wave -noupdate -radix binary /tb_overall/dut/FC_REG
 add wave -noupdate -radix binary /tb_overall/dut/FC_REG_SAVE
 add wave -noupdate -radix binary /tb_overall/dut/DATA_IN_Pad
 add wave -noupdate -radix binary /tb_overall/dut/Dec_in
-add wave -noupdate -radix binary /tb_overall/dut/DATA_IN_REG
-add wave -noupdate -radix binary /tb_overall/dut/PRDATA_REG
 add wave -noupdate -radix binary /tb_overall/dut/NOF
 add wave -noupdate -radix binary /tb_overall/dut/NOE_Out
 add wave -noupdate -radix binary /tb_overall/dut/Enc_noise
@@ -90,7 +82,6 @@ add wave -noupdate -radix binary /tb_overall/dut/Register_selctor/PWDATA
 add wave -noupdate -radix binary /tb_overall/dut/Register_selctor/PENABLE
 add wave -noupdate -radix binary /tb_overall/dut/Register_selctor/PSEL
 add wave -noupdate -radix binary /tb_overall/dut/Register_selctor/PWRITE
-add wave -noupdate -radix binary /tb_overall/dut/Register_selctor/PRDATA
 add wave -noupdate -radix binary /tb_overall/dut/Register_selctor/CTRL
 add wave -noupdate -radix binary /tb_overall/dut/Register_selctor/DATA_IN
 add wave -noupdate -radix binary /tb_overall/dut/Register_selctor/CODEWORD_WIDTH
@@ -105,6 +96,14 @@ add wave -noupdate -radix binary /tb_overall/dut/Encoder/DATA_IN
 add wave -noupdate -radix binary /tb_overall/dut/Encoder/Enc_Out
 add wave -noupdate -radix binary /tb_overall/dut/Encoder/YOUT
 add wave -noupdate -radix binary /tb_overall/dut/Encoder/xor_gates
+add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/Yin
+add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/DATA_IN
+add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/Small
+add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/Medium
+add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/NOF
+add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/NOE_Out
+add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/Prity_Y
+add wave -noupdate -radix binary /tb_overall/dut/Num_Of_Errors/S
 add wave -noupdate -radix binary /tb_overall/dut/Error_fix/clk
 add wave -noupdate -radix binary /tb_overall/dut/Error_fix/rst
 add wave -noupdate -radix binary /tb_overall/dut/Error_fix/S
@@ -115,6 +114,20 @@ add wave -noupdate -radix binary /tb_overall/dut/Error_fix/DATA_IN
 add wave -noupdate -radix binary /tb_overall/dut/Error_fix/Dec_Out
 add wave -noupdate -radix binary /tb_overall/dut/Error_fix/Bit_fix
 add wave -noupdate -radix binary /tb_overall/dut/Error_fix/Enable_Fix
+add wave -noupdate -radix binary /tb_overall/cov/test
+add wave -noupdate -radix binary /tb_overall/cov/test1
+add wave -noupdate -radix binary /tb_overall/cov/test2
+add wave -noupdate -radix binary /tb_overall/cov/APB_bus_Test
+add wave -noupdate -radix binary /tb_overall/cov/sample_walking_1/sample_walking_1
+add wave -noupdate -radix binary /tb_overall/cov/sample_walking_1/x
+add wave -noupdate -radix binary /tb_overall/cov/sample_walking_1/temp
+add wave -noupdate -radix binary /tb_overall/cov/sample/sample
+add wave -noupdate -radix binary /tb_overall/cov/sample/x
+add wave -noupdate -radix binary /tb_overall/cov/sample/position
+add wave -noupdate -radix binary /tb_overall/cov/Sample_two/Sample_two
+add wave -noupdate -radix binary /tb_overall/cov/Sample_two/x
+add wave -noupdate -radix binary /tb_overall/cov/Sample_two/Init
+add wave -noupdate -radix binary /tb_overall/cov/Sample_two/temp
 add wave -noupdate -radix binary /tb_overall/cov/coverage_bus/clk
 add wave -noupdate -radix binary /tb_overall/cov/coverage_bus/rst
 add wave -noupdate -radix binary /tb_overall/cov/coverage_bus/PADDR
@@ -127,11 +140,13 @@ add wave -noupdate -radix binary /tb_overall/cov/coverage_bus/RegistersOut
 add wave -noupdate -radix binary /tb_overall/cov/coverage_bus/data_out
 add wave -noupdate -radix binary /tb_overall/cov/coverage_bus/operation_done
 add wave -noupdate -radix binary /tb_overall/cov/coverage_bus/num_of_errors
+add wave -noupdate -radix binary /tb_overall/cov/coverage_bus/NOISE
 add wave -noupdate -radix binary /tb_overall/cov/coverage_bus/RegistersW
 add wave -noupdate -radix binary /tb_overall/cov/coverage_bus/RegistersR
 add wave -noupdate -radix binary /tb_overall/cov/coverage_bus/FullWord
 add wave -noupdate -radix binary /tb_overall/cov/coverage_bus/gm_DATA_OUT
 add wave -noupdate -radix binary /tb_overall/cov/coverage_bus/gm_number_of_errors
+add wave -noupdate -radix binary /tb_overall/cov/coverage_bus/CTRL_REG
 add wave -noupdate -radix binary /tb_overall/check/checker_bus/clk
 add wave -noupdate -radix binary /tb_overall/check/checker_bus/rst
 add wave -noupdate -radix binary /tb_overall/check/checker_bus/PADDR
@@ -144,16 +159,20 @@ add wave -noupdate -radix binary /tb_overall/check/checker_bus/RegistersOut
 add wave -noupdate -radix binary /tb_overall/check/checker_bus/data_out
 add wave -noupdate -radix binary /tb_overall/check/checker_bus/operation_done
 add wave -noupdate -radix binary /tb_overall/check/checker_bus/num_of_errors
+add wave -noupdate -radix binary /tb_overall/check/checker_bus/NOISE
 add wave -noupdate -radix binary /tb_overall/check/checker_bus/RegistersW
 add wave -noupdate -radix binary /tb_overall/check/checker_bus/RegistersR
 add wave -noupdate -radix binary /tb_overall/check/checker_bus/FullWord
 add wave -noupdate -radix binary /tb_overall/check/checker_bus/gm_DATA_OUT
 add wave -noupdate -radix binary /tb_overall/check/checker_bus/gm_number_of_errors
+add wave -noupdate -radix binary /tb_overall/check/checker_bus/CTRL_REG
 add wave -noupdate -radix binary /tb_overall/goldmod/DataOut
 add wave -noupdate -radix binary /tb_overall/goldmod/CTRL
 add wave -noupdate -radix binary /tb_overall/goldmod/DATA_IN
 add wave -noupdate -radix binary /tb_overall/goldmod/CODEWORD_WIDTH
 add wave -noupdate -radix binary /tb_overall/goldmod/NOISE
+add wave -noupdate -radix binary /tb_overall/goldmod/flag
+add wave -noupdate -radix binary /tb_overall/goldmod/Data_Out_Flag
 add wave -noupdate -radix binary /tb_overall/goldmod/gold_bus/clk
 add wave -noupdate -radix binary /tb_overall/goldmod/gold_bus/rst
 add wave -noupdate -radix binary /tb_overall/goldmod/gold_bus/PADDR
@@ -166,16 +185,18 @@ add wave -noupdate -radix binary /tb_overall/goldmod/gold_bus/RegistersOut
 add wave -noupdate -radix binary /tb_overall/goldmod/gold_bus/data_out
 add wave -noupdate -radix binary /tb_overall/goldmod/gold_bus/operation_done
 add wave -noupdate -radix binary /tb_overall/goldmod/gold_bus/num_of_errors
+add wave -noupdate -radix binary /tb_overall/goldmod/gold_bus/NOISE
 add wave -noupdate -radix binary /tb_overall/goldmod/gold_bus/RegistersW
 add wave -noupdate -radix binary /tb_overall/goldmod/gold_bus/RegistersR
 add wave -noupdate -radix binary /tb_overall/goldmod/gold_bus/FullWord
 add wave -noupdate -radix binary /tb_overall/goldmod/gold_bus/gm_DATA_OUT
 add wave -noupdate -radix binary /tb_overall/goldmod/gold_bus/gm_number_of_errors
+add wave -noupdate -radix binary /tb_overall/goldmod/gold_bus/CTRL_REG
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {15807 ns} 0}
+WaveRestoreCursors {{Cursor 1} {24792 ns} 0}
 quietly wave cursor active 1
-configure wave -namecolwidth 256
-configure wave -valuecolwidth 227
+configure wave -namecolwidth 264
+configure wave -valuecolwidth 100
 configure wave -justifyvalue left
 configure wave -signalnamewidth 0
 configure wave -snapdistance 10
@@ -188,4 +209,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {15643 ns} {15971 ns}
+WaveRestoreZoom {24568 ns} {25016 ns}
