@@ -132,7 +132,7 @@ Error_fix #(.DATA_WIDTH(DATA_WIDTH)) Error_fix(
 );
 
 //###########=================Top State Machine=================###########//
-always@(current_state or CTRL_REG or Noise_added or start_work) 
+always@(current_state or CTRL_REG or start_work) 
 begin: Top_state_machine // Next state chosing
 			case (current_state)
 				ENCODING: begin	//=================ENCODING State//=================
