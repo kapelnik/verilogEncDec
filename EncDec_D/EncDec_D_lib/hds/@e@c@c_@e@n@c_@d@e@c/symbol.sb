@@ -701,19 +701,19 @@ value "D:\\Users\\benmaorr\\Desktop\\verilogEncDec\\EncDec_D\\EncDec_D_lib\\hds\
 )
 (vvPair
 variable "date"
-value "12/21/2021"
+value "12/23/2021"
 )
 (vvPair
 variable "day"
-value "Tue"
+value "Thu"
 )
 (vvPair
 variable "day_long"
-value "Tuesday"
+value "Thursday"
 )
 (vvPair
 variable "dd"
-value "21"
+value "23"
 )
 (vvPair
 variable "entity_name"
@@ -741,7 +741,7 @@ value "benmaorr"
 )
 (vvPair
 variable "graphical_source_date"
-value "12/21/2021"
+value "12/23/2021"
 )
 (vvPair
 variable "graphical_source_group"
@@ -753,7 +753,7 @@ value "L330W529"
 )
 (vvPair
 variable "graphical_source_time"
-value "18:45:24"
+value "14:32:06"
 )
 (vvPair
 variable "group"
@@ -857,7 +857,7 @@ value "symbol"
 )
 (vvPair
 variable "time"
-value "18:45:24"
+value "14:32:06"
 )
 (vvPair
 variable "unit"
@@ -924,8 +924,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,10000,23000,10800"
-st "input  wire                        clk;
-"
+st "input  wire                        clk;"
 )
 thePort (LogicalPort
 lang 5
@@ -972,8 +971,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,10800,23000,11600"
-st "input  wire                        rst;
-"
+st "input  wire                        rst;"
 )
 thePort (LogicalPort
 lang 5
@@ -1020,8 +1018,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,11600,24500,12400"
-st "input  wire [AMBA_ADDR_WIDTH-1:0]  PADDR;
-"
+st "input  wire [AMBA_ADDR_WIDTH-1:0]  PADDR;"
 )
 thePort (LogicalPort
 lang 5
@@ -1069,8 +1066,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,12400,25000,13200"
-st "input  wire [AMBA_WORD-1:0]        PWDATA;
-"
+st "input  wire [AMBA_WORD-1:0]        PWDATA;"
 )
 thePort (LogicalPort
 lang 5
@@ -1118,8 +1114,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,13200,25500,14000"
-st "input  wire                        PENABLE;
-"
+st "input  wire                        PENABLE;"
 )
 thePort (LogicalPort
 lang 5
@@ -1166,8 +1161,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,14000,24000,14800"
-st "input  wire                        PSEL;
-"
+st "input  wire                        PSEL;"
 )
 thePort (LogicalPort
 lang 5
@@ -1214,8 +1208,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,14800,25000,15600"
-st "input  wire                        PWRITE;
-"
+st "input  wire                        PWRITE;"
 )
 thePort (LogicalPort
 lang 5
@@ -1263,8 +1256,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,15600,25000,16400"
-st "output reg [AMBA_WORD-1:0]         PRDATA;
-"
+st "output reg [AMBA_WORD-1:0]         PRDATA;"
 )
 thePort (LogicalPort
 lang 5
@@ -1314,8 +1306,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,16400,26000,17200"
-st "output reg [DATA_WIDTH-1:0]        data_out;
-"
+st "output reg [DATA_WIDTH-1:0]        data_out;"
 )
 thePort (LogicalPort
 lang 5
@@ -1365,8 +1356,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,17200,29000,18000"
-st "output reg                         operation_done;
-"
+st "output reg                         operation_done;"
 )
 thePort (LogicalPort
 lang 5
@@ -1415,8 +1405,7 @@ va (VaSet
 font "Courier New,8,0"
 )
 xt "2000,18000,28500,18800"
-st "output reg [1:0]                   num_of_errors;
-"
+st "output reg [1:0]                   num_of_errors;"
 )
 thePort (LogicalPort
 lang 5
@@ -1487,8 +1476,7 @@ IDLE            3'b000
 ENCODING        3'b001  
 DECODING        3'b010  
 NOISE           3'b011  
-FINISH          3'b100  
-"
+FINISH          3'b100  "
 )
 header "Parameter Declarations"
 showHdrWhenContentsEmpty 1
@@ -1915,7 +1903,7 @@ xt "2000,9000,2000,9000"
 tm "SyDeclarativeTextMgr"
 )
 )
-lastUid 244,0
+lastUid 266,0
 postModuleDirective "//States"
 activeModelName "Symbol:CDM"
 )
